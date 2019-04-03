@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project 2 - Visualization</title>
+</head><style>
+
+    svg {
+        font: 10px sans-serif;
+    }
+
+    .background path {
+        fill: none;
+        stroke: #ddd;
+        shape-rendering: crispEdges;
+    }
+
+    .foreground path {
+        fill: none;
+        stroke: steelblue;
+    }
+
+    .brush .extent {
+        fill-opacity: .3;
+        stroke: #fff;
+        shape-rendering: crispEdges;
+    }
+
+    .axis line,
+    .axis path {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .active {
+        stroke: #000;
+        stroke-width: 1px;
+    }
+
+    .axis text {
+        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+        cursor: move;
+    }
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+    // Info to show visualization
+    var width = 700, height = 400,
+        margin = {top: 20, right: 20, bottom: 30, left: 30},
+        contentWidth = width - margin.left - margin.right,
+        contentHeight = height - margin.top - margin.bottom;
+
+    var svg = d3.select("body").append("svg").attr("width",width).attr("height",height),
+        g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+
+    // x and y Scale
+    var xScale = d3.scalePoint().range([0,contentWidth]),
+        yScale = d3.scaleLinear().range([contentHeight , 0]).domain([0,1]);
+
+    // axises definition
+    var xAxis = d3.axisBottom(xScale),
+        yAxis = d3.axisLeft(yScale).ticks(5);
+
+    d3.select(".domain").attr("opacity", 0);
+
+    // Axis Group
+    var xAxisGroup = g.append("g")
+        .attr("transform", "translate(0, " + contentHeight + ")");
+    var yAxisGroup = g.append("g");
+
+    // Define line
+    var line = d3.line(),background, foreground;
+
+    //drag object
+    var dragging = {};
+
+    let features = [];
+    d3.csv("dataset/songs.csv",function (error, songs) {
+
+        // get features that used for mutlti-dimension coordinates
+        features = songs.columns.slice(1,9);
+        xScale.domain(features,2);
+
+        // Add grey background lines for context.
+        background = g.append("g")
+            .attr("class", "background")
+            .selectAll("path")
+            .data(songs)
+            .enter().append("path")
+            .attr("d", path);
+
+        // Add blue foreground lines for focus.
+        foreground = svg.append("g")
+            .attr("class", "foreground")
+            .selectAll("path")
+            .data(songs)
+            .enter().append("path")
+            .attr("d", path);
+
+        // Add a group element for each dimension.
+        yAxisGroup.selectAll(".dimension")
+            .data(features)
+            .enter().append("g")
+            .attr("class", "dimension")
+            .attr("transform", d=>{return "translate(" + xScale(d) + ")";})
+            .on("mouseover", function (d) {d3.select(this).style("cursor", "move");})
+            .on("mouseout", function (d) {})
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .call(yAxis);
+
+
+
+        // Axis Call
+        xAxisGroup.call(xAxis);
+        d3.select(".domain").attr("opacity", 0);
+        // yAxisGroup.call(yAxis);
+
+
+
+    });
+
+
+    function path(d) {
+        console.log(d);
+        return line(features.map(function(p) {
+            console.log(p);
+            return [position(p), yScale[p](d[p])]; }));
+    }
+
+    function position(d) {
+        var v = dragging[d];
+        return v == null ? xScale(d) : v;
+    }
+    function dragstarted(d) {
+        d3.select(this).raise().classed("active", true);
+        dragging[d] = xScale(d);
+
+        console.log(dragging[d]);
+        // background.attr("visibility", "hidden");
+    }
+
+    function dragged(d) {
+        dragging[d] = Math.min(contentWidth, Math.max(0, d3.event.x));
+        // foreground.attr("d", path);
+
+        features.sort(function(a, b) { return position(a) - position(b); });
+        // xScale.domain(features);
+        // yAxisGroup.data(features).attr("transform", function(da) {
+        //     console.log((da));
+        //     return "translate(" + position(da) + ")"; })
+
+
+
+        // d3.select(this).select("text")
+        //     .attr("x", d.x = d3.event.x)
+        //     .attr("y", d.y = d3.event.y);
+        // d3.select(this).select("rect")
+        //     .attr("x", d.x = d3.event.x)
+        //     .attr("y", d.y = d3.event.y);
+    }
+
+
+    function transition(g) {
+        return g.transition().duration(500);
+    }
+    function dragended(d) {
+        console.log("drag end");
+        delete dragging[d];
+                d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
+                // transition(foreground).attr("d", path);
+                background
+                    // .attr("d", path)
+                    .transition()
+                    .delay(500)
+                    .duration(0)
+                    .attr("visibility", null);
+        d3.select(this).classed("active", false);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
