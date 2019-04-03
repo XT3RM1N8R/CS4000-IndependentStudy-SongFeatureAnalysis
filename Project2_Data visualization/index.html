@@ -120,7 +120,6 @@
         // Axis Call
         xAxisGroup.call(xAxis);
         d3.select(".domain").attr("opacity", 0);
-        // yAxisGroup.call(yAxis);
 
 
 
@@ -128,10 +127,8 @@
 
 
     function path(d) {
-        console.log(d);
-        return line(features.map(function(p) {
-            console.log(p);
-            return [position(p), yScale[p](d[p])]; }));
+        return line(features.map(function(p) {;
+            return [position(p), yScale(d[p])]; }));
     }
 
     function position(d) {
@@ -148,13 +145,13 @@
 
     function dragged(d) {
         dragging[d] = Math.min(contentWidth, Math.max(0, d3.event.x));
-        // foreground.attr("d", path);
+        foreground.attr("d", path);
 
         features.sort(function(a, b) { return position(a) - position(b); });
-        // xScale.domain(features);
-        // yAxisGroup.data(features).attr("transform", function(da) {
-        //     console.log((da));
-        //     return "translate(" + position(da) + ")"; })
+        xScale.domain(features);
+        yAxisGroup.data(features).attr("transform", function(da) {
+            console.log((da));
+            return "translate(" + position(da) + ")"; })
 
 
 
@@ -174,9 +171,9 @@
         console.log("drag end");
         delete dragging[d];
                 d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
-                // transition(foreground).attr("d", path);
+                transition(foreground).attr("d", path);
                 background
-                    // .attr("d", path)
+                    .attr("d", path)
                     .transition()
                     .delay(500)
                     .duration(0)
