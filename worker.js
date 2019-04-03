@@ -11,7 +11,7 @@ onmessage = function(e){
 
     // for(var k = 0; k < 10; k++) {
     //     tsne.step(); // every time you call this, solution gets better
-    //     if(k%1==0){
+    //     if(k%2==0){
             postMessage(tsne.getSolution());
     //     }
     // }
