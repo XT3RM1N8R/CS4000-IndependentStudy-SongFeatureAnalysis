@@ -14,10 +14,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset/dataset.csv">
+        <entry file="file://$PROJECT_DIR$/stack_graph.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="23" column="42" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset/dataset_full(optimal).csv">
           <provider selected="true" editor-type-id="csv-text-editor">
-            <state relative-caret-position="76653">
-              <caret line="4509" column="25" selection-start-line="4509" selection-start-column="25" selection-end-line="4509" selection-end-column="25" />
+            <state relative-caret-position="-45">
+              <caret line="401" selection-start-line="401" selection-end-line="401" />
             </state>
           </provider>
           <provider editor-type-id="csv-table-editor">
@@ -26,28 +35,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stack_graph.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="42" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset/songs.csv">
-          <provider selected="true" editor-type-id="csv-text-editor">
-            <state>
-              <caret column="397" selection-start-column="391" selection-end-column="397" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parallel_example.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="33" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="33" />
+            <state relative-caret-position="519">
+              <caret line="109" column="40" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -55,12 +46,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="141" column="33" lean-forward="true" selection-start-line="141" selection-start-column="33" selection-end-line="141" selection-end-column="33" />
+            <state relative-caret-position="564">
+              <caret line="105" column="11" lean-forward="true" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
               <folding>
                 <element signature="n#head#0;n#html#0;n#!!top" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset/dataset.csv">
+          <provider selected="true" editor-type-id="csv-text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="93" selection-start-line="1" selection-start-column="84" selection-end-line="1" selection-end-column="93" />
+            </state>
+          </provider>
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
           </provider>
         </entry>
       </file>
@@ -81,9 +84,12 @@
       <find>position</find>
       <find>domain</find>
       <find>dragging</find>
-      <find>text-anchor</find>
       <find>line</find>
       <find>path</find>
+      <find>call</find>
+      <find>axis</find>
+      <find>console</find>
+      <find>text-anchor</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,17 +105,17 @@
       <list>
         <option value="$PROJECT_DIR$/dataset/index.js" />
         <option value="$PROJECT_DIR$/dataset/index.html" />
-        <option value="$PROJECT_DIR$/dataset/dataset.csv" />
         <option value="$PROJECT_DIR$/dataset/cars.csv" />
         <option value="$PROJECT_DIR$/stack_graph.html" />
         <option value="$PROJECT_DIR$/../Project-1-Visualization/index.html" />
+        <option value="$PROJECT_DIR$/dataset/dataset.csv" />
         <option value="$PROJECT_DIR$/parallel_example.html" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="170" />
+    <option name="x" value="210" />
     <option name="y" value="23" />
     <option name="width" value="1230" />
     <option name="height" value="877" />
@@ -152,12 +158,12 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/dataset" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -185,15 +191,15 @@
       <workItem from="1553557413370" duration="24663000" />
       <workItem from="1554177854374" duration="65000" />
       <workItem from="1554177924462" duration="17410000" />
-      <workItem from="1554330049661" duration="1098000" />
+      <workItem from="1554330049661" duration="12234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43236000" />
+    <option name="totallyTimeSpent" value="54372000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="170" y="23" width="1230" height="877" extended-state="0" />
+    <frame x="210" y="23" width="1230" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24979322" />
@@ -249,23 +255,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Project-1-Visualization/index.html" />
-    <entry file="file://$PROJECT_DIR$/dataset/dataset.csv">
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="76653">
-          <caret line="4509" column="25" selection-start-line="4509" selection-start-column="25" selection-end-line="4509" selection-end-column="25" />
-        </state>
-      </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stack_graph.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="42" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataset/songs.csv">
       <provider selected="true" editor-type-id="csv-text-editor">
         <state>
@@ -273,17 +262,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stack_graph.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="23" column="42" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parallel_example.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="33" />
+        <state relative-caret-position="519">
+          <caret line="109" column="40" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="40" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/dataset_full(optimal).csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="-45">
+          <caret line="401" selection-start-line="401" selection-end-line="401" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/dataset.csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="93" selection-start-line="1" selection-start-column="84" selection-end-line="1" selection-end-column="93" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="141" column="33" lean-forward="true" selection-start-line="141" selection-start-column="33" selection-end-line="141" selection-end-column="33" />
+        <state relative-caret-position="564">
+          <caret line="105" column="11" lean-forward="true" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
           <folding>
             <element signature="n#head#0;n#html#0;n#!!top" />
           </folding>

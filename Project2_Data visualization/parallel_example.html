@@ -124,7 +124,9 @@
         // Add an axis and title.
         g.append("g")
             .attr("class", "axis")
-            .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
+            .each(function(d) {
+                console.log(d);
+                d3.select(this).call(axis.scale(y[d])); })
             .append("text")
             .style("text-anchor", "middle")
             .attr("y", -9)
@@ -139,6 +141,7 @@
             .selectAll("rect")
             .attr("x", -8)
             .attr("width", 16);
+        // console.log(y);
     });
 
     function position(d) {
@@ -154,7 +157,7 @@
     // Returns the path for a given data point.
     function path(d) {
         return line(dimensions.map(function(p) {
-            console.log([position(p), y[p](d[p])]);
+            // console.log([position(p), y[p](d[p])]);
             return [position(p), y[p](d[p])]; }));
     }
 
