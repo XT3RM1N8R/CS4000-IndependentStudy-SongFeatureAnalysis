@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parallel_example.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="519">
-              <caret line="109" column="40" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="40" />
+            <state relative-caret-position="542">
+              <caret line="109" column="85" lean-forward="true" selection-start-line="109" selection-start-column="85" selection-end-line="109" selection-end-column="86" />
             </state>
           </provider>
         </entry>
@@ -46,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+            <state relative-caret-position="512">
+              <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
               <folding>
                 <element signature="n#head#0;n#html#0;n#!!top" />
               </folding>
@@ -191,12 +191,12 @@
       <workItem from="1553557413370" duration="24663000" />
       <workItem from="1554177854374" duration="65000" />
       <workItem from="1554177924462" duration="17410000" />
-      <workItem from="1554330049661" duration="13113000" />
+      <workItem from="1554330049661" duration="13996000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55251000" />
+    <option name="totallyTimeSpent" value="56134000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="210" y="23" width="1230" height="877" extended-state="0" />
@@ -269,13 +269,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parallel_example.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="109" column="40" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataset/dataset_full(optimal).csv">
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="-45">
@@ -296,10 +289,17 @@
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/parallel_example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="109" column="85" lean-forward="true" selection-start-line="109" selection-start-column="85" selection-end-line="109" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+        <state relative-caret-position="512">
+          <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
           <folding>
             <element signature="n#head#0;n#html#0;n#!!top" />
           </folding>

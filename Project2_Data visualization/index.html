@@ -84,7 +84,7 @@
     var dragging = {};
 
     let features = [];
-    d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
+    d3.csv("dataset/dataset.csv",function (error, songs) {
 
         // get features that used for mutlti-dimension coordinates
         features = songs.columns.slice(1,9);
@@ -92,26 +92,10 @@
 
         features.forEach(d=>{
             yScale[d] = d3.scaleLinear().range([contentHeight,0])
-                .domain(temp=d3.extent(songs,function (fea) {
-                    // if(fea[d] <0.1)
-                    //     return 0;
+                .domain(d3.extent(songs,function (fea) {
                     return Number(fea[d]);}))
             // console.log(temp);
         });
-        // xScale.domain(d3.keys(songs[0]).filter(function(d) {
-        //     return d != "name" && (yScale[d] = d3.scale.linear()
-        //         .domain(d3.extent(songs, function(p) {
-        //             return +p[d]; }))
-        //         .range([height, 0]));
-        // }));
-
-        // songs.forEach(d=>{
-        //     console.log(d["tempo"]);
-        // });
-        // var tempo_extent = d3.extent(songs,function (d) {
-        //     return d.tempo;
-        // });
-        // console.log(tempo_extent);
 
         // Add grey background lines for context.
         // background = g.append("g")
@@ -130,7 +114,7 @@
             .attr("d", path);
 
         // Add a group element for each dimension.
-        var xAxisGroup = g.selectAll(".dimension")
+        xAxisGroup = g.selectAll(".dimension")
             .data(features)
             .enter().append("g")
             .attr("class", "dimension")
@@ -183,7 +167,7 @@
 
         features.sort(function(a, b) { return position(a) - position(b); });
         xScale.domain(features);
-        xAxisGroup.data(features).attr("transform", function(da) {
+        xAxisGroup.attr("transform", function(da) {
             // console.log((da));
             return "translate(" + position(da) + ")"; })
 
@@ -222,13 +206,6 @@
 
         // d3.select(this).classed("active", false);
     }
-
-
-
-
-
-
-
 
 
 
