@@ -6,9 +6,9 @@ function startWorker(data,drawresult){
             w.postMessage(data);
         }
         w.onmessage = function (event){
-            // drawresult(event.data)
-            getcluster(event.data)
-            draw(getcluster(event.data))
+            // getcluster(event.data)
+            console.log(event.data) //show raw-result of t-sne
+            draw(event.data) //plot the 2D datapoint.
         };
 
     }
