@@ -18,6 +18,7 @@
     .foreground path {
         fill: none;
         stroke: dodgerblue;
+        opacity: 50%;
     }
 
     .brush .extent {
@@ -62,7 +63,6 @@
 
     // x and y Scale
     var xScale = d3.scalePoint().range([0,contentWidth]),
-        // yScale = d3.scaleLinear().range([contentHeight,0]);
         yScale = {};
 
     // axises definition
@@ -90,18 +90,12 @@
         features = songs.columns.slice(1,9);
         xScale.domain(features);
 
-
-        var tempoMin = d3.min(songs,d=>{return d["tempo"]});
-
-        var tempoMax = d3.max(songs,d=>{return d["tempo"]});
-        console.log([tempoMin,tempoMax]);
-
         features.forEach(d=>{
             yScale[d] = d3.scaleLinear().range([contentHeight,0])
                 .domain(temp=d3.extent(songs,function (fea) {
                     // if(fea[d] <0.1)
                     //     return 0;
-                    return Number(fea[d]).toFixed(2);}))
+                    return Number(fea[d]);}))
             // console.log(temp);
         });
         // xScale.domain(d3.keys(songs[0]).filter(function(d) {
