@@ -79,7 +79,7 @@
     var dragging = {};
 
     let features = [];
-    d3.csv("dataset/songs.csv",function (error, songs) {
+    d3.csv("dataset/test_songs.csv",function (error, songs) {
 
         // get features that used for mutlti-dimension coordinates
         features = songs.columns.slice(1,9);
