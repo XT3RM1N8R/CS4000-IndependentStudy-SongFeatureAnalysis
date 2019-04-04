@@ -13,7 +13,7 @@ function getcluster(dataset){
     var result=[];
     var result2=[];
 //give number of clusters we want
-    clusters.k(3);
+    clusters.k(10);
 
 //number of iterations (higher number gives more time to converge), defaults to 1000
     clusters.iterations(750);
@@ -22,7 +22,11 @@ function getcluster(dataset){
     clusters.data(dataset);
 
     result=clusters.clusters();
-    console.log("number of cluster and centroid position"+result)
+    result.forEach(function(d){
+        return result2.push(d.centroid)
+    })
+    return result2
+    console.log(result2)
 
 }
 
