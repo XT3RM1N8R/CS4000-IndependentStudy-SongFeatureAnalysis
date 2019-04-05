@@ -7,8 +7,8 @@ function startWorker(data,drawresult){
         }
         w.onmessage = function (event){
             // drawresult(event.data)
-            getcluster(event.data)
-            draw(getcluster(event.data))
+            // getcluster(event.data)
+            draw((event.data))
         };
 
     }
