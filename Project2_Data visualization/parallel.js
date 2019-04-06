@@ -2,12 +2,13 @@
 
 // Info to show visualization
 var width = 900, height = 600,
-    margin = {top: 20, right: 20, bottom: 30, left: 30},
+    margin = {top: 30, right: 20, bottom: 30, left: 30},
     contentWidth = width - margin.left - margin.right,
     contentHeight = height - margin.top - margin.bottom;
 
 var svg = d3.select("body").append("svg").attr("width",width).attr("height",height),
-    g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+    g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")"),
+    titleGroup = svg.append("g").attr("transform","translate("+(margin.left+20)+","+(margin.top-10)+")");
 
 // x and y Scale
 var xScale = d3.scalePoint().range([0,contentWidth]),
@@ -31,7 +32,7 @@ var dragging = {};
 
 let features = [];
 // console.log('44444444');
-d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
+d3.csv("dataset/dataset.csv",function (error, songs) {
     // console.log('222222222');
 
     // get features that used for mutlti-dimension coordinates
@@ -52,7 +53,20 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
         .selectAll("path")
         .data(songs)
         .enter().append("path")
-        .attr("d", path);
+        .attr("id",d=>{return "path"+ d.track_id;})
+        .attr("d", path)
+        .on("mouseover",d=>{
+            console.log(d);
+            foreground.style("opacity","0.3");
+            d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity","1");
+            titleGroup.append("text").attr("class","title").text("Title: "+ d.title);
+        })
+        .on("mouseout",d=>{
+            // console.log("mouse out");
+            brush();
+            d3.select("#path"+ d.track_id).style("stroke-width","1px").style("opacity","0.7");
+            d3.selectAll(".title").remove();
+        });
 
     // Add a group element for each dimension.
     xAxisGroup = g.selectAll(".dimension")
@@ -93,41 +107,6 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
         });
 });
 
-function brushstart() {
-    d3.event.sourceEvent.stopPropagation();
-}
-
-// Handles a brush event, toggling the display of foreground lines.
-function brush() {
-
-    var actives = [];
-    svg.selectAll(".brush")
-        .filter(function(d) {
-            yScale[d].brushSelectionValue = d3.brushSelection(this);
-            return d3.brushSelection(this);
-        })
-        .each(function(d) {
-            // Get extents of brush along each active selection axis (the Y axes)
-            actives.push({
-                feature: d,
-                extent: d3.brushSelection(this).map(yScale[d].invert)
-            });
-        });
-
-    var selected = [];
-    // Update foreground to only display selected values
-    foreground.style("display", function(d) {
-        return actives.every(function(active) {
-            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
-            if(result)selected.push(d);
-            return result;
-        }) ? null : "none";
-    });
-    // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
-
-}
-
-
 function path(d) {
     // console.log('333333')
     return line(features.map(function(p) {return [position(p), yScale[p](d[p])]; }));
@@ -164,5 +143,43 @@ function dragended(d) {
     transition(foreground).attr("d", path);
 
     foreground.attr("opacity","0.7");
+
+}
+
+// Handles a brush event, toggling the display of foreground lines.
+function brush() {
+
+    var actives = [];
+    svg.selectAll(".brush")
+        .filter(function(d) {
+            // console.log(d3.brushSelection(this));
+            yScale[d].brushSelectionValue = d3.brushSelection(this);
+            return d3.brushSelection(this);
+        })
+        .each(function(d) {
+            // Get extents of brush along each active selection axis (the Y axes)
+            actives.push({
+                feature: d,
+                extent: d3.brushSelection(this).map(yScale[d].invert)
+            });
+        });
+
+    var selected = [];
+    // Update foreground to only display selected values
+    foreground.style("opacity",function(d) {
+            return actives.every(function(active) {
+                let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
+                if(result)selected.push(d);
+                return result;
+            }) ? "1" : "0.1";
+        });
+    // foreground.style("display", function(d) {
+    //     return actives.every(function(active) {
+    //         let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
+    //         if(result)selected.push(d);
+    //         return result;
+    //     }) ? null : "none";
+    // });
+    // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
 
 }
