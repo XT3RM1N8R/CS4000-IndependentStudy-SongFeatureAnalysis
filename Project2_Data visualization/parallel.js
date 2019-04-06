@@ -31,7 +31,7 @@ var dragging = {};
 
 let features = [];
 // console.log('44444444');
-d3.csv("dataset/dataset.csv",function (error, songs) {
+d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
 
     // get features that used for mutlti-dimension coordinates
