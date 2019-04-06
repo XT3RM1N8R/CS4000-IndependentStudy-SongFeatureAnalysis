@@ -3,52 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Project 2 - Visualization</title>
-</head><style>
 
-    svg {
-        font: 10px sans-serif;
-    }
-
-    .background path {
-        fill: none;
-        stroke: #ddd;
-        shape-rendering: crispEdges;
-    }
-
-    .foreground path {
-        fill: none;
-        stroke: dodgerblue;
-    }
-
-    .brush .extent {
-        fill-opacity: .3;
-        stroke: #fff;
-        shape-rendering: crispEdges;
-    }
-
-    .axis line,
-    .axis path {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-
-    .active {
-        stroke: #000;
-        stroke-width: 1px;
-    }
-
-    .axis text {
-        font-size: 10px;
-        stroke: black;
-        font-weight: lighter;
-        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
-        cursor: move;
-    }
-
-</style>
+    <link rel="stylesheet" type="text/css" href="parallel.css">
+</head>
 <body>
+    <div class="well well-sm" >
+        <div class="text-center">
+            <h3> Project 2 - Music</h3>
+        </div>
+    </div>
+    <div class="row">
+
+        <h4>Chart Area</h4>
+        <!--<div><label>Year:</label></div>-->
+        <!--<div id="slider"></div>-->
+        <div class="row align-items-center">
+            <div class="col-sm-1"><label>Year: </label></div>
+            <div class="col-sm-2"><p id="value-time"></p></div>
+            <div class="col-sm-1"><div id="slider-time"></div></div>
+        </div>
+
+
+        <!--<div id="slider-div">-->
+            <!--<label>Year: </label>-->
+            <!--<input type="text" id="year-selection" readonly style="border:0; font-weight:bold; margin: fill">-->
+        <!--</div>-->
+        <!--<div id="slider"></div>-->
+    </div>
+<div class="row">
+    <div class="col-md-10">
+        <div id="chart-area" ></div>
+    </div>
+</div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
 <script src="parallel.js"></script>
 
 </body>
