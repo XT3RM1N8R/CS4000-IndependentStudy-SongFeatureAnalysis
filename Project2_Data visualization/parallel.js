@@ -17,18 +17,14 @@ var xScale = d3.scalePoint().range([0,contentWidth]),
 var xAxis = d3.axisBottom(xScale),
     yAxis = d3.axisLeft(yScale).ticks(5);
 
-d3.select(".domain").attr("opacity", 0);
 
 // Axis Group
 var xAxisGroup;
-// = g.append("g")
-//     .attr("transform", "translate(0, " + contentHeight + ")");
-// var yAxisGroup = g.append("g");
 
 // Define line
 var line = d3.line(),
     //Background and foreground line
-    background, foreground;
+    foreground;
 
 //drag object
 var dragging = {};
@@ -49,18 +45,10 @@ d3.csv("dataset/dataset.csv",function (error, songs) {
             }))
         // console.log(temp);
     });
-
-    // Add grey background lines for context.
-    // background = g.append("g")
-    //     .attr("class", "background")
-    //     .selectAll("path")
-    //     .data(songs)
-    //     .enter().append("path")
-    //     .attr("d", path);
-
     // Add blue foreground lines for focus.
     foreground = g.append("g")
         .attr("class", "foreground")
+        .attr("opacity","0.7")
         .selectAll("path")
         .data(songs)
         .enter().append("path")
@@ -97,41 +85,46 @@ d3.csv("dataset/dataset.csv",function (error, songs) {
     xAxisGroup.append("g")
         .attr("class", "brush")
         .each(function (d) {
-            yScale[d].brush = d3.brushY(yScale[d])
+            d3.select(this).call(yScale[d].brush = d3.brushY()
                 .extent([[-10, 0], [10, contentHeight]])
-                .on("start", brushstart)
-                .on("brush", brush);
-            d3.select(this).call(yScale[d].brush);
-            // console.log(yScale[d].brush);
+                .on("brush", brush)
+                .on("end", brush)
+             );
         });
 });
 
 function brushstart() {
     d3.event.sourceEvent.stopPropagation();
-    // var t = d3.event.target;
-    // var s = (d3.event.selection);
-    // var actives = features.filter(function(p) {
-    //     console.log(!yScale[p].brush.empty);
-    //     return yScale[p].brush.empty})
-    // console.log(actives);
 }
 
 // Handles a brush event, toggling the display of foreground lines.
 function brush() {
-    var s = (d3.event.selection);
 
-    // console.log(s);
-    var actives = features.filter(function(p) {
-        console.log("HERE"+yScale[p].brush.filter(d3.target));
-        return yScale[p].brush.empty;});
-    var  extents = actives.map(function(p) { return yScale[p].brush.extent();
+    var actives = [];
+    svg.selectAll(".brush")
+        .filter(function(d) {
+            yScale[d].brushSelectionValue = d3.brushSelection(this);
+            return d3.brushSelection(this);
+        })
+        .each(function(d) {
+            // Get extents of brush along each active selection axis (the Y axes)
+            actives.push({
+                feature: d,
+                extent: d3.brushSelection(this).map(yScale[d].invert)
+            });
+        });
+
+    var selected = [];
+    // Update foreground to only display selected values
+    foreground.style("display", function(d) {
+        return actives.every(function(active) {
+            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
+            if(result)selected.push(d);
+            return result;
+        }) ? null : "none";
     });
-    // console.log(actives);
-    // foreground.style("display", function(d) {
-    //     return actives.every(function(p, i) {
-    //         return extents[i][0] <= d[p] && d[p] <= extents[i][1];
-    //     }) ? null : "none";
-    // });
+    // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
+
 }
 
 
@@ -146,14 +139,11 @@ function position(d) {
 }
 function dragstarted(d) {
     dragging[d] = xScale(d);
-
-    // console.log(dragging[d]);
-    // background.attr("visibility", "hidden");
+    foreground.attr("opacity","0.2");
 }
 
 function dragged(d) {
     dragging[d] = Math.min(width, Math.max(0, d3.event.x));
-    // console.log(dragging[d]);
     foreground.attr("d", path);
 
     features.sort(function(a, b) { return position(a) - position(b); });
@@ -172,11 +162,7 @@ function dragended(d) {
     delete dragging[d];
     d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
     transition(foreground).attr("d", path);
-    // background
-    //     .attr("d", path)
-    //     .transition()
-    //     .delay(500)
-    //     .duration(0)
-    //     .attr("visibility", null);
+
+    foreground.attr("opacity","0.7");
 
 }
