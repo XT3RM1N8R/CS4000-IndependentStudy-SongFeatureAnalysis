@@ -186,6 +186,7 @@ const minForegroundOpacity = "0.1";
 function drawGraph(songs) {
     // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
+    d3.selectAll(".dimension").remove();
     // Make yScale for each dimension
     features.forEach((d) => {
         if (d=="genre") {
@@ -245,7 +246,7 @@ function drawGraph(songs) {
             if(d!="genre")
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
             else
-                d3.select(this).call(d3.axisRight(yScale[d]));
+                d3.select(this).call(d3.axisLeft(yScale[d]));
         })
         .append("text")
         .style("text-anchor", "middle")
