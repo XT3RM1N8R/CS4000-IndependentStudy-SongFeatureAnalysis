@@ -11,10 +11,11 @@ onmessage = function(e){
     
     for(let k = 0; k < inputs.iterations; k++) {
         tsne.step(); // every time you call this, solution gets better
-            drawPoints(tsne.getSolution(), "Learning Rate: " + inputs.epsilon +
-                                           "<br>Perplexity: " + inputs.perplexity +
-                                           "<br>Iteration: " + k);
+            // drawPoints(tsne.getSolution(), "Learning Rate: " + inputs.epsilon +
+            //                                "<br>Perplexity: " + inputs.perplexity +
+            //                                "<br>Iteration: " + k);
     }
+    drawPoints(tsne.getSolution());
     alert("tSNE Complete")
 };
 
