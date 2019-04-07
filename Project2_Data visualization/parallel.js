@@ -245,7 +245,7 @@ function drawGraph(songs) {
             if(d!="genre")
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
             else
-                d3.select(this).call(d3.axisLeft(yScale[d]));
+                d3.select(this).call(d3.axisRight(yScale[d]));
         })
         .append("text")
         .style("text-anchor", "middle")
