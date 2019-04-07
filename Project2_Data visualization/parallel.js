@@ -180,6 +180,9 @@ function graphByYear(songs, year) {
     drawGraph(selectedSongs);
 }
 
+const maxForegroundOpacity = "1";
+const minForegroundOpacity = "0.1";
+
 function drawGraph(songs) {
     // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
@@ -191,29 +194,29 @@ function drawGraph(songs) {
             }))
         // console.log(temp);
     });
+    
     // Add blue foreground lines for focus.
     foreground = g.append("g")
         .attr("class", "foreground")
-        .attr("opacity","0.7")
+        .style("opacity", maxForegroundOpacity)
         .selectAll("path")
         .data(songs)
         .enter().append("path")
-        .attr("id",d=>{return "path"+ d.track_id;})
-        .attr("d", path)
-        .on("mouseover",d=>{
-            foreground.style("opacity","0.1");
-            d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity","1");
-            titleGroup.append("text")
-                .attr("class","title")
-                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
-        })
+            .attr("id",d=>{return "path"+ d.track_id;})
+            .attr("d", path)
+            .on("mouseover",d=>{
+                d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
+                titleGroup.append("text")
+                    .attr("class","title")
+                    .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+            })
         .on("mouseout",d=>{
             // console.log("mouse out");
             // brush();
-            foreground.style("opacity","0.7");
-            d3.select("#path"+ d.track_id).style("stroke-width","1px").style("opacity","0.7");
+            d3.select("#path"+ d.track_id).style("stroke-width","1px").style("opacity", minForegroundOpacity);
             d3.selectAll(".title").remove();
         });
+    foreground.style("opacity", minForegroundOpacity);
 
     // Add a group element for each dimension.
     xAxisGroup = g.selectAll(".dimension")
@@ -265,7 +268,7 @@ function position(d) {
 }
 function dragstarted(d) {
     dragging[d] = xScale(d);
-    foreground.attr("opacity","0.2");
+    foreground.style("opacity", minForegroundOpacity / 2);
 }
 
 function dragged(d) {
@@ -289,7 +292,7 @@ function dragended(d) {
     d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
     transition(foreground).attr("d", path);
 
-    foreground.attr("opacity","0.7");
+    foreground.style("opacity", minForegroundOpacity);
 
 }
 
