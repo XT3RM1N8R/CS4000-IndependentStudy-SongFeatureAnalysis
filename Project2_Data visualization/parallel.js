@@ -44,7 +44,9 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
     data = songs;
     // get features that used for mutlti-dimension coordinates
-    features = songs.columns.slice(1, 9);
+    features = songs.columns.slice(1, 13);
+    features.splice(8,3);
+    console.log(features);
     xScale.domain(features);
 
 
@@ -98,9 +100,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
     d3.select('p#value-time').text((sliderTime.value()));
 
-    graphByYear(songs,sliderTime.value());
-
-
+    graphByYear(data,sliderTime.value());
 
 });
 
@@ -165,7 +165,7 @@ function addCheckBoxes(array) {
             label.appendChild(document.createTextNode(d));
 
             container.appendChild(checkbox);
-            container.appendChild(label)
+            container.appendChild(label);
             container.appendChild(document.createElement("br"));
         }
     })
@@ -187,12 +187,17 @@ function drawGraph(songs) {
     // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
     // Make yScale for each dimension
-    features.forEach(d => {
-        yScale[d] = d3.scaleLinear().range([contentHeight, 0])
-            .domain(d3.extent(songs, function (fea) {
-                return Number(fea[d]);
-            }))
-        // console.log(temp);
+    features.forEach((d) => {
+        if (d=="genre") {
+           yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(genres);
+        }
+        else {
+            yScale[d] = d3.scaleLinear().range([contentHeight, 0])
+                .domain(d3.extent(songs, function (fea) {
+                    return Number(fea[d]);
+                }))
+            // console.log(temp);
+        }
     });
     
     // Add blue foreground lines for focus.
@@ -201,15 +206,16 @@ function drawGraph(songs) {
         .style("opacity", maxForegroundOpacity)
         .selectAll("path")
         .data(songs)
-        .enter().append("path")
-            .attr("id",d=>{return "path"+ d.track_id;})
-            .attr("d", path)
-            .on("mouseover",d=>{
-                d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
-                titleGroup.append("text")
-                    .attr("class","title")
-                    .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
-            })
+        .enter()
+        .append("path")
+        .attr("id",d=>{return "path"+ d.track_id;})
+        .attr("d", path)
+        .on("mouseover",d=>{
+            d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
+            titleGroup.append("text")
+                .attr("class","title")
+                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+        })
         .on("mouseout",d=>{
             // console.log("mouse out");
             // brush();
@@ -236,7 +242,10 @@ function drawGraph(songs) {
     xAxisGroup.append("g")
         .attr("class", "axis")
         .each(function (d) {
-            d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
+            if(d!="genre")
+                d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
+            else
+                d3.select(this).call(d3.axisLeft(yScale[d]));
         })
         .append("text")
         .style("text-anchor", "middle")
