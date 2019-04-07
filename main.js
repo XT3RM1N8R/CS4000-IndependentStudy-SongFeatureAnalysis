@@ -5,7 +5,9 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         return database.push([+d.acousticness, +d.danceability,
         +d.energy, +d.instrumentalness, +d.liveness, +d.speechiness, +d.tempo, +d.valence]); })
     .get(function(error, rows) {
-        data_min=database.slice(0,13000) //i try to test with 1000 data point first.
+        console.log("About to print dataset");
+        //console.log(database) //we can get the data in csv file really quick
+        data_min=database.slice(0,1000) //i try to test with 1000 data point first.
         startWorker(data_min);
     });
 
