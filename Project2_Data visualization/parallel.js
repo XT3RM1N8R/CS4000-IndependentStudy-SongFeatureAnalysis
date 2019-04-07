@@ -39,7 +39,7 @@ let features = [];
 var selectedGenres=[];
 var genres = [];
 var genresCount = [];
-var data = [];
+let data = [];
 d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
     data = songs;
@@ -73,7 +73,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     });
 
 
-    var sliderTime = d3.sliderBottom()
+    sliderTime = d3.sliderBottom()
         .min(timeRange[0])
         .max(timeRange[1])
         .step(1)
@@ -98,39 +98,45 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
     d3.select('p#value-time').text((sliderTime.value()));
 
-    // graphByYear(songs,sliderTime.value());
+    graphByYear(songs,sliderTime.value());
 
-
-    // Add check boxes of genres
-    addCheckBoxes(genres);
 
 
 });
 
 function chooseOption() {
-    var yearChart = document.getElementById("slider-time"),
+    var yearChart = document.getElementById("slider"),
         genreChart = document.getElementById("container"),
         yearChoice = document.getElementById("year"),
         genreChoice = document.getElementById("genre")
 
-    if(yearChoice.checked)
-        yearChart.disabled = true;
-    if(genreChoice.checked)
-        console.log(genreChart);
+    if(yearChoice.checked) {
+        yearChart.style.display = "block";
+        genreChart.style.display = "none";
+        graphByYear(data,sliderTime.value());
+
+    }
+
+    if(genreChoice.checked){
+        // Add check boxes of genres
+        addCheckBoxes(genres);
+        graphByGenre();
+        yearChart.style.display = "none";
+        genreChart.style.display = "block";
+
+    }
+
 }
 
 function graphByGenre() {
     var selectedSongs=[];
-    if(this.checked) {
-        if(!selectedGenres.includes(this.id)) {
-            selectedGenres.push(this.id);
-        }
-    }
-    else {
-        if(selectedGenres.includes(this.id)) {
-            selectedGenres.splice(selectedGenres.indexOf(this.id),1);
-        }
-    }
+    genres.forEach(d=>{
+        var genChecked = document.getElementById(d);
+        if(genChecked.checked && !selectedGenres.includes(d))
+            selectedGenres.push(d);
+        else if (!genChecked.checked && selectedGenres.includes(d))
+            selectedGenres.splice(selectedGenres.indexOf(d),1);
+    });
     selectedGenres.forEach(gen=>{
         data.forEach(song=>{
             if(song.genre == gen)
@@ -143,21 +149,25 @@ function graphByGenre() {
 function addCheckBoxes(array) {
     // console.log(array);
     var container = document.getElementById("container");
-    array.forEach(d=>{
-        var checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.name = d;
-        checkbox.value = d;
-        checkbox.id = d
-        checkbox.onclick = graphByGenre;
+    array.forEach((d,i)=>{
+        //Add if checkbox not show
+        if(document.getElementById(d)==null) {
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.name = d;
+            checkbox.value = d;
+            checkbox.id = d;
+            checkbox.onclick = graphByGenre;
+            if(i==0) checkbox.checked = true;
 
-        var label = document.createElement('label')
-        label.htmlFor = d;
-        label.appendChild(document.createTextNode(d));
+            var label = document.createElement('label')
+            label.htmlFor = d;
+            label.appendChild(document.createTextNode(d));
 
-        container.appendChild(checkbox);
-        container.appendChild(label)
-        container.appendChild(document.createElement("br"));
+            container.appendChild(checkbox);
+            container.appendChild(label)
+            container.appendChild(document.createElement("br"));
+        }
     })
 }
 
@@ -167,7 +177,7 @@ function graphByYear(songs, year) {
         if(d.tracks_track_date_created == year)
             selectedSongs.push(d);
     });
-    graphByYear(selectedSongs);
+    drawGraph(selectedSongs);
 }
 
 function drawGraph(songs) {
@@ -195,7 +205,7 @@ function drawGraph(songs) {
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity","1");
             titleGroup.append("text")
                 .attr("class","title")
-                .text(d.title + " - " + d.genre);
+                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
         })
         .on("mouseout",d=>{
             // console.log("mouse out");
