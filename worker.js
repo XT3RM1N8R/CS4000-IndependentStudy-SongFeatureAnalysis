@@ -6,13 +6,14 @@ onmessage = function(e){
     opt.dim = 2; // dimensionality of the embedding (2 = default)
 
     const tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+    tsne.initDataRaw(e.data);
 
-    tsne.initDataDist(e.data);
+    for(var k = 0; k < 100; k++) {
+        tsne.step(); // every time you call this, solution gets better
 
-    // for(var k = 0; k < 10; k++) {
-    //     tsne.step(); // every time you call this, solution gets better
-    //     if(k%2==0){
-            postMessage(tsne.getSolution());
-    //     }
+
+    }
+    postMessage(tsne.getSolution());
+
     // }
 }

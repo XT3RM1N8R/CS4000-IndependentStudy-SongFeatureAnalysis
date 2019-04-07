@@ -1,5 +1,5 @@
 let w;
-function startWorker(data,drawresult){
+function startWorker(data){
     if(typeof(Worker)!== "undefined"){
         if(w===undefined){
             w = new Worker('worker.js');
