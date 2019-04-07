@@ -15,6 +15,12 @@
     <div class="row">
 
         <h4>Chart Area</h4>
+        <div>
+            <label>choose choice</br></label>
+            <input type="radio" name="chooseGraph" id="year" checked> By Year<br>
+            <input type="radio" name="chooseGraph" id="genre"> By Genre<br>
+            <input type="submit" value="Choose" onclick="chooseOption()">
+        </div>
         <!--<div><label>Year:</label></div>-->
         <!--<div id="slider"></div>-->
         <div class="row align-items-center">
@@ -22,6 +28,7 @@
             <div class="col-sm-2"><p id="value-time"></p></div>
             <div class="col-sm-1"><div id="slider-time"></div></div>
         </div>
+        <div id="container"style="overflow-y:scroll; height:100px;"></div>
 
 
         <!--<div id="slider-div">-->

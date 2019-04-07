@@ -36,9 +36,13 @@ var dragging = {};
 
 let features = [];
 // console.log('44444444');
+var selectedGenres=[];
+var genres = [];
+var genresCount = [];
+var data = [];
 d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
-
+    data = songs;
     // get features that used for mutlti-dimension coordinates
     features = songs.columns.slice(1, 9);
     xScale.domain(features);
@@ -46,37 +50,27 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
     // Doing Time Slider
     // Time
-
     songs.forEach(d=>{
         d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
+        var gen = d["genre"];
+        // Create new element in genres count if the element is in first appears.
+        if(!genres.includes(gen)) {
+            genres.push(gen);
+            genresCount.push(1);
+        }
+        // // or else increase count for that genres by 1
+        // else {
+        //     genresCount[genres.indexOf(gen)]++;
+        // }
     });
+    // console.log(genres);
+    // console.log(genresCount);
+
     var timeRange = d3.extent(songs,d=>{return d.tracks_track_date_created});
     var dataTime = d3.range(Number(timeRange[0]),Number(timeRange[1])+1).map(d=>{
         // console.log(d);
         return d;
     });
-
-    //Slider
-    // var slidersvg = d3.select('div#slider').append('svg')
-    //     .attr('width', 100)
-    //     .attr('height', 50);
-    //
-    // var slider = slidersvg.append('g')
-    //     .classed('slider', true);
-    //
-    // // using clamp here to avoid slider exceeding the range limits
-    // var xScale = d3.scaleLinear()
-    //     .domain(range)
-    //     .range([0, width - margin.left - margin.right])
-    //     .clamp(true);
-    //
-    // // array useful for step sliders
-    // var rangeValues = d3.range(range[0], range[1], step || 1).concat(range[1]);
-    // var xAxis = d3.axisBottom(xScale).tickValues(rangeValues).tickFormat(function (d) {
-    //     return d;
-    // });
-    //
-    // xScale.clamp(true);
 
 
     var sliderTime = d3.sliderBottom()
@@ -89,8 +83,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
         .default(dataTime[0])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
-            drawGraph(songs,sliderTime.value());
-
+            graphByYear(songs,sliderTime.value());
         });
 
     var gTime = d3
@@ -105,20 +98,80 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
     d3.select('p#value-time').text((sliderTime.value()));
 
+    // graphByYear(songs,sliderTime.value());
 
-    drawGraph(songs,sliderTime.value());
 
+    // Add check boxes of genres
+    addCheckBoxes(genres);
 
 
 });
 
-function drawGraph(allData,year) {
-    var songs = [];
-    allData.forEach(d=>{
-        if(d.tracks_track_date_created == year)
-            songs.push(d);
+function chooseOption() {
+    var yearChart = document.getElementById("slider-time"),
+        genreChart = document.getElementById("container"),
+        yearChoice = document.getElementById("year"),
+        genreChoice = document.getElementById("genre")
+
+    if(yearChoice.checked)
+        yearChart.disabled = true;
+    if(genreChoice.checked)
+        console.log(genreChart);
+}
+
+function graphByGenre() {
+    var selectedSongs=[];
+    if(this.checked) {
+        if(!selectedGenres.includes(this.id)) {
+            selectedGenres.push(this.id);
+        }
+    }
+    else {
+        if(selectedGenres.includes(this.id)) {
+            selectedGenres.splice(selectedGenres.indexOf(this.id),1);
+        }
+    }
+    selectedGenres.forEach(gen=>{
+        data.forEach(song=>{
+            if(song.genre == gen)
+                selectedSongs.push(song);
+        })
     });
-    console.log(songs);
+    drawGraph(selectedSongs);
+    console.log(selectedGenres);
+}
+function addCheckBoxes(array) {
+    // console.log(array);
+    var container = document.getElementById("container");
+    array.forEach(d=>{
+        var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = d;
+        checkbox.value = d;
+        checkbox.id = d
+        checkbox.onclick = graphByGenre;
+
+        var label = document.createElement('label')
+        label.htmlFor = d;
+        label.appendChild(document.createTextNode(d));
+
+        container.appendChild(checkbox);
+        container.appendChild(label)
+        container.appendChild(document.createElement("br"));
+    })
+}
+
+function graphByYear(songs, year) {
+    var selectedSongs = [];
+    songs.forEach(d=>{
+        if(d.tracks_track_date_created == year)
+            selectedSongs.push(d);
+    });
+    graphByYear(selectedSongs);
+}
+
+function drawGraph(songs) {
+    // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
     // Make yScale for each dimension
     features.forEach(d => {
@@ -142,7 +195,7 @@ function drawGraph(allData,year) {
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity","1");
             titleGroup.append("text")
                 .attr("class","title")
-                .text( "Title: " + d.title);
+                .text(d.title + " - " + d.genre);
         })
         .on("mouseout",d=>{
             // console.log("mouse out");

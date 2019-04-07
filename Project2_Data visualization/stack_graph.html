@@ -73,7 +73,7 @@
     var genresCount = [];
     var genres = [];
 
-    d3.csv("dataset/dataset_full(echonest+tracks)-fixed.csv",(row)=>{
+    d3.csv("dataset/dataset_full(optimal).csv",(row)=>{
         var cols = row.columns;
 
         // console.log(data);
@@ -112,10 +112,8 @@
             })
         });
         const stack = d3.stack().keys(genres);
-        console.log(genresCount);
-        console.log(row);
-        console.log(genres);
-        console.log(stack((genresCount)));
+        console.log(genresByYear);
+
 
     });
 
