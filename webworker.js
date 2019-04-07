@@ -12,7 +12,7 @@ function startWorker(data){
             } else if (event.data.command === "drawPoints") {
                 // getcluster(event.data)
                 // console.log(event.data) //show raw-result of t-sne
-                draw(event.data.content) //plot the 2D datapoint.
+                draw(event.data.content); //plot the 2D datapoint.
                 d3.select("#textDiv").html(event.data.logMessage)
             } else {
                 alert("Unknown postMessage \'command\' arguments sent by worker!")

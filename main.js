@@ -1,14 +1,23 @@
 database=[];
 data=[]
 d3.csv("./Dataset/dataset_full(optimal).csv")
-    .row(function(d) { data.push(d)
-        return database.push([+d.acousticness, +d.danceability,
-        +d.energy, +d.instrumentalness, +d.liveness, +d.speechiness, +d.tempo, +d.valence]); })
+    .row(function(d) {
+        data.push(d);
+        return database.push([
+            +d.acousticness,
+            +d.danceability,
+            +d.energy,
+            +d.instrumentalness,
+            +d.liveness,
+            +d.speechiness, +d.tempo, +d.valence]); })
     .get(function(error, rows) {
         console.log("About to print dataset");
         //console.log(database) //we can get the data in csv file really quick
-        data_min=database.slice(0,1000) //i try to test with 1000 data point first.
-        startWorker(data_min);
+        data_min=database.slice(0,1000) // Test with 1000 data point first.
+        startWorker({dataset:data_min,
+                     epsilon: 1,        // epsilon is learning rate (10 = default)
+                     perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
+                     iterations: 500});
     });
 
 function getcluster(dataset){
