@@ -1,6 +1,6 @@
 database=[];
 data=[];
-const testSize = 500; // The size of our test data for development speed
+const testSize = 2000; // The size of our test data for development speed
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
