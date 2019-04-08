@@ -282,6 +282,14 @@ const svg = d3.select("#theGraph")
                 .attr("width", width)
                 .attr("height", height);
 
+var legend = svg
+             .append("rect")
+                .attr("width", 75)
+                .attr("height", 275)
+                .attr("x", 0)
+                .attr("y", 0)
+                .style("fill", "#dae4e8");
+
 const scatterplot = svg
                     .append("g")
                       .attr("transform", `translate(${margin.left}, ${margin.right})`)
@@ -311,10 +319,12 @@ function _Draw_Scatterplot(data){
                             .range([0, contentHeight]);
     
     UpdateNodes(data);
+    //DrawLegend(genreColorScale, topGenres20);
     
     function UpdateNodes(data) {
         const hoverDelay = 50;
         const radius = 3;
+        const opacity = "0.75";
         
         const selection = scatterplot.selectAll(".compute").data(data);
         //Exit
@@ -326,6 +336,7 @@ function _Draw_Scatterplot(data){
                                 .attr("cx", d => xScale(d.x))
                                 .attr("cy", d => yScale(d.y))
                                 .attr("r", radius)
+                                .style("opacity", opacity)
                                 .style("fill", function(d) {
                                     if (topGenres20.some(element => element.genre === d.genre)) {
                                         return genreColorScale(d.genre);
@@ -369,6 +380,20 @@ function _Draw_Scatterplot(data){
             .attr("cy", d => yScale(d.y)).attr("r", 3);
     }
 }
+    /*function DrawLegend(colorScale, values) {
+        
+        values.forEach(function(d, i) {
+            legend
+            .append("rect")
+                .attr("x", 5)
+                .attr("y", i*5)
+                .attr("width", 10)
+                .attr("height", 10)
+                .style("fill", d => genreColorScale(d.genre))
+            
+            
+        });
+    }/*
 
 function getExtent(data, key) {
     return d3.extent(data.map(d => d[key]));
