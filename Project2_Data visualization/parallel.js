@@ -38,7 +38,8 @@ let features = [];
 // console.log('44444444');
 var selectedGenres=[];
 var genres = [];
-var genresCount = [];
+var genresByYear = {};
+// var genresCount = [];
 let data = [];
 d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
@@ -46,26 +47,35 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // get features that used for mutlti-dimension coordinates
     features = songs.columns.slice(1, 13);
     features.splice(8,3);
-    console.log(features);
     xScale.domain(features);
 
 
     // Doing Time Slider
     // Time
     songs.forEach(d=>{
-        d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
+        var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
         var gen = d["genre"];
         // Create new element in genres count if the element is in first appears.
         if(!genres.includes(gen)) {
             genres.push(gen);
-            genresCount.push(1);
+            // genresCount.push(1);
         }
         // // or else increase count for that genres by 1
         // else {
         //     genresCount[genres.indexOf(gen)]++;
         // }
+        //
+        //Add genres by each year
+        if(!genresByYear.hasOwnProperty(year)) {
+            genresByYear[year] = [];
+            genresByYear[year].push(d.genre);
+        }
+        else {
+            if (!genresByYear[year].includes(d.genre))
+                genresByYear[year].push(d.genre);
+        }
     });
-    // console.log(genres);
+    // console.log(genresByYear["2008"]);
     // console.log(genresCount);
 
     var timeRange = d3.extent(songs,d=>{return d.tracks_track_date_created});
@@ -132,6 +142,8 @@ function graphByGenre() {
     var selectedSongs=[];
     genres.forEach(d=>{
         var genChecked = document.getElementById(d);
+
+
         if(genChecked.checked && !selectedGenres.includes(d))
             selectedGenres.push(d);
         else if (!genChecked.checked && selectedGenres.includes(d))
@@ -143,7 +155,7 @@ function graphByGenre() {
                 selectedSongs.push(song);
         })
     });
-    drawGraph(selectedSongs);
+    drawGraph(selectedSongs,0,selectedGenres);
     console.log(selectedGenres);
 }
 function addCheckBoxes(array) {
@@ -177,20 +189,27 @@ function graphByYear(songs, year) {
         if(d.tracks_track_date_created == year)
             selectedSongs.push(d);
     });
-    drawGraph(selectedSongs);
+    drawGraph(selectedSongs,year,null);
 }
 
 const maxForegroundOpacity = "1";
 const minForegroundOpacity = "0.1";
 
-function drawGraph(songs) {
+
+// Draw graph from songs data, and year (0: draw all year, else: draw by year)
+function drawGraph(songs,year,selectedGenres) {
     // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
     d3.selectAll(".dimension").remove();
     // Make yScale for each dimension
     features.forEach((d) => {
+
+        // Add Scale for each axis
         if (d=="genre") {
-           yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(genres);
+            if(year == 0)
+                yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(selectedGenres);
+            else
+                yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(genresByYear[year]);
         }
         else {
             yScale[d] = d3.scaleLinear().range([contentHeight, 0])
@@ -243,6 +262,7 @@ function drawGraph(songs) {
     xAxisGroup.append("g")
         .attr("class", "axis")
         .each(function (d) {
+            // Call y-axises
             if(d!="genre")
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
             else
