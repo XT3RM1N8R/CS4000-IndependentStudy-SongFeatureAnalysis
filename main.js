@@ -1,5 +1,7 @@
 database=[];
 data=[]
+const testSize = 100; // Size of test dataset for performance cost reduction
+
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
         data.push(d);
@@ -13,7 +15,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
     .get(function(error, rows) {
         console.log("About to print dataset");
         //console.log(database) //we can get the data in csv file really quick
-        data_min=database.slice(0,100) // Test with 1000 data point first.
+        data_min=database.slice(0,testSize);
         startWorker({dataset:data_min,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
@@ -70,7 +72,7 @@ function draw_network(tsne_data){
         d.i = i;
     });
 
-    var nodes=data.slice(0,100);
+    var nodes=data.slice(0,testSize);
     console.log(nodes);
     
     nodes.forEach(function(d, i) {
@@ -78,6 +80,7 @@ function draw_network(tsne_data){
         d.y = tsne_data[i][1];
     });
     
+    // Initialize the Network Diagram with node data, links between nodes, and then render it
     var network = new d3plus.Network()
     .links(links)
     .nodes(nodes)
