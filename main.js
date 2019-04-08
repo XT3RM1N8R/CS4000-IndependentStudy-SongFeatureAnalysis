@@ -20,6 +20,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                      iterations: 500});
     });
 
+// Get a set of cluster centroids based on the given data
 function getcluster(dataset){
     let clusterSet = [];
     let centroids = [];
@@ -42,6 +43,7 @@ function getcluster(dataset){
     return centroids;
 }
 
+// Draw a network diagram based on the given data
 function Draw_Network(tsne_data){
     let totalscore = [];
     let links = [];
@@ -264,11 +266,11 @@ function Draw_Scatterplot(data){
         selection.exit().remove();
         //Enter
         const newElements = selection.enter()
-        .append('circle')
-            .attr("class", "compute")
-            .attr("cx", d=>xScale(d[0]))
-            .attr("cy", d=>yScale(d[1]))
-            .attr("r", 3);
+                            .append('circle')
+                                .attr("class", "compute")
+                                .attr("cx", d=>xScale(d[0]))
+                                .attr("cy", d=>yScale(d[1]))
+                                .attr("r", 3);
         //Update
         selection
             .attr("cx", d=>xScale(d[0]))
