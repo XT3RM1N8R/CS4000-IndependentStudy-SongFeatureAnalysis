@@ -17,10 +17,13 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
     .get(function(error, rows) {
         audioData_min = audioData.slice(0,testSize); // Limit the test data for quick debugging
         data_min = dataset.slice(0,testSize);
-        startWorker({dataset:audioData_min,
+        /*startWorker({dataset:audioData_min,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
-                     iterations: 500});
+                     iterations: 500});*/
+        alert("Data Size: " + bigdata.length);
+        Draw_Scatterplot(bigdata);
+        
     });
 
 // Get a set of cluster centroids based on the given data
@@ -285,7 +288,7 @@ function Draw_Scatterplot(data){
                                 .on("mouseout", function(d) {
                                     console.log(d);
                                     d3.select(this)
-                                        .transition(50)
+                                        .transition(1)
                                         .attr("r", 3);
                                 });
         //Update
