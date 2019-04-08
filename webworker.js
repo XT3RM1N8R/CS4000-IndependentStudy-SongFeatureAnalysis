@@ -7,13 +7,13 @@ function startWorker(data){
         }
         w.onmessage = function (event){
             // This workaround is necessary to handle different functions with a Web Worker
-            if (event.data.command === "alert") {
+            if (event.data.status === "alert") {
                 alert(event.data.content);
-            } else if (event.data.command === "drawPoints") {
+            } else if (event.data.status === "TSNE_complete") {
                 // getcluster(event.data)
                 // console.log(event.data) //show raw-result of t-sne
                 draw_network(event.data.content); //plot the 2D datapoint.
-                d3.select("#textDiv").html(event.data.logMessage)
+                d3.select("#textDiv").html(event.data.logMessage);
             } else {
                 alert("Unknown postMessage \'command\' arguments sent by worker!")
             }

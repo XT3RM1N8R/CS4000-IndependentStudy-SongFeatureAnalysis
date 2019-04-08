@@ -21,10 +21,10 @@ onmessage = function(e){
 
 // Tell the worker container in the main thread to send an alert
 function alert(strMessage) {
-    postMessage({command:"alert", content:strMessage});
+    postMessage({status:"alert", content:strMessage});
 }
 
 // Tell the worker container in the main thread to draw the points within objectData
 function drawPoints(objectData, strMessage) {
-    postMessage({command:"drawPoints", content:objectData, logMessage:strMessage});
+    postMessage({status:"TSNE_complete", content:objectData, logMessage:strMessage});
 }
