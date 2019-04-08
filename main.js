@@ -164,7 +164,7 @@ function draw_network(tsne_data){
         const thresholded_links = links.filter(function (d) {
             return (d.value <= threshold);
         });
-        console.log(thresholded_links);
+        //console.log(thresholded_links);
 
         force
             .links(thresholded_links);
