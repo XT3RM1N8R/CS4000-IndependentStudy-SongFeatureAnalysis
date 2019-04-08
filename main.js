@@ -345,13 +345,14 @@ function _Draw_Scatterplot(data){
                                     }
                                 })
                                 .on("mouseover", function(d) {
-                                    console.log(d);
-                                    d3.select(this)
+                                    /*d3.select(this)   // Doesn't work
                                     .append("circle")
                                         .attr("cx", d => xScale(d.x))
                                         .attr("cy", d => yScale(d.y))
                                         .attr("r", radius * 2)
-                                        .style("fill", "black");
+                                        .style("fill", "black");*/
+                                    d3.select(this)     // Does work
+                                        .attr("r", radius * 2);
                                     d3.select(this)
                                     .append("text")
                                         .text(function(d) {
@@ -366,10 +367,11 @@ function _Draw_Scatterplot(data){
                                         .style("font-size", "500%"); // This didn't solve the visibility issue :(
                                 })
                                 .on("mouseout", function(d) {
-                                    console.log(d);
-                                    d3.select(this)
+                                    /*d3.select(this)   // Doesn't Work
                                     .select("circle")
-                                        .remove();
+                                        .remove();*/
+                                    d3.select(this)     // Does work
+                                        .attr("r", radius);
                                     d3.select(this)
                                     .select("text")
                                         .remove();
@@ -393,7 +395,7 @@ function _Draw_Scatterplot(data){
             
             
         });
-    }/*
+    }*/
 
 function getExtent(data, key) {
     return d3.extent(data.map(d => d[key]));
