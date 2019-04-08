@@ -5,6 +5,7 @@ const testSize = bigdata.length; // The size of our test data for development sp
 var audioData_min = [];
 var topGenresAll = [];
 var topGenres20 = [];
+var genreColorScale = d3.scale.category20();
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
@@ -50,7 +51,7 @@ function CountGenres(data) {    // ***We could optimize this function further, b
                 }
             }
             genre_queue.push(d.genre);              // Mark this genre as counted
-            count_genre.push({genres:d.genre, number:count})    // Add the count of this genre
+            count_genre.push({genre:d.genre, number:count})    // Add the count of this genre
         }
     });
 
@@ -312,6 +313,9 @@ function _Draw_Scatterplot(data){
     UpdateNodes(data);
     
     function UpdateNodes(data) {
+        const hoverDelay = 50;
+        const radius = 3;
+        
         const selection = scatterplot.selectAll(".compute").data(data);
         //Exit
         selection.exit().remove();
@@ -321,18 +325,43 @@ function _Draw_Scatterplot(data){
                                 .attr("class", "compute")
                                 .attr("cx", d => xScale(d.x))
                                 .attr("cy", d => yScale(d.y))
-                                .attr("r", 3)
+                                .attr("r", radius)
+                                .style("fill", function(d) {
+                                    if (topGenres20.some(element => element.genre === d.genre)) {
+                                        return genreColorScale(d.genre);
+                                    } else {
+                                        return "black";
+                                    }
+                                })
                                 .on("mouseover", function(d) {
                                     console.log(d);
                                     d3.select(this)
-                                        .transition(50)
-                                        .attr("r", 12);
+                                    .append("circle")
+                                        .attr("cx", d => xScale(d.x))
+                                        .attr("cy", d => yScale(d.y))
+                                        .attr("r", radius * 2)
+                                        .style("fill", "black");
+                                    d3.select(this)
+                                    .append("text")
+                                        .text(function(d) {
+                                            if (topGenres20.includes(d.genre)) {
+                                                return "Top Genre: " + d.genre;
+                                            } else {
+                                                return "Other Genre: " + d.genre;
+                                            }
+                                        })
+                                        .attr("x", d.x)
+                                        .attr("y", d.y)
+                                        .style("font-size", "500%"); // This didn't solve the visibility issue :(
                                 })
                                 .on("mouseout", function(d) {
                                     console.log(d);
                                     d3.select(this)
-                                        .transition(1)
-                                        .attr("r", 3);
+                                    .select("circle")
+                                        .remove();
+                                    d3.select(this)
+                                    .select("text")
+                                        .remove();
                                 });
         //Update
         selection
