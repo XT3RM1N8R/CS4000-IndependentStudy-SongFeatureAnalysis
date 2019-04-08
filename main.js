@@ -42,7 +42,7 @@ function getcluster(dataset){
     return centroids;
 }
 
-function draw_network(tsne_data){
+function Draw_Network(tsne_data){
     let totalscore = [];
     let links = [];
     let link2 = [];
@@ -52,7 +52,7 @@ function draw_network(tsne_data){
         for (j = i + 1; j < tsne_data.length; j++) {
 
             //Calculate distance based on Euclidean Distance
-            scorefinal.push(euclidean(tsne_data[i], tsne_data[j]));
+            scorefinal.push(Euclidean(tsne_data[i], tsne_data[j]));
             link1.push({"source": i, "target": j})
 
             //Calculate distance based on T-sne output and Euclidean Distance
@@ -79,41 +79,41 @@ function draw_network(tsne_data){
     
     const colors = colorbrewer.Spectral[9];
     const colorScale = d3.scale.quantize()
-        .domain([0, 1])
-        .range(colors);
+                         .domain([0, 1])
+                         .range(colors);
     
     const width = 1000,
           height = 1000;
     var force = d3.layout.force()
-        .charge(-20)
-        .linkDistance(30)
-        .size([width, height]);
+                    .charge(-20)
+                    .linkDistance(30)
+                    .size([width, height]);
     
     var svg = d3.select("#network")
-    .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+              .append("svg")
+                .attr("width", width)
+                .attr("height", height);
     
     var x = d3.scale.linear()
-        .domain([0, math.max(totalscore)])
-        .range([280, 450])
-        .clamp(true);
+                .domain([0, math.max(totalscore)])
+                .range([280, 450])
+                .clamp(true);
     
     var brush = d3.svg.brush()
         .y(x)
         .extent([0, 0]);
 
     var links_g = svg
-    .append("g")
-        .attr("id", "links");
+                  .append("g")
+                    .attr("id", "links");
     var nodes_g = svg
-    .append("g")
-        .attr("id", "nodes");
+                  .append("g")
+                    .attr("id", "nodes");
     
     var control2 = d3.select("#controller")
-    .append("svg")
-        .attr("width",650)
-        .attr("height",100);
+                   .append("svg")
+                     .attr("width",650)
+                     .attr("height",100);
     
     control2
     .append("g")
@@ -134,19 +134,19 @@ function draw_network(tsne_data){
         .attr("class", "halo");
     
     var slider = control2
-    .append("g")
-        .attr("class", "slider")
-        .attr("transform", "translate(0,0),rotate(270)")
-        .call(brush);
+                 .append("g")
+                    .attr("class", "slider")
+                    .attr("transform", "translate(0,0),rotate(270)")
+                    .call(brush);
 
     slider.selectAll(".extent,.resize")
         .remove();
 
     var handle = slider
-    .append("circle")
-        .attr("class", "handle")
-        .attr("transform", "translate(" + (-50) + ",0)")
-        .attr("r", 5);
+                 .append("circle")
+                    .attr("class", "handle")
+                    .attr("transform", "translate(" + (-50) + ",0)")
+                    .attr("r", 5);
     
     // Handle the link threshold slider
     function brushed() {
@@ -211,8 +211,8 @@ function draw_network(tsne_data){
         .call(brush.event);
 
     var node = nodes_g.selectAll(".node")
-        .data(nodes)
-        .enter()
+               .data(nodes)
+               .enter()
     .append("circle")
         .attr("class", "node")
         .attr("r", 3)
@@ -225,7 +225,7 @@ function draw_network(tsne_data){
 }
 
 // Calculate the Euclidean Distance between two arrays of the same length
-function euclidean(a,b){
+function Euclidean(a,b){
     let sum = 0;
     for (let n = 0; n < a.length; n++) {
         sum += Math.pow(a[n] - b[n], 2)
@@ -238,21 +238,44 @@ const width = 800, height = 800,
     contentWidth = width - margin.left - margin.right,
     contentHeight = height - margin.top - margin.bottom;
 
-const svg = d3.select("#theGraph").append("svg").attr("width", width).attr("height", height);
+const svg = d3.select("#theGraph")
+            .append("svg")
+                .attr("width", width)
+                .attr("height", height);
 
-const maing = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.right})`);
+const maing = svg
+              .append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.right})`);
 
-function draw_scatterplot(data){
-    const xScale = d3.scale.linear().domain(getExtent(data, 0)).range([0, contentWidth]);
-    const yScale = d3.scale.linear().domain(getExtent(data, 1)).range([0, contentHeight]);
-    const selection = maing.selectAll(".compute").data(data);
-    //Exit
-    selection.exit().remove();
-    //Enter
-    const newElements = selection.enter().append('circle').attr("class", "compute").attr("cx", d=>xScale(d[0])).attr("cy", d=>yScale(d[1])).attr("r", 3);
-    //Update
-    selection.attr("cx", d=>xScale(d[0])).attr("cy", d=>yScale(d[1])).attr("r", 2);
+// Draw a scatterplot from the given data
+function Draw_Scatterplot(data){
+    const xScale = d3.scale.linear()
+                            .domain(getExtent(data, 0))
+                            .range([0, contentWidth]);
+    const yScale = d3.scale.linear()
+                            .domain(getExtent(data, 1))
+                            .range([0, contentHeight]);
+    
+    UpdateNodes(data);
+    
+    function UpdateNodes(data) {
+        const selection = maing.selectAll(".compute").data(data);
+        //Exit
+        selection.exit().remove();
+        //Enter
+        const newElements = selection.enter()
+        .append('circle')
+            .attr("class", "compute")
+            .attr("cx", d=>xScale(d[0]))
+            .attr("cy", d=>yScale(d[1]))
+            .attr("r", 3);
+        //Update
+        selection
+            .attr("cx", d=>xScale(d[0]))
+            .attr("cy", d=>yScale(d[1])).attr("r", 2);
+    }
 }
+
 function getExtent(data, columnIndex) {
     return d3.extent(data.map(d=>d[columnIndex]));
 }
