@@ -3,6 +3,8 @@ var data_min = [];
 var audioData = [];
 const testSize = bigdata.length; // The size of our test data for development speed
 var audioData_min = [];
+var topGenresAll = [];
+var topGenres20 = [];
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
@@ -23,8 +25,40 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                      iterations: 500});*/
         alert("Data Size: " + bigdata.length);
         
+        topGenresAll = CountGenres(data_min);
+        topGenres20 = topGenresAll.slice(0,20);
         Draw_Scatterplot(bigdata);
     });
+
+// Count the genres and return a descending frequency-ordered list of top genres
+function CountGenres(data) {    // ***We could optimize this function further, but maybe later
+    var genres = [];            // ***I think it has O(N^2) time complexity or more     ~Darien
+    var count_genre = [];
+    var genre_queue = [];
+    //(data) get from d3.csv, push all genre to genres array
+    data.forEach(d => { // Build the list of genre occurrences
+        genres.push(d.genre);
+    });
+    
+    var count;
+    data.forEach((d) => {
+        count = 0;
+        if(!genre_queue.includes(d.genre)) {        // If this genre has not been counted
+            for (i = 0; i < genres.length; i++) {   // Count the occurrences of this genre
+                if (genres[i] === d.genre) {
+                    count++;
+                }
+            }
+            genre_queue.push(d.genre);              // Mark this genre as counted
+            count_genre.push({genres:d.genre, number:count})    // Add the count of this genre
+        }
+    });
+
+    //sort count_genre array
+    count_genre.sort( function ( a, b ) { return b.number - a.number; } );
+    
+    return count_genre;
+}
 
 // Get a set of cluster centroids based on the given data
 function getcluster(data){
@@ -285,8 +319,8 @@ function _Draw_Scatterplot(data){
         const newElements = selection.enter()
                             .append('circle')
                                 .attr("class", "compute")
-                                .attr("cx", d=>xScale(d.x))
-                                .attr("cy", d=>yScale(d.y))
+                                .attr("cx", d => xScale(d.x))
+                                .attr("cy", d => yScale(d.y))
                                 .attr("r", 3)
                                 .on("mouseover", function(d) {
                                     console.log(d);
@@ -302,12 +336,12 @@ function _Draw_Scatterplot(data){
                                 });
         //Update
         selection
-            .attr("cx", d=>xScale(d.x))
-            .attr("cy", d=>yScale(d.y)).attr("r", 3);
+            .attr("cx", d => xScale(d.x))
+            .attr("cy", d => yScale(d.y)).attr("r", 3);
     }
 }
 
 function getExtent(data, key) {
-    return d3.extent(data.map(d=>d[key]));
+    return d3.extent(data.map(d => d[key]));
 }
 
