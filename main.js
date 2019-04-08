@@ -233,8 +233,6 @@ function euclidean(a,b){
     return math.sqrt(sum)
 }
 
-
-/*
 const width = 800, height = 800,
     margin = {left: 20, top: 20, right: 20, bottom: 20},
     contentWidth = width - margin.left - margin.right,
@@ -258,5 +256,4 @@ function draw_scatterplot(data){
 function getExtent(data, columnIndex) {
     return d3.extent(data.map(d=>d[columnIndex]));
 }
-*/
 
