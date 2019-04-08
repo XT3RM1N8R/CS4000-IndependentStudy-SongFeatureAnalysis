@@ -10,7 +10,7 @@ var width = 900, height = 600,
 const parseTime = d3.timeParse("%m/%d/%Y %H:%M");
 const formatYear = d3.timeFormat("%Y");
 
-var svg = d3.select("#chart-area").append("svg").attr("width",width).attr("height",height),
+var svg = d3.select("#chart-area").append("svg").attr("width",width+60).attr("height",height),
     g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")"),
     titleGroup = svg.append("g").attr("transform","translate("+(contentHeight/2+15)+","+(margin.top-15)+")");
 
@@ -82,6 +82,8 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
 
     graphByYear(data,sliderTime.value());
+
+    document.getElementById("container").style.display = "none";
 
 });
 
@@ -257,7 +259,9 @@ function drawGraph(songs,year,selectedGenres) {
                 .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
 
             //Show song info to the graph
-            xAxisGroup.append("text").attr("class","title").style("text-anchor","middle")
+            xAxisGroup.append("text").attr("class","title")
+                .style("text-anchor","middle")
+                .style("font","10px times")
                 .attr("y",0)
                 .text(feature=>{
                     if(feature != "genre")
@@ -288,13 +292,13 @@ function drawGraph(songs,year,selectedGenres) {
 
     // Add an axis and title.
     xAxisGroup.append("g")
-        .attr("class", "axis")
+        .attr("class", "axises")
         .each(function (d) {
             // Call y-axises
             if(d!="genre")
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
             else
-                d3.select(this).attr("stroke","red").call(d3.axisLeft(yScale[d]));
+                d3.select(this).call(d3.axisRight(yScale[d]));
         })
         .append("text")
         .style("text-anchor", "middle")

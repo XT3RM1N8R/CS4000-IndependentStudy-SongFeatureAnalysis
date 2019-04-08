@@ -18,14 +18,14 @@ svg {
     shape-rendering: crispEdges;
 }
 
-.axis line,
-.axis path {
+.axises line,
+.axises path {
     fill: none;
-    stroke: #000;
+    /*stroke: #000;*/
     shape-rendering: crispEdges;
 }
 
-.axis text {
+.axises text {
     font-size: 10px;
     stroke: black;
     font-weight: lighter;
