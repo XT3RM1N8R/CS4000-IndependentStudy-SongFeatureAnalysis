@@ -80,11 +80,11 @@ function draw_network(tsne_data){
         d.y = tsne_data[i][1];
     });
     
-    // Initialize the Network Diagram with node data, links between nodes, and then render it
+    // Initialize the Network Diagram
     var network = new d3plus.Network()
-    .links(links)
-    .nodes(nodes)
-    .render();
+        .links(links)       // Give set of links between nodes
+        .nodes(nodes)       // Give set of nodes with their position and other data
+        .render();          // Render the Network Diagram
     
     /*var width = 1000,
         height = 1000;
