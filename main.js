@@ -70,7 +70,7 @@ function draw_network(tsne_data){
     });
 
     var nodes=data.slice(0,testSize);
-    console.log(nodes);
+    //console.log(nodes);
     
     const dataset = totalscore;
     var scale = d3.scale.linear()
