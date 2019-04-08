@@ -51,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parallel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="256" column="87" lean-forward="true" selection-start-line="256" selection-start-column="87" selection-end-line="256" selection-end-column="87" />
+            <state relative-caret-position="319">
+              <caret line="250" column="27" selection-start-line="250" selection-start-column="27" selection-end-line="250" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -60,7 +60,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
+            <state relative-caret-position="175">
               <caret line="22" column="64" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="64" />
             </state>
           </provider>
@@ -218,12 +218,12 @@
       <workItem from="1554177924462" duration="17410000" />
       <workItem from="1554330049661" duration="13996000" />
       <workItem from="1554416165213" duration="1910000" />
-      <workItem from="1554615431204" duration="15317000" />
+      <workItem from="1554615431204" duration="16437000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109474000" />
+    <option name="totallyTimeSpent" value="110594000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="115" y="63" width="1234" height="827" extended-state="0" />
@@ -305,13 +305,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="22" column="64" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../US-Immigration-Data-Visualization/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
@@ -326,10 +319,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="22" column="64" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parallel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="256" column="87" lean-forward="true" selection-start-line="256" selection-start-column="87" selection-end-line="256" selection-end-column="87" />
+        <state relative-caret-position="319">
+          <caret line="250" column="27" selection-start-line="250" selection-start-column="27" selection-end-line="250" selection-end-column="27" />
         </state>
       </provider>
     </entry>
