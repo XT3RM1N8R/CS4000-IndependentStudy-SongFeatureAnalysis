@@ -16,7 +16,8 @@ var svg = d3.select("#chart-area").append("svg").attr("width",width).attr("heigh
 
 // x, y, and color Scale
 var xScale = d3.scalePoint().range([0,contentWidth]),
-    yScale = {};
+    yScale = {},
+    color = d3.scaleOrdinal().range(d3.schemeCategory20);
 
 // axises definition
 var xAxis = d3.axisBottom(xScale),
@@ -247,12 +248,19 @@ function drawGraph(songs,year,selectedGenres) {
         .append("path")
         .attr("id",d=>{return "path"+ d.track_id;})
         .attr("d", path)
+        .attr("stroke",d=>{return color(d.genre);})
         .on("mouseover",d=>{
-            d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
+            d3.select("#path"+ d.track_id).style("opacity", maxForegroundOpacity);
             titleGroup.append("text")
                 .style("font-weight","bold")
                 .attr("class","title")
-                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")")
+                // .append("rect")
+                // .attr("x",0)
+                // .attr("y",0)
+                // .attr("height",10)
+                // .attr("width",10)
+                // .attr("fill",color(d.genre));
 
             //Show song info to the graph
             xAxisGroup.append("text").attr("class","title").style("text-anchor","middle")

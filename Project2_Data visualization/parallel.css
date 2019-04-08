@@ -10,7 +10,6 @@ svg {
 
 .foreground path {
     fill: none;
-    stroke: dodgerblue;
 }
 
 .brush .extent {
