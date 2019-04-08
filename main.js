@@ -1,7 +1,7 @@
 var dataset = [];
 var data_min = [];
 var audioData = [];
-const testSize = 500; // The size of our test data for development speed
+const testSize = bigdata.length; // The size of our test data for development speed
 var audioData_min = [];
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
@@ -22,8 +22,8 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});*/
         alert("Data Size: " + bigdata.length);
-        Draw_Scatterplot(bigdata);
         
+        Draw_Scatterplot(bigdata);
     });
 
 // Get a set of cluster centroids based on the given data
@@ -252,19 +252,28 @@ const scatterplot = svg
                       .attr("transform", `translate(${margin.left}, ${margin.right})`)
                       .attr("id", "snodes");
 
+// Update the data with the given t-SNE result
+function UpdateDataTSNE(data) {
+    data.forEach(function(d, i) {
+        data_min[i].x = d[0];  // Add the t-SNE x result to the dataset
+        data_min[i].y = d[1];  // Add the t-SNE y result to the dataset
+    });
+}
+
+// Draw a scatterplot from the given t-SNE data
+function Draw_Scatterplot(tsne_data) {
+    UpdateDataTSNE(tsne_data);      // Update our data with the given t-SNE data
+    _Draw_Scatterplot(data_min);    // Draw the scatterplot with the updated data
+}
+
 // Draw a scatterplot from the given data
-function Draw_Scatterplot(data){
+function _Draw_Scatterplot(data){
     const xScale = d3.scale.linear()
-                            .domain(getExtent(data, 0))
+                            .domain(getExtent(data, "x"))
                             .range([0, contentWidth]);
     const yScale = d3.scale.linear()
-                            .domain(getExtent(data, 1))
+                            .domain(getExtent(data, "y"))
                             .range([0, contentHeight]);
-    
-    data_min.forEach(function(d, i) {
-        d.x = data[i][0];  // Add the t-SNE x result to the dataset
-        d.y = data[i][1];  // Add the t-SNE y result to the dataset
-    });
     
     UpdateNodes(data);
     
@@ -276,8 +285,8 @@ function Draw_Scatterplot(data){
         const newElements = selection.enter()
                             .append('circle')
                                 .attr("class", "compute")
-                                .attr("cx", d=>xScale(d[0]))
-                                .attr("cy", d=>yScale(d[1]))
+                                .attr("cx", d=>xScale(d.x))
+                                .attr("cy", d=>yScale(d.y))
                                 .attr("r", 3)
                                 .on("mouseover", function(d) {
                                     console.log(d);
@@ -293,12 +302,12 @@ function Draw_Scatterplot(data){
                                 });
         //Update
         selection
-            .attr("cx", d=>xScale(d[0]))
-            .attr("cy", d=>yScale(d[1])).attr("r", 3);
+            .attr("cx", d=>xScale(d.x))
+            .attr("cy", d=>yScale(d.y)).attr("r", 3);
     }
 }
 
-function getExtent(data, columnIndex) {
-    return d3.extent(data.map(d=>d[columnIndex]));
+function getExtent(data, key) {
+    return d3.extent(data.map(d=>d[key]));
 }
 
