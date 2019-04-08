@@ -12,9 +12,9 @@ const formatYear = d3.timeFormat("%Y");
 
 var svg = d3.select("#chart-area").append("svg").attr("width",width).attr("height",height),
     g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")"),
-    titleGroup = svg.append("g").attr("transform","translate("+(margin.left+20)+","+(margin.top-10)+")");
+    titleGroup = svg.append("g").attr("transform","translate("+(contentHeight/2+15)+","+(margin.top-15)+")");
 
-// x and y Scale
+// x, y, and color Scale
 var xScale = d3.scalePoint().range([0,contentWidth]),
     yScale = {};
 
@@ -77,8 +77,15 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     });
     // console.log(genresByYear["2008"]);
     // console.log(genresCount);
+    drawSlider();
 
-    var timeRange = d3.extent(songs,d=>{return d.tracks_track_date_created});
+
+    graphByYear(data,sliderTime.value());
+
+});
+
+function drawSlider() {
+    var timeRange = d3.extent(data,d=>{return d.tracks_track_date_created});
     var dataTime = d3.range(Number(timeRange[0]),Number(timeRange[1])+1).map(d=>{
         // console.log(d);
         return d;
@@ -92,15 +99,16 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
         .width(300)
         .tickFormat(d3.format(".0f"))
         .tickValues(dataTime)
-        .default(dataTime[0])
+        .default(dataTime[4])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
-            graphByYear(songs,sliderTime.value());
+            graphByYear(data,sliderTime.value());
         });
 
     var gTime = d3
-        .select('div#slider-time')
+        .select('#slider-time')
         .append('svg')
+        .attr("id","slider")
         .attr('width', 500)
         .attr('height', 100)
         .append('g')
@@ -109,10 +117,16 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     gTime.call(sliderTime);
 
     d3.select('p#value-time').text((sliderTime.value()));
+}
 
+function resetAll() {
+    d3.select("svg#slider").remove();
+    drawSlider();
     graphByYear(data,sliderTime.value());
-
-});
+    addCheckBoxes(genres);
+    document.getElementById("slider").style.display = "block";
+    document.getElementById("container").style.display = "none";
+}
 
 function chooseOption() {
     var yearChart = document.getElementById("slider"),
@@ -135,7 +149,6 @@ function chooseOption() {
         genreChart.style.display = "block";
 
     }
-
 }
 
 function graphByGenre() {
@@ -170,7 +183,6 @@ function addCheckBoxes(array) {
             checkbox.value = d;
             checkbox.id = d;
             checkbox.onclick = graphByGenre;
-            if(i==0) checkbox.checked = true;
 
             var label = document.createElement('label')
             label.htmlFor = d;
@@ -180,6 +192,11 @@ function addCheckBoxes(array) {
             container.appendChild(label);
             container.appendChild(document.createElement("br"));
         }
+
+        // Set default check box
+        var checkbox = document.getElementById(d);
+        if(i==0) checkbox.checked = true;
+        else checkbox.checked = false;
     })
 }
 
@@ -233,8 +250,17 @@ function drawGraph(songs,year,selectedGenres) {
         .on("mouseover",d=>{
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
             titleGroup.append("text")
+                .style("font-weight","bold")
                 .attr("class","title")
                 .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+
+            //Show song info to the graph
+            xAxisGroup.append("text").attr("class","title").style("text-anchor","middle")
+                .attr("y",0)
+                .text(feature=>{
+                    if(feature != "genre")
+                        return d[feature];
+                });
         })
         .on("mouseout",d=>{
             // console.log("mouse out");
@@ -363,3 +389,4 @@ function brush() {
     // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
 
 }
+
