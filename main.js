@@ -13,7 +13,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
     .get(function(error, rows) {
         console.log("About to print dataset");
         //console.log(database) //we can get the data in csv file really quick
-        data_min=database.slice(0,1000) // Test with 1000 data point first.
+        data_min=database.slice(0,100) // Test with 1000 data point first.
         startWorker({dataset:data_min,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
@@ -70,9 +70,20 @@ function draw_network(tsne_data){
         d.i = i;
     });
 
-    var nodes=data.slice(0,1000);
-    console.log(nodes)
-    var width = 1000,
+    var nodes=data.slice(0,100);
+    console.log(nodes);
+    
+    nodes.forEach(function(d, i) {
+        d.x = tsne_data[i][0];
+        d.y = tsne_data[i][1];
+    });
+    
+    var network = new d3plus.Network()
+    .links(links)
+    .nodes(nodes)
+    .render();
+    
+    /*var width = 1000,
         height = 1000;
     var colors = colorbrewer.Spectral[9];
     var dataset=totalscore;
@@ -83,7 +94,7 @@ function draw_network(tsne_data){
     var force = d3.layout.force()
         .charge(-20)
         .linkDistance(30)
-        .size([width, height]);
+        .size([width, height]);*/
     var x = d3.scale.linear()
         .domain([0, math.max(totalscore)])
         .range([280, 450])
@@ -94,12 +105,12 @@ function draw_network(tsne_data){
     var control2 = d3.select("#controller").append("svg")
         .attr("width",650)
         .attr("height",100);
-    var svg = d3.select("#network").append("svg")
+    /*var svg = d3.select("#network").append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height);*/
 
-    var links_g = svg.append("g");
-    var nodes_g = svg.append("g");
+    /*var links_g = svg.append("g");
+    var nodes_g = svg.append("g");*/
 
     control2.append("g")
         .attr("transform", "translate(0,50) rotate(270)")
@@ -144,8 +155,8 @@ function draw_network(tsne_data){
         });
         console.log(thresholded_links)
 
-
-        force
+        network.links(thresholded_links).render();
+        /*force
             .links(thresholded_links);
 
         var active_value;
@@ -182,11 +193,11 @@ function draw_network(tsne_data){
                 .attr("cy", function(d) { return d.y; });
         });
 
-        force.start();
+        force.start();*/
     }
 
-    force
-        .nodes(nodes);
+    /*force
+        .nodes(nodes);*/
 
 
     brush.on("brush", brushed);
@@ -195,7 +206,7 @@ function draw_network(tsne_data){
         .call(brush.event);
 
 
-    var node = nodes_g.selectAll(".node")
+    /*var node = nodes_g.selectAll(".node")
         .data(nodes)
         .enter().append("circle")
         .attr("class", "node")
@@ -203,8 +214,7 @@ function draw_network(tsne_data){
         .style("fill", "steelblue")
         .call(force.drag);
     node.append("title")
-        .text(function(d) { return d.genre; });
-
+        .text(function(d) { return d.genre; });*/
 }
 
 function euclidean(a,b){

@@ -1,4 +1,4 @@
-track_id,acousticness,danceability,energy,instrumentalness,liveness,speechiness,tempo,valence,duration,tracks_album_title,tracks_artist_name,genre,tracks_track_date_created,title
+id,acousticness,danceability,energy,instrumentalness,liveness,speechiness,tempo,valence,duration,tracks_album_title,tracks_artist_name,genre,tracks_track_date_created,title
 2,0.416675233,0.675893985,0.634476268,0.010628068,0.177646571,0.159310065,165.922,0.576660988,168,AWOL - A Way Of Life,AWOL,Hip-Hop,11/26/2008 1:48,Food
 3,0.374407769,0.528643062,0.817461132,0.001851103,0.105879944,0.461818128,126.957,0.269240242,237,AWOL - A Way Of Life,AWOL,Hip-Hop,11/26/2008 1:48,Electric Ave
 5,0.043566899,0.74556587,0.701469992,0.000696799,0.373143312,0.124595342,100.26,0.621661224,206,AWOL - A Way Of Life,AWOL,Hip-Hop,11/26/2008 1:48,This World
