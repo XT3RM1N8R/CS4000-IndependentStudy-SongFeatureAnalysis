@@ -76,14 +76,17 @@ function draw_network(tsne_data){
     console.log(nodes);
     
     nodes.forEach(function(d, i) {
-        d.x = tsne_data[i][0];
-        d.y = tsne_data[i][1];
+        d.x = tsne_data[i][0];  // Add the t-SNE x result to the dataset
+        d.y = tsne_data[i][1];  // Add the t-SNE y result to the dataset
+        d.size = 10; // Test size  // Add a desired size for the node(s)
     });
     
     // Initialize the Network Diagram
     var network = new d3plus.Network()
         .links(links)       // Give set of links between nodes
         .nodes(nodes)       // Give set of nodes with their position and other data
+        .size("size")       // Specify the key accessor for size values
+        .sizeMax(10)        // Set the max size (everything seems to scale off this instead of setting a max)
         .render();          // Render the Network Diagram
     
     /*var width = 1000,
@@ -143,6 +146,7 @@ function draw_network(tsne_data){
         .attr("class", "handle")
         .attr("transform", "translate(" + (-50) + ",0)")
         .attr("r", 5);
+    
     function brushed() {
         var value = brush.extent()[0];
         if (d3.event.sourceEvent) {
