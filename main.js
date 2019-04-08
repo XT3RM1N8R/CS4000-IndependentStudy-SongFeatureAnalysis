@@ -243,8 +243,8 @@ const svg = d3.select("#theGraph").append("svg").attr("width", width).attr("heig
 const maing = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.right})`);
 
 function draw_scatterplot(data){
-    const xScale = d3.scaleLinear().domain(getExtent(data, 0)).range([0, contentWidth]);
-    const yScale = d3.scaleLinear().domain(getExtent(data, 1)).range([0, contentHeight]);
+    const xScale = d3.scale.linear().domain(getExtent(data, 0)).range([0, contentWidth]);
+    const yScale = d3.scale.linear().domain(getExtent(data, 1)).range([0, contentHeight]);
     const selection = maing.selectAll(".compute").data(data);
     //Exit
     selection.exit().remove();
