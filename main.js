@@ -1,11 +1,13 @@
-database=[];
-data=[];
-const testSize = 2000; // The size of our test data for development speed
+var data = [];
+var data_min = [];
+var audioData = [];
+const testSize = 500; // The size of our test data for development speed
+var audioData_min = [];
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
         data.push(d);
-        return database.push([
+        return audioData.push([
             +d.acousticness,
             +d.danceability,
             +d.energy,
@@ -13,8 +15,9 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
             +d.liveness,
             +d.speechiness, +d.tempo, +d.valence]); })
     .get(function(error, rows) {
-        const data_min = database.slice(0,testSize); // Limit the test data for quick debugging
-        startWorker({dataset:data_min,
+        audioData_min = audioData.slice(0,testSize); // Limit the test data for quick debugging
+        data_min = data.slice(0,testSize);
+        startWorker({dataset:audioData_min,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});
@@ -70,9 +73,6 @@ function Draw_Network(tsne_data){
         d.value = data1[i];
         d.i = i;
     });
-
-    var nodes=data.slice(0,testSize);
-    //console.log(nodes);
     
     const dataset = totalscore;
     var scale = d3.scale.linear()
@@ -205,7 +205,7 @@ function Draw_Network(tsne_data){
     }
 
     force
-        .nodes(nodes);
+        .nodes(data_min);
 
     brush.on("brush", brushed);
     slider
@@ -213,7 +213,7 @@ function Draw_Network(tsne_data){
         .call(brush.event);
 
     var node = nodes_g.selectAll(".node")
-               .data(nodes)
+               .data(data_min)
                .enter()
     .append("circle")
         .attr("class", "node")
@@ -245,9 +245,10 @@ const svg = d3.select("#theGraph")
                 .attr("width", width)
                 .attr("height", height);
 
-const maing = svg
-              .append("g")
-                .attr("transform", `translate(${margin.left}, ${margin.right})`);
+const scatterplot = svg
+                    .append("g")
+                      .attr("transform", `translate(${margin.left}, ${margin.right})`)
+                      .attr("id", "snodes");
 
 // Draw a scatterplot from the given data
 function Draw_Scatterplot(data){
@@ -261,7 +262,7 @@ function Draw_Scatterplot(data){
     UpdateNodes(data);
     
     function UpdateNodes(data) {
-        const selection = maing.selectAll(".compute").data(data);
+        const selection = scatterplot.selectAll(".compute").data(data);
         //Exit
         selection.exit().remove();
         //Enter
