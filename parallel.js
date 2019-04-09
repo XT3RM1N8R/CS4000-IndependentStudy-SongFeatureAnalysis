@@ -44,7 +44,6 @@ var genresByYear = {};
 let data = [];
 d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // console.log('222222222');
-    data = songs;
     // get features that used for mutlti-dimension coordinates
     features = songs.columns.slice(1, 13);
     features.splice(8,3);
@@ -55,6 +54,10 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // Time
     songs.forEach(d=>{
         var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
+        features.forEach(feature=>{
+            if (feature != "genre")
+                d[feature] = +d[feature];
+        });
         var gen = d["genre"];
         // Create new element in genres count if the element is in first appears.
         if(!genres.includes(gen)) {
@@ -76,6 +79,8 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
                 genresByYear[year].push(d.genre);
         }
     });
+
+    data = songs;
     // console.log(genresByYear["2008"]);
     // console.log(genresCount);
     drawSlider();
@@ -231,13 +236,15 @@ function drawGraph(songs,year,selectedGenres) {
             else
                 yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(genresByYear[year]);
         }
-        else {
+        else if(d=="tempo"){
             yScale[d] = d3.scaleLinear().range([contentHeight, 0])
                 .domain(d3.extent(songs, function (fea) {
-                    return Number(fea[d]);
+                    return fea[d];
                 }))
             // console.log(temp);
         }
+        else
+            yScale[d] = d3.scaleLinear().range([contentHeight, 0]).domain([0,1]);
     });
     
     // Add blue foreground lines for focus.
