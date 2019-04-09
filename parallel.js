@@ -260,16 +260,26 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("stroke",d=>{return color(d.genre);})
         .on("mouseover",d=>{
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
+
+            // Show title - genre (Year)
             titleGroup.append("text")
                 .style("font-weight","bold")
+                .attr("y", -5)
                 .attr("class","title")
                 .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+
+            titleGroup.append("rect")
+                .attr("class","title")
+                .attr("x",-17)
+                .attr("y",-15)
+                .attr("width",10).attr("height",10)
+                .style("fill",function (){return color(d.genre)});
 
             //Show song info to the graph
             xAxisGroup.append("text").attr("class","title")
                 .style("text-anchor","middle")
                 .style("font","10px times")
-                .attr("y",0)
+                .attr("y",-5)
                 .text(feature=>{
                     if(feature != "genre")
                         return d[feature];
@@ -309,7 +319,7 @@ function drawGraph(songs,year,selectedGenres) {
         })
         .append("text")
         .style("text-anchor", "middle")
-        .attr("y", contentHeight + 10)
+        .attr("y", contentHeight + 15)
         .text(function (d) {
             return d;
         });
