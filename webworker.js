@@ -15,7 +15,7 @@ function startWorker(data){
             } else if (event.data.status === "TSNE_Completed") {
                 // getcluster(event.data)
                 // console.log(event.data) //show raw-result of t-sne
-                Draw_Network(event.data.content); //plot the 2D datapoint.
+                Draw_Scatterplot(event.data.content); //plot the 2D datapoint.
                 d3.select("#textDiv").html(event.data.logMessage);
             } else {
                 alert("Unknown postMessage \'command\' arguments sent by worker!")
