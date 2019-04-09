@@ -5,7 +5,6 @@ const testSize = bigdata.length; // The size of our test data for development sp
 var audioData_min = [];
 var topGenresAll = [];
 var topGenres20 = [];
-var genreColorScale = d3.scale.category20();
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
@@ -102,15 +101,15 @@ function UpdateDataTSNE(data) {
 
 // Draw a scatterplot from the given data
 function _Draw_Scatterplot(data){
-    const xScale = d3.scale.linear()
+    const xScale = d3.scaleLinear()
                             .domain(getExtent(data, "x"))
                             .range([0, contentWidth]);
-    const yScale = d3.scale.linear()
+    const yScale = d3.scaleLinear()
                             .domain(getExtent(data, "y"))
                             .range([0, contentHeight]);
     
     UpdateNodes(data);
-    //DrawLegend(genreColorScale, topGenres20);
+    //DrawLegend(color, topGenres20);
     
     function UpdateNodes(data) {
         const hoverDelay = 50;
@@ -130,7 +129,7 @@ function _Draw_Scatterplot(data){
                                 .style("opacity", opacity)
                                 .style("fill", function(d) {
                                     if (topGenres20.some(element => element.genre === d.genre)) {
-                                        return genreColorScale(d.genre);
+                                        return color(d.genre);
                                     } else {
                                         return "black";
                                     }
@@ -183,7 +182,7 @@ function _Draw_Scatterplot(data){
                 .attr("y", i*5)
                 .attr("width", 10)
                 .attr("height", 10)
-                .style("fill", d => genreColorScale(d.genre))
+                .style("fill", d => colorScale(d.genre))
             
             
         });

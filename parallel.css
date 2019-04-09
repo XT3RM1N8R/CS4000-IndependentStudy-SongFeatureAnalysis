@@ -1,0 +1,36 @@
+svg {
+    font: 10px sans-serif;
+}
+
+.background path {
+    fill: none;
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+}
+
+.foreground path {
+    fill: none;
+}
+
+.brush .extent {
+    fill-opacity: .3;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.axises line,
+.axises path {
+    fill: none;
+    /*stroke: #000;*/
+    shape-rendering: crispEdges;
+}
+
+.axises text {
+    font-size: 10px;
+    stroke: black;
+    font-weight: lighter;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+    cursor: move;
+}
+
+/*Slider style*/
