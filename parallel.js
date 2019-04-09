@@ -1,21 +1,21 @@
 // console.log('1111111111');
 
 // Info to show visualization
-var width = 900, height = 600,
-    margin = {top: 30, right: 20, bottom: 30, left: 30},
-    contentWidth = width - margin.left - margin.right,
-    contentHeight = height - margin.top - margin.bottom;
+var parallelWidth = 900, parallelHeight = 600,
+    parallelMargin = {top: 30, right: 20, bottom: 30, left: 30},
+    parallelContentWidth = parallelWidth - parallelMargin.left - parallelMargin.right,
+    parallelContentHeight = parallelHeight - parallelMargin.top - parallelMargin.bottom;
 
 //Time Format and Parsing
 const parseTime = d3.timeParse("%m/%d/%Y %H:%M");
 const formatYear = d3.timeFormat("%Y");
 
-var svg = d3.select("#chart-area").append("svg").attr("width",width+60).attr("height",height),
-    g = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")"),
-    titleGroup = svg.append("g").attr("transform","translate("+(contentHeight/2+15)+","+(margin.top-15)+")");
+var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+60).attr("height",parallelHeight),
+    g = parallelSvg.append("g").attr("transform","translate("+parallelMargin.left+","+parallelMargin.top+")"),
+    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight/2+15)+","+(parallelMargin.top-15)+")");
 
 // x, y, and color Scale
-var xScale = d3.scalePoint().range([0,contentWidth]),
+var xScale = d3.scalePoint().range([0,parallelContentWidth]),
     yScale = {},
     color = d3.scaleOrdinal().range(d3.schemeCategory20);
 
@@ -232,19 +232,19 @@ function drawGraph(songs,year,selectedGenres) {
         // Add Scale for each axis
         if (d=="genre") {
             if(year == 0)
-                yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(selectedGenres);
+                yScale[d] = d3.scalePoint().range([parallelContentHeight,0]).domain(selectedGenres);
             else
-                yScale[d] = d3.scalePoint().range([contentHeight,0]).domain(genresByYear[year]);
+                yScale[d] = d3.scalePoint().range([parallelContentHeight,0]).domain(genresByYear[year]);
         }
         else if(d=="tempo"){
-            yScale[d] = d3.scaleLinear().range([contentHeight, 0])
+            yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0])
                 .domain(d3.extent(songs, function (fea) {
                     return fea[d];
                 }))
             // console.log(temp);
         }
         else
-            yScale[d] = d3.scaleLinear().range([contentHeight, 0]).domain([0,1]);
+            yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0]).domain([0,1]);
     });
     
     // Add blue foreground lines for focus.
@@ -319,7 +319,7 @@ function drawGraph(songs,year,selectedGenres) {
         })
         .append("text")
         .style("text-anchor", "middle")
-        .attr("y", contentHeight + 15)
+        .attr("y", parallelContentHeight + 15)
         .text(function (d) {
             return d;
         });
@@ -329,7 +329,7 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("class", "brush")
         .each(function (d) {
             d3.select(this).call(yScale[d].brush = d3.brushY()
-                .extent([[-10, 0], [10, contentHeight]])
+                .extent([[-10, 0], [10, parallelContentHeight]])
                 .on("brush", brush)
                 .on("end", brush)
             );
@@ -351,7 +351,7 @@ function dragstarted(d) {
 }
 
 function dragged(d) {
-    dragging[d] = Math.min(width, Math.max(0, d3.event.x));
+    dragging[d] = Math.min(parallelWidth, Math.max(0, d3.event.x));
     foreground.attr("d", path);
 
     features.sort(function(a, b) { return position(a) - position(b); });
@@ -379,7 +379,7 @@ function dragended(d) {
 function brush() {
 
     var actives = [];
-    svg.selectAll(".brush")
+    parallelSvg.selectAll(".brush")
         .filter(function(d) {
             // console.log(d3.brushSelection(this));
             yScale[d].brushSelectionValue = d3.brushSelection(this);
