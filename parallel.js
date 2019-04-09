@@ -88,7 +88,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
     graphByYear(data,sliderTime.value());
 
-    document.getElementById("container").style.display = "none";
+    document.getElementById("genreContainer").style.display = "none";
 
 });
 
@@ -133,12 +133,12 @@ function resetAll() {
     graphByYear(data,sliderTime.value());
     addCheckBoxes(genres);
     document.getElementById("slider").style.display = "block";
-    document.getElementById("container").style.display = "none";
+    document.getElementById("genreContainer").style.display = "none";
 }
 
 function chooseOption() {
     var yearChart = document.getElementById("slider"),
-        genreChart = document.getElementById("container"),
+        genreChart = document.getElementById("genreContainer"),
         yearChoice = document.getElementById("year"),
         genreChoice = document.getElementById("genre")
 
@@ -181,7 +181,7 @@ function graphByGenre() {
 }
 function addCheckBoxes(array) {
     // console.log(array);
-    var container = document.getElementById("container");
+    var genreContainer = document.getElementById("genreContainer");
     array.forEach((d,i)=>{
         //Add if checkbox not show
         if(document.getElementById(d)==null) {
@@ -196,9 +196,9 @@ function addCheckBoxes(array) {
             label.htmlFor = d;
             label.appendChild(document.createTextNode(d));
 
-            container.appendChild(checkbox);
-            container.appendChild(label);
-            container.appendChild(document.createElement("br"));
+            genreContainer.appendChild(checkbox);
+            genreContainer.appendChild(label);
+            genreContainer.appendChild(document.createElement("br"));
         }
 
         // Set default check box

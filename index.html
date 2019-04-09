@@ -3,10 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Project 2 - Visualization</title>
-
     <link rel="stylesheet" type="text/css" href="parallel.css">
-
+    <script src="./js/d3.v3.min.js"></script>
+    <script src="./js/colorbrewer.v1.min.js"></script>
+    <script src="./js/clusters.js"></script>
+    <script src="./js/math.min.js"></script>
+    <script src="./js/tsne.js"></script>
+    <script src="./Dataset/tsne_data.js"></script>
 </head>
+<style>
+    .chart {
+
+    }
+
+    .main text {
+        font: 10px sans-serif;
+    }
+
+    .axis line, .axis path {
+        shape-rendering: crispEdges;
+        stroke: black;
+        fill: none;
+    }
+
+    circle {
+        fill: black;
+    }
+    .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+
+    /*.link {*/
+    /*stroke: #000000;*/
+    /*stroke-opacity: .6;*/
+    /*}*/
+
+    .axis {
+        opacity: 0.5;
+        font: 10px sans-serif;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+    .link {
+        fill: #dddddd;
+        stroke-width: 1px;
+    }
+
+    .axis .domain {
+        fill: none;
+        stroke: #000;
+        stroke-opacity: .3;
+        stroke-width: 4px;
+        stroke-linecap: round;
+    }
+
+    .axis .halo {
+        fill: none;
+        stroke: #ddd;
+        stroke-width: 3px;
+        stroke-linecap: round;
+    }
+
+    .slider .handle {
+        fill: #fff;
+        stroke: #000;
+        stroke-opacity: .5;
+        stroke-width: 1.25px;
+        cursor: grab;
+    }
+
+</style>
 <body>
     <div class="well well-sm" >
         <div class="text-center">
@@ -30,7 +98,7 @@
             <div class="col-sm-2"><p id="value-time"></p></div>
             <div class="col-sm-1"><div id="slider-time"></div></div>
         </div>
-        <div id="container"style="overflow-y:scroll; height:100px;"></div>
+        <div id="genreContainer"style="overflow-y:scroll; height:100px;"></div>
 
 
         <!--<div id="slider-div">-->
@@ -44,9 +112,15 @@
         <div id="chart-area" ></div>
     </div>
 </div>
-<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://unpkg.com/d3-simple-slider"></script>
 <script src="parallel.js"></script>
-
+<div id="controller">
+</div>
+<div id="network">
+</div>
+<div id="textDiv"></div>
+<div id="theGraph"></div>
+<!--<script src="webworker.js"></script>-->
+<script src="main.js"></script>
 </body>
 </html>
