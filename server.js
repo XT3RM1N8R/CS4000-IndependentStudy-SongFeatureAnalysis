@@ -50,7 +50,25 @@ csv()
 
 // Execute dimensionality reduction
         let Y = dimensionReduce(data) // Y is an array of 2-dimensional vectors that you can visualize.
-        console.log (Y)
+        console.log (Y.data);
+
+
+        // Save to result of tsne to output
+        // var normalArr = [].slice.call(Y.data);
+        // var x = [],y = [];
+        // normalArr.forEach((d,i)=>{
+        //     if(i%2==0)
+        //         x.push(d);
+        //     else
+        //         y.push(d);
+        // });
+        // // console.log(normalArr);
+        // // Write to output file
+        // var fs = require("fs")
+        // fs.writeFile("output.txt","X: "+ x + "\nY: " + y, function (err,d) {
+        //     if(err) console.log(err);
+        //     console.log("successful");
+        // });
 
     })
 
