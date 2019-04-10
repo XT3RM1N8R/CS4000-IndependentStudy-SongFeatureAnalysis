@@ -30,6 +30,10 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         dataset = songData.slice(0, testSize);
         dataset.columns = songData.columns;
 
+        //get audiodata for k-mean cluster, assign the genre for each datapoint
+        audioData.forEach((d,i)=>{d.genre=dataset[i].genre})
+
+
         // get features that used for mutlti-dimension coordinates
         features = songData.columns.slice(1, 10);
         xScale.domain(features);
@@ -64,8 +68,17 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
 
         drawSlider();
         graphByYear(dataset, sliderTime.value());
-
         document.getElementById("genreContainer").style.display = "none";
+
+        //Using k-mean for 10 clusters, apply count genre in each cluster;
+        // getcluster(audioData)
+
+        //Using hierachical cluster method (source: https://harthur.github.io/clusterfck/ )
+        var threshold = 14; // only combine two clusters with distance less than 14 ??? I still in question about the threshold
+        var clusters = clusterfck.hcluster(audioData, clusterfck.EUCLIDEAN_DISTANCE,
+            clusterfck.AVERAGE_LINKAGE, threshold);
+        console.log(clusters)
+
 
     });
 
@@ -263,10 +276,16 @@ function getcluster(data) {
     clusters.data(data);
 
     clusterSet = clusters.clusters();
-    clusterSet.forEach(function (d) { // Save the centroids of each cluster
-        return centroids.push(d.centroid)
-    });
-
-    console.log(centroids);
-    return centroids;
+    // clusterSet.forEach(function (d) { // Save the centroids of each cluster
+    //     return centroids.push(d.centroid)
+    // });
+    //
+    // console.log(centroids);
+    // return centroids;
+    var cluster_count_genre=[];
+    var index;
+    for (i=1;i<clusterSet.length;i++){
+        cluster_count_genre.push(CountGenres(clusterSet[i].points))
+    }
+    console.log(cluster_count_genre)
 }
