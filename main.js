@@ -1,9 +1,9 @@
 var raw_dataset = [];
 var dataset = [];
 var audioData = [];
-const testSize = bigdata.length; // The size of our test data for development speed
-var topGenresAll = [];
-var topGenres20 = [];
+const testSize = 8000; // The size of our test data for development speed
+var topGenresAll = [];           // Must not be greater than the size of our precomputed
+var topGenres20 = [];            // t-SNE result if we are using it
 
 let features = [];
 var selectedGenres=[];
@@ -85,7 +85,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         
         topGenresAll = CountGenres(dataset);
         topGenres20 = topGenresAll.slice(0,20);
-        Draw_Scatterplot(bigdata);
+        Draw_Scatterplot(bigdata.slice(0, testSize));
     });
 
 // Count the genres and return a descending frequency-ordered list of top genres
