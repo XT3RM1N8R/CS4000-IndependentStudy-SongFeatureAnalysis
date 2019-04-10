@@ -63,28 +63,23 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                     genresByYear[year].push(d.genre);
             }
         });
-    
-        dataset = dataset;
         // console.log(genresByYear["2008"]);
         // console.log(genresCount);
+        topGenresAll = CountGenres(dataset);
+        topGenres20 = topGenresAll.slice(0,20);
+      
+        UpdateDataTSNE(bigdata.slice(0,testSize));
+      
         drawSlider();
-    
-    
         graphByYear(dataset,sliderTime.value());
     
         document.getElementById("genreContainer").style.display = "none";
-    
-    
     
         /*startWorker({dataset:audioData,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});*/
         // alert("Data Size: " + bigdata.length);
-        
-        topGenresAll = CountGenres(dataset);
-        topGenres20 = topGenresAll.slice(0,20);
-        Draw_Scatterplot(bigdata.slice(0, testSize));
     });
 
 // Count the genres and return a descending frequency-ordered list of top genres
@@ -157,9 +152,9 @@ zoom_handler(svg);
 
 
 // Draw a scatterplot from the given t-SNE data
-function Draw_Scatterplot(tsne_data) {
+function TSNEDraw_Scatterplot(tsne_data) {
     UpdateDataTSNE(tsne_data);      // Update our data with the given t-SNE data
-    _Draw_Scatterplot(dataset);    // Draw the scatterplot with the updated data
+    Draw_Scatterplot(dataset);    // Draw the scatterplot with the updated data
 }
 
 
@@ -172,7 +167,7 @@ function UpdateDataTSNE(data) {
 }
 
 // Draw a scatterplot from the given data
-function _Draw_Scatterplot(data){
+function Draw_Scatterplot(data){
     const xScale = d3.scaleLinear()
                             .domain(getExtent(data, "x"))
                             .range([0, contentWidth]);

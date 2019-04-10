@@ -159,6 +159,7 @@ function graphByYear(data, year) {
             selectedSongs.push(d);
     });
     drawGraph(selectedSongs,year,null);
+    Draw_Scatterplot(selectedSongs);
 }
 
 const maxForegroundOpacity = "1";
