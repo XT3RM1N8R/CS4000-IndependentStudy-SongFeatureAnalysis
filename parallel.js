@@ -10,7 +10,7 @@ var parallelWidth = 500, parallelHeight = 500,
 const parseTime = d3.timeParse("%m/%d/%Y %H:%M");
 const formatYear = d3.timeFormat("%Y");
 
-var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+60).attr("height",parallelHeight),
+var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+60).attr("height",parallelHeight).attr("transform","translate(50,0)"),
     g = parallelSvg.append("g").attr("transform","translate("+parallelMargin.left+","+parallelMargin.top+")"),
     titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight/2+15)+","+(parallelMargin.top-15)+")");
 
