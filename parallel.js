@@ -42,55 +42,6 @@ var genres = [];
 var genresByYear = {};
 // var genresCount = [];
 let data = [];
-d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
-    // console.log('222222222');
-    // get features that used for mutlti-dimension coordinates
-    features = songs.columns.slice(1, 13);
-    features.splice(8,3);
-    xScale.domain(features);
-
-
-    // Doing Time Slider
-    // Time
-    songs.forEach(d=>{
-        var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
-        features.forEach(feature=>{
-            if (feature != "genre")
-                d[feature] = +d[feature];
-        });
-        var gen = d["genre"];
-        // Create new element in genres count if the element is in first appears.
-        if(!genres.includes(gen)) {
-            genres.push(gen);
-            // genresCount.push(1);
-        }
-        // // or else increase count for that genres by 1
-        // else {
-        //     genresCount[genres.indexOf(gen)]++;
-        // }
-        //
-        //Add genres by each year
-        if(!genresByYear.hasOwnProperty(year)) {
-            genresByYear[year] = [];
-            genresByYear[year].push(d.genre);
-        }
-        else {
-            if (!genresByYear[year].includes(d.genre))
-                genresByYear[year].push(d.genre);
-        }
-    });
-
-    data = songs;
-    // console.log(genresByYear["2008"]);
-    // console.log(genresCount);
-    drawSlider();
-
-
-    graphByYear(data,sliderTime.value());
-
-    document.getElementById("genreContainer").style.display = "none";
-
-});
 
 function drawSlider() {
     var timeRange = d3.extent(data,d=>{return d.tracks_track_date_created});
