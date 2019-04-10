@@ -53,7 +53,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
     // Doing Time Slider
     // Time
     songs.forEach(d=>{
-        var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
+        var year = d.tracks_track_date_created = +formatYear(parseTime(d.tracks_track_date_created));
         features.forEach(feature=>{
             if (feature != "genre")
                 d[feature] = +d[feature];
@@ -94,7 +94,7 @@ d3.csv("dataset/dataset_full(optimal).csv",function (error, songs) {
 
 function drawSlider() {
     var timeRange = d3.extent(data,d=>{return d.tracks_track_date_created});
-    var dataTime = d3.range(Number(timeRange[0]),Number(timeRange[1])+1).map(d=>{
+    var dataTime = d3.range(timeRange[0],timeRange[1]+1).map(d=>{
         // console.log(d);
         return d;
     });
@@ -107,7 +107,7 @@ function drawSlider() {
         .width(300)
         .tickFormat(d3.format(".0f"))
         .tickValues(dataTime)
-        .default(dataTime[4])
+        .default(dataTime[6])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
             graphByYear(data,sliderTime.value());
@@ -310,6 +310,7 @@ function drawGraph(songs,year,selectedGenres) {
     // Add an axis and title.
     xAxisGroup.append("g")
         .attr("class", "axises")
+        .attr("id",d=>"axis-"+d)
         .each(function (d) {
             // Call y-axises
             if(d!="genre")
@@ -328,11 +329,13 @@ function drawGraph(songs,year,selectedGenres) {
     xAxisGroup.append("g")
         .attr("class", "brush")
         .each(function (d) {
-            d3.select(this).call(yScale[d].brush = d3.brushY()
-                .extent([[-10, 0], [10, parallelContentHeight]])
-                .on("brush", brush)
-                .on("end", brush)
-            );
+            if(d!="genre") {
+                d3.select(this).call(yScale[d].brush = d3.brushY()
+                    .extent([[-10, 0], [10, parallelContentHeight]])
+                    .on("brush", brush)
+                    .on("end", brush)
+                );
+            }
         });
 }
 
@@ -366,7 +369,6 @@ function transition(g) {
     return g.transition().duration(500);
 }
 function dragended(d) {
-    console.log("drag end");
     delete dragging[d];
     d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
     transition(foreground).attr("d", path);
@@ -377,7 +379,9 @@ function dragended(d) {
 
 // Handles a brush event, toggling the display of foreground lines.
 function brush() {
-
+    // console.log(d3.event.sourceEvent);
+    // console.log(d3.event.selection);
+    // console.log(parallelContentHeight);
     var actives = [];
     parallelSvg.selectAll(".brush")
         .filter(function(d) {
@@ -394,6 +398,13 @@ function brush() {
         });
 
     var selected = [];
+    foreground.style("display", function(d) {
+        return actives.every(function(active) {
+            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
+            if(result) selected.push(d);
+            return result;
+        }) ? null : "none";
+    });
     // Update foreground to only display selected values
     // foreground.style("opacity",function(d) {
     //         return actives.every(function(active) {
@@ -402,13 +413,6 @@ function brush() {
     //             return result;
     //         }) ? "1" : "0.1";
     //     });
-    foreground.style("display", function(d) {
-        return actives.every(function(active) {
-            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
-            if(result)selected.push(d);
-            return result;
-        }) ? null : "none";
-    });
     // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
 
 }

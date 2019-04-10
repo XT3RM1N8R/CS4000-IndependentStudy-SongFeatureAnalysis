@@ -23,7 +23,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});*/
-        alert("Data Size: " + bigdata.length);
+        // alert("Data Size: " + bigdata.length);
         
         topGenresAll = CountGenres(data_min);
         topGenres20 = topGenresAll.slice(0,20);
