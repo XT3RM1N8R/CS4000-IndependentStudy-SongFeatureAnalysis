@@ -41,7 +41,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         // Doing Time Slider
         // Time
         dataset.forEach(d => {
-            var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
+            var year = d.tracks_track_date_created = +formatYear(parseTime(d.tracks_track_date_created));
             features.forEach(feature => {
                 if (feature != "genre")
                     d[feature] = +d[feature];
@@ -60,6 +60,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                     genresByYear[year].push(d.genre);
             }
         });
+
 
         topGenresAll = CountGenres(dataset);
         topGenres20 = topGenresAll.slice(0, 20);

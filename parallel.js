@@ -1,7 +1,7 @@
 // console.log('1111111111');
 
 // Info to show visualization
-var parallelWidth = 500, parallelHeight = 500,
+var parallelWidth = 630, parallelHeight = 500,
     parallelMargin = {top: 30, right: 20, bottom: 30, left: 30},
     parallelContentWidth = parallelWidth - parallelMargin.left - parallelMargin.right,
     parallelContentHeight = parallelHeight - parallelMargin.top - parallelMargin.bottom;
@@ -12,7 +12,7 @@ const formatYear = d3.timeFormat("%Y");
 
 var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+200).attr("height",parallelHeight),
     g = parallelSvg.append("g").attr("transform","translate("+parallelMargin.left+","+parallelMargin.top+")"),
-    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight/2+15)+","+(parallelMargin.top-15)+")");
+    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight/2)+","+(parallelMargin.top-15)+")");
 
 // x, y, and color Scale
 var xScale = d3.scalePoint().range([0,parallelContentWidth]),
@@ -38,7 +38,7 @@ var dragging = {};
 
 function drawSlider() {
     var timeRange = d3.extent(dataset,d=>{return d.tracks_track_date_created});
-    var dataTime = d3.range(Number(timeRange[0]),Number(timeRange[1])+1).map(d=>{
+    var dataTime = d3.range(timeRange[0],timeRange[1]+1).map(d=>{
         // console.log(d);
         return d;
     });
@@ -243,7 +243,7 @@ function drawGraph(songs,year,selectedGenres) {
         .enter().append("g")
         .attr("class", "dimension")
         .attr("transform", d => {
-            return "translate(" + xScale(d)*1.2 + ")";
+            return "translate(" + xScale(d) + ")";
         })
         .call(d3.drag()
             .subject(function(d) { return {x: xScale(d)}; })
