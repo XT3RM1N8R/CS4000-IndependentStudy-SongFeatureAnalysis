@@ -141,3 +141,13 @@ h2 {
     text-align: center;
 }
 
+#slider-time{
+    position: relative;
+    width: 700px;
+    height: 100px;
+}
+.col-sm-1{
+    position: relative;
+    width: 700px;
+    height: 100px;
+}
