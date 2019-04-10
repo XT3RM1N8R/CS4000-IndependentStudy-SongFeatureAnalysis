@@ -243,7 +243,7 @@ function drawGraph(songs,year,selectedGenres) {
         .enter().append("g")
         .attr("class", "dimension")
         .attr("transform", d => {
-            return "translate(" + xScale(d) + ")";
+            return "translate(" + xScale(d)*1.2 + ")";
         })
         .call(d3.drag()
             .subject(function(d) { return {x: xScale(d)}; })
