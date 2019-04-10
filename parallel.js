@@ -256,15 +256,21 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("class", "axises")
         .each(function (d) {
             // Call y-axises
-            if(d!="genre")
-                d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
-            else
+            if(d =="genre")
                 d3.select(this).call(d3.axisRight(yScale[d]));
+            else if (d =="duration")
+                d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5).tickFormat(d3.format(",")));
+            else
+                d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
         })
         .append("text")
         .style("text-anchor", "middle")
         .attr("y", parallelContentHeight + 15)
         .text(function (d) {
+            if(d=="duration")
+                return d+"(s)";
+            if(d=="tempo")
+                return d+"(bps)";
             return d;
         });
 
