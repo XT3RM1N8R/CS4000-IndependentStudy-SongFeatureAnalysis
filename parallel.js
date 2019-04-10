@@ -37,7 +37,7 @@ var dragging = {};
 
 
 function drawSlider() {
-    var timeRange = d3.extent(data,d=>{return d.tracks_track_date_created});
+    var timeRange = d3.extent(dataset,d=>{return d.tracks_track_date_created});
     var dataTime = d3.range(Number(timeRange[0]),Number(timeRange[1])+1).map(d=>{
         // console.log(d);
         return d;
@@ -54,7 +54,7 @@ function drawSlider() {
         .default(dataTime[0])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
-            graphByYear(data,sliderTime.value());
+            graphByYear(dataset,sliderTime.value());
         });
 
     var gTime = d3
@@ -74,7 +74,7 @@ function drawSlider() {
 function resetAll() {
     d3.select("svg#slider").remove();
     drawSlider();
-    graphByYear(data,sliderTime.value());
+    graphByYear(dataset,sliderTime.value());
     addCheckBoxes(genres);
     document.getElementById("slider").style.display = "block";
     document.getElementById("genreContainer").style.display = "none";
@@ -89,7 +89,7 @@ function chooseOption() {
     if(yearChoice.checked) {
         yearChart.style.display = "block";
         genreChart.style.display = "none";
-        graphByYear(data,sliderTime.value());
+        graphByYear(dataset,sliderTime.value());
 
     }
 
@@ -115,7 +115,7 @@ function graphByGenre() {
             selectedGenres.splice(selectedGenres.indexOf(d),1);
     });
     selectedGenres.forEach(gen=>{
-        data.forEach(song=>{
+        dataset.forEach(song=>{
             if(song.genre === gen)
                 selectedSongs.push(song);
         })

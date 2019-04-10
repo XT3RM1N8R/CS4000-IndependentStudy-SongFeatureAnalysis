@@ -10,7 +10,6 @@ var selectedGenres=[];
 var genres = [];
 var genresByYear = {};
 // var genresCount = [];
-let data = [];
 
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
@@ -65,13 +64,13 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
             }
         });
     
-        data = dataset;
+        dataset = dataset;
         // console.log(genresByYear["2008"]);
         // console.log(genresCount);
         drawSlider();
     
     
-        graphByYear(data,sliderTime.value());
+        graphByYear(dataset,sliderTime.value());
     
         document.getElementById("genreContainer").style.display = "none";
     
