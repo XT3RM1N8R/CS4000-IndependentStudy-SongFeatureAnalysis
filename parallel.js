@@ -1,7 +1,7 @@
 // console.log('1111111111');
 
 // Info to show visualization
-var parallelWidth = 900, parallelHeight = 600,
+var parallelWidth = 500, parallelHeight = 500,
     parallelMargin = {top: 30, right: 20, bottom: 30, left: 30},
     parallelContentWidth = parallelWidth - parallelMargin.left - parallelMargin.right,
     parallelContentHeight = parallelHeight - parallelMargin.top - parallelMargin.bottom;
@@ -68,7 +68,7 @@ function drawSlider() {
         .select('#slider-time')
         .append('svg')
         .attr("id","slider")
-        .attr('width', 500)
+        .attr('width', 400)
         .attr('height', 100)
         .append('g')
         .attr('transform', 'translate(30,30)');

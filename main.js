@@ -110,7 +110,7 @@ function CountGenres(data) {    // ***We could optimize this function further, b
     return count_genre;
 }
 
-const width = 800, height = 800,
+const width = 700, height = 500,
     margin = {left: 20, top: 20, right: 20, bottom: 20},
     contentWidth = width - margin.left - margin.right,
     contentHeight = height - margin.top - margin.bottom;
@@ -119,14 +119,14 @@ const svg = d3.select("#theGraph")
             .append("svg")
                 .attr("width", width)
                 .attr("height", height);
-
-var legend = svg
-             .append("rect")
-                .attr("width", 75)
-                .attr("height", 275)
-                .attr("x", 0)
-                .attr("y", 0)
-                .style("fill", "#dae4e8");
+//
+// var legend = svg
+//              .append("rect")
+//                 .attr("width", 75)
+//                 .attr("height", 275)
+//                 .attr("x", 0)
+//                 .attr("y", 0)
+//                 .style("fill", "#dae4e8");
 
 const scatterplot = svg
                     .append("g")
