@@ -232,8 +232,6 @@ function drawGraph(songs,year,selectedGenres) {
                 });
         })
         .on("mouseout",d=>{
-            // console.log("mouse out");
-            // brush();
             d3.select("#path"+ d.track_id).style("stroke-width","1px").style("opacity", minForegroundOpacity);
             d3.selectAll(".title").remove();
         });
@@ -280,11 +278,13 @@ function drawGraph(songs,year,selectedGenres) {
     xAxisGroup.append("g")
         .attr("class", "brush")
         .each(function (d) {
-            d3.select(this).call(yScale[d].brush = d3.brushY()
-                .extent([[-10, 0], [10, parallelContentHeight]])
-                .on("brush", brush)
-                .on("end", brush)
-            );
+            if(d != "genre") {
+                d3.select(this).call(yScale[d].brush = d3.brushY()
+                    .extent([[-10, 0], [10, parallelContentHeight]])
+                    .on("brush", brush)
+                    .on("end", brush)
+                );
+            }
         });
 }
 
