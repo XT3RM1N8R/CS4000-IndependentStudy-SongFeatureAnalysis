@@ -180,7 +180,7 @@ function drawGraph(songs,year,selectedGenres) {
             else
                 yScale[d] = d3.scalePoint().range([parallelContentHeight,0]).domain(genresByYear[year]);
         }
-        else if(d=="tempo"){
+        else if(d=="tempo" || d=="duration"){
             yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0])
                 .domain(d3.extent(songs, function (fea) {
                     return fea[d];
