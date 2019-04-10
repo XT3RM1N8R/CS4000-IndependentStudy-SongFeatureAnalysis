@@ -217,7 +217,7 @@ function _Draw_Scatterplot(data){
                                         .attr("r", radius * 2)
                                         .style("fill", "black");*/
                                     d3.select(this)     // Does work
-                                        .attr("r", radius * 2);
+                                        .attr("r", radius * 3);
                                     d3.select(this)
                                     .append("title")
                                         .text(function(d) {

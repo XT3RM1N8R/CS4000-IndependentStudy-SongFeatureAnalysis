@@ -29,7 +29,7 @@ svg {
     font-size: 10px;
     stroke: black;
     font-weight: lighter;
-    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+    text-shadow: 0 1px 0 darkblue, 1px 0 0 #fff, 0 -1px 0 darkblue, -1px 0 0 #fff;
     cursor: move;
 }
 
@@ -42,7 +42,7 @@ svg {
     font-weight: 800;
     letter-spacing: -3px;
     line-height: 1;
-    text-shadow: #EDEDED 3px 2px 0;
+    text-shadow: lightblue 3px 2px 0;
     position: absolute;
     top: 0;
     left: 1px;
@@ -59,7 +59,7 @@ svg {
 
 }
 .header{
-    background-color: lightgray;
+    background-color: black;
 }
 
 
