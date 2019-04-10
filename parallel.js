@@ -35,13 +35,6 @@ var line = d3.line(),
 //drag object
 var dragging = {};
 
-let features = [];
-// console.log('44444444');
-var selectedGenres=[];
-var genres = [];
-var genresByYear = {};
-// var genresCount = [];
-let data = [];
 
 function drawSlider() {
     var timeRange = d3.extent(data,d=>{return d.tracks_track_date_created});
@@ -58,7 +51,7 @@ function drawSlider() {
         .width(300)
         .tickFormat(d3.format(".0f"))
         .tickValues(dataTime)
-        .default(dataTime[4])
+        .default(dataTime[0])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
             graphByYear(data,sliderTime.value());
@@ -159,9 +152,9 @@ function addCheckBoxes(array) {
     })
 }
 
-function graphByYear(songs, year) {
+function graphByYear(data, year) {
     var selectedSongs = [];
-    songs.forEach(d=>{
+    data.forEach(d=>{
         if(d.tracks_track_date_created == year)
             selectedSongs.push(d);
     });

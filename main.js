@@ -1,35 +1,43 @@
+var raw_dataset = [];
 var dataset = [];
-var data_min = [];
 var audioData = [];
 const testSize = bigdata.length; // The size of our test data for development speed
-var audioData_min = [];
 var topGenresAll = [];
 var topGenres20 = [];
 
+let features = [];
+var selectedGenres=[];
+var genres = [];
+var genresByYear = {};
+// var genresCount = [];
+let data = [];
+
 d3.csv("./Dataset/dataset_full(optimal).csv")
     .row(function(d) {
-        dataset.push(d);
-        return d;/*audioData.push([
+        audioData.push([
             +d.acousticness,
             +d.danceability,
             +d.energy,
             +d.instrumentalness,
             +d.liveness,
-            +d.speechiness, +d.tempo, +d.valence]);*/ })
-    .get(function(error, songs) {
-        audioData_min = audioData.slice(0,testSize); // Limit the test data for quick debugging
-        data_min = dataset.slice(0,testSize);
+            +d.speechiness,
+            +d.tempo,
+            +d.valence]);
+        return d;
+    })
+    .get(function(error, songData) {
+        raw_dataset = songData;     // Save a copy of the raw dataset
+        audioData = audioData.slice(0,testSize); // Limit the test data for quick debugging
+        dataset = songData.slice(0,testSize);
+        dataset.columns = songData.columns;
     
-        // console.log('222222222');
         // get features that used for mutlti-dimension coordinates
-        features = songs.columns.slice(1, 13);
-        features.splice(8,3);
+        features = songData.columns.slice(1, 10);
         xScale.domain(features);
-    
     
         // Doing Time Slider
         // Time
-        songs.forEach(d=>{
+        dataset.forEach(d=>{
             var year = d.tracks_track_date_created = formatYear(parseTime(d.tracks_track_date_created));
             features.forEach(feature=>{
                 if (feature != "genre")
@@ -57,7 +65,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
             }
         });
     
-        data = songs;
+        data = dataset;
         // console.log(genresByYear["2008"]);
         // console.log(genresCount);
         drawSlider();
@@ -69,13 +77,13 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
     
     
     
-        /*startWorker({dataset:audioData_min,
+        /*startWorker({dataset:audioData,
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});*/
         // alert("Data Size: " + bigdata.length);
         
-        topGenresAll = CountGenres(data_min);
+        topGenresAll = CountGenres(dataset);
         topGenres20 = topGenresAll.slice(0,20);
         Draw_Scatterplot(bigdata);
     });
@@ -152,15 +160,15 @@ zoom_handler(svg);
 // Draw a scatterplot from the given t-SNE data
 function Draw_Scatterplot(tsne_data) {
     UpdateDataTSNE(tsne_data);      // Update our data with the given t-SNE data
-    _Draw_Scatterplot(data_min);    // Draw the scatterplot with the updated data
+    _Draw_Scatterplot(dataset);    // Draw the scatterplot with the updated data
 }
 
 
 // Update the data with the given t-SNE result
 function UpdateDataTSNE(data) {
     data.forEach(function(d, i) {
-        data_min[i].x = d[0];  // Add the t-SNE x result to the dataset
-        data_min[i].y = d[1];  // Add the t-SNE y result to the dataset
+        dataset[i].x = d[0];  // Add the t-SNE x result to the dataset
+        dataset[i].y = d[1];  // Add the t-SNE y result to the dataset
     });
 }
 
