@@ -121,6 +121,7 @@ function graphByGenre() {
         })
     });
     drawGraph(selectedSongs,0,selectedGenres);
+    Draw_Scatterplot(selectedSongs);
     console.log(selectedGenres);
 }
 function addCheckBoxes(array) {

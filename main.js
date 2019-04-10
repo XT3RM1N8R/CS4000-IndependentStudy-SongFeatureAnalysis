@@ -202,7 +202,6 @@ function Draw_Scatterplot(data){
                                         return "black";
                                     }
                                 })
-
                                 .on("mouseover", function(d) {
                                     /*d3.select(this)   // Doesn't work
                                     .append("circle")
@@ -234,8 +233,17 @@ function Draw_Scatterplot(data){
                                 });
         //Update
         selection
-            .attr("cx", d => xScale(d.x))
-            .attr("cy", d => yScale(d.y)).attr("r", 3);
+          .attr("cx", d => xScale(d.x))
+          .attr("cy", d => yScale(d.y))
+          .attr("r", radius)
+          .style("opacity", opacity)
+          .style("fill", function(d) {
+            if (topGenres20.some(element => element.genre === d.genre)) {
+              return color(d.genre);
+            } else {
+              return "black";
+            }
+          });
     }
 }
     /*function DrawLegend(colorScale, values) {
