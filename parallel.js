@@ -172,7 +172,7 @@ function graphByGenre() {
     });
     selectedGenres.forEach(gen=>{
         data.forEach(song=>{
-            if(song.genre == gen)
+            if(song.genre === gen)
                 selectedSongs.push(song);
         })
     });
@@ -185,7 +185,7 @@ function addCheckBoxes(array) {
     array.forEach((d,i)=>{
         //Add if checkbox not show
         if(document.getElementById(d)==null) {
-            var checkbox = document.createElement('input');
+            let checkbox = document.createElement('input');
             checkbox.type = "checkbox";
             checkbox.name = d;
             checkbox.value = d;
@@ -202,8 +202,8 @@ function addCheckBoxes(array) {
         }
 
         // Set default check box
-        var checkbox = document.getElementById(d);
-        if(i==0) checkbox.checked = true;
+        let checkbox = document.getElementById(d);
+        if(i===0) checkbox.checked = true;
         else checkbox.checked = false;
     })
 }
