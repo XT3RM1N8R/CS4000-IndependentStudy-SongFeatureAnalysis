@@ -73,7 +73,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                      epsilon: 1,        // epsilon is learning rate (10 = default)
                      perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
                      iterations: 500});*/
-        alert("Data Size: " + bigdata.length);
+        // alert("Data Size: " + bigdata.length);
         
         topGenresAll = CountGenres(data_min);
         topGenres20 = topGenresAll.slice(0,20);
@@ -134,6 +134,21 @@ const scatterplot = svg
                       .attr("id", "snodes");
 
 
+//create zoom handler
+var zoom_handler = d3.zoom()
+    .on("zoom", zoom);
+
+
+//specify what to do when zoom event listener is triggered
+function zoom(){
+    scatterplot.attr("transform", d3.event.transform);
+}
+
+//add zoom behaviour to the svg element backing our graph.
+//same thing as svg.call(zoom_handler);
+zoom_handler(svg);
+
+
 // Draw a scatterplot from the given t-SNE data
 function Draw_Scatterplot(tsne_data) {
     UpdateDataTSNE(tsne_data);      // Update our data with the given t-SNE data
@@ -165,7 +180,8 @@ function _Draw_Scatterplot(data){
         const hoverDelay = 50;
         const radius = 3;
         const opacity = "0.75";
-        
+
+
         const selection = scatterplot.selectAll(".compute").data(data);
         //Exit
         selection.exit().remove();
@@ -203,9 +219,6 @@ function _Draw_Scatterplot(data){
                                                 return "Other Genre: " + d.genre;
                                             }
                                         })
-                                //         .attr("x", d.x)
-                                //         .attr("y", d.y)
-                                //         .style("font-size", "500%"); // This didn't solve the visibility issue :(
                                 })
                                 .on("mouseout", function(d) {
                                     /*d3.select(this)   // Doesn't Work
