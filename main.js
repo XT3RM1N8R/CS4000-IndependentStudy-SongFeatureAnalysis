@@ -73,6 +73,12 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         graphByYear(dataset, sliderTime.value());
         document.getElementById("genreContainer").style.display = "none";
 
+        drawLegend(d=>{
+            var temp = topGenres20.map(g=>g.genre);
+            temp.push("Others");
+            return temp;
+        });
+
         //Using k-mean for 10 clusters, apply count genre in each cluster;
         // getcluster(audioData)
 
