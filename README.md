@@ -1,7 +1,7 @@
 # CS5331-Project-2: SONG GENRE VISUALIZATION
 
 ## Video
-[Video Link Here](https://www.youtube.com/watch?v=N_5CfvvKGwg&feature=youtu.be)
+[Video Link Here](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Project%202%20Demo%20Video.mkv)
 
 ![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/p2.Le.Nguyen.Sokolov.gif)
 Link: https://nhatmusic.github.io/CS5331-Project-2/
@@ -46,25 +46,38 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 
 # Limitation and Future Work:
 1. Currently, we are unable to visualize the whole 13,127 songs, however, we will find the way to reduce the cost when working with t-sne.
+
 2. We want to visualize each iteration when computing the t-sne so it may provide more visible information how t-sne works.
 
 3. In the future, we will implement sample song when users click to color legend represented for each genre. It's really useful since users will get more sense about how genre is defined.
 
 
 # Team work and member contribution:
-This is the first time we work together as a team. The great thing is that all the team member is responsible for their task as well as active in communication.
+This is the first time we have worked together as a team. The great thing is that all the team members were responsible for their tasks as well as active in communication.
 The task completed by each member is described as following:
-- Task : Name 
-- Task : Name
-- Task : Name
-- Task : Name
+- Data cleaning & pre-processing - Nhat, Hao, Darien
+- Design & planning - Nhat, Hao, Darien
+- t-SNE Computation - Nhat, Darien
+- Parallel Coordinate Graph; initial features - Hao
+- t-SNE Scatterplot; initial features - Nhat
+- Parallel Coordinate Graph; mouseover and context info - Hao, Darien
+- Parallel Coordinate Graph; filter by genre & year - Hao
+- Page Layout - Nhat
+- Scatterplot; zoom - Nhat
+- Parallel Coordinate Graph; axes dragging and brush filter features - Hao
+- Graph linking; filter by genre & year - Hao, Darien
+- Graph linking: mouseover events and context info - Hao, Darien
+- Top Genre coloring - Nhat, Hao, Darien
+- Legend for Genre coloring - Nhat, Hao, Darien
+- Legend for Genre coloring; mouseover events - Hao
+- Scatterplot; context info on mouseover - Nhat
 
 
 # Interesting Findings and Observation:
 
-We are still confused about how genres are defined in each dataset. Depending on the variance of the value of each audio features, it's hard to define the genres close to each other like Rock, Electronic, Hip-Hop. However, looking the graph below, it's clearly that Rock (Green) has the significant higher value of energy and valence comparing with the Folk (Orange)
+We are still confused about how genres are defined in each dataset. Depending on the variance of the value of each audio features, it's hard to define the genres close to each other like Rock, Electronic, Hip-Hop. However, looking the graph below, it's clearly that Rock (Green) has the significant higher value of energy and valence comparing with the Fold (Orange)
 
-![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/rock-folk.JPG)
+![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/tsne.jpeg)
 
 
 
