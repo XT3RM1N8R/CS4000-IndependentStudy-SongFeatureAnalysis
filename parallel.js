@@ -10,12 +10,12 @@ var parallelWidth = 630, parallelHeight = 300,
 const parseTime = d3.timeParse("%m/%d/%Y %H:%M");
 const formatYear = d3.timeFormat("%Y");
 
-var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+200).attr("height",parallelHeight),
-    g = parallelSvg.append("g").attr("transform","translate("+parallelMargin.left+","+parallelMargin.top+")"),
-    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight-15)+","+(parallelMargin.top-15)+")");
+var parallelSvg = d3.select("#chart-area").append("svg").attr("width", parallelWidth + 200).attr("height", parallelHeight),
+    g = parallelSvg.append("g").attr("transform", "translate(" + parallelMargin.left + "," + parallelMargin.top + ")"),
+    titleGroup = parallelSvg.append("g").attr("transform", "translate(" + (parallelContentHeight - 15) + "," + (parallelMargin.top - 15) + ")");
 
 // x, y, and color Scale
-var xScale = d3.scalePoint().range([0,parallelContentWidth]),
+var xScale = d3.scalePoint().range([0, parallelContentWidth]),
     yScale = {},
     color = d3.scaleOrdinal().range(d3.schemeCategory20);
 
@@ -36,14 +36,17 @@ var line = d3.line(),
 var dragging = {};
 
 function colorByTop20Genres(genre) {
-    var temp = topGenres20.map(d=>d.genre).slice(0,19);
-    if(temp.includes(genre))
+    var temp = topGenres20.map(d => d.genre).slice(0, 19);
+    if (temp.includes(genre))
         return color(genre);
     return "#000000";
 }
+
 function drawSlider() {
-    var timeRange = d3.extent(dataset,d=>{return d.tracks_track_date_created});
-    var dataTime = d3.range(timeRange[0],timeRange[1]+1).map(d=>{
+    var timeRange = d3.extent(dataset, d => {
+        return d.tracks_track_date_created
+    });
+    var dataTime = d3.range(timeRange[0], timeRange[1] + 1).map(d => {
         // console.log(d);
         return d;
     });
@@ -59,15 +62,17 @@ function drawSlider() {
         .default(dataTime[0])
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
+
             graphByYear(dataset,sliderTime.value());
 
             legendisClicked = false; //set legend off-click
+            graphByYear(dataset, sliderTime.value());
         });
 
     var gTime = d3
         .select('#slider-time')
         .append('svg')
-        .attr("id","slider")
+        .attr("id", "slider")
         .attr('width', 200)
         .attr('height', 100)
         .append('g')
@@ -81,7 +86,7 @@ function drawSlider() {
 function resetAll() {
     d3.select("svg#slider").remove();
     drawSlider();
-    graphByYear(dataset,sliderTime.value());
+    graphByYear(dataset, sliderTime.value());
     addCheckBoxes(genres);
     document.getElementById("slider").style.display = "block";
     document.getElementById("genreContainer").style.display = "none";
@@ -93,14 +98,14 @@ function chooseOption() {
         yearChoice = document.getElementById("year"),
         genreChoice = document.getElementById("genre")
 
-    if(yearChoice.checked) {
+    if (yearChoice.checked) {
         yearChart.style.display = "block";
         genreChart.style.display = "none";
-        graphByYear(dataset,sliderTime.value());
+        graphByYear(dataset, sliderTime.value());
 
     }
 
-    if(genreChoice.checked){
+    if (genreChoice.checked) {
         // Add check boxes of genres
         addCheckBoxes(genres);
         graphByGenre();
@@ -111,32 +116,33 @@ function chooseOption() {
 }
 
 function graphByGenre() {
-    var selectedSongs=[];
-    genres.forEach(d=>{
+    var selectedSongs = [];
+    genres.forEach(d => {
         var genChecked = document.getElementById(d);
 
 
-        if(genChecked.checked && !selectedGenres.includes(d))
+        if (genChecked.checked && !selectedGenres.includes(d))
             selectedGenres.push(d);
         else if (!genChecked.checked && selectedGenres.includes(d))
-            selectedGenres.splice(selectedGenres.indexOf(d),1);
+            selectedGenres.splice(selectedGenres.indexOf(d), 1);
     });
-    selectedGenres.forEach(gen=>{
-        dataset.forEach(song=>{
-            if(song.genre === gen)
+    selectedGenres.forEach(gen => {
+        dataset.forEach(song => {
+            if (song.genre === gen)
                 selectedSongs.push(song);
         })
     });
-    drawGraph(selectedSongs,0,selectedGenres);
+    drawGraph(selectedSongs, 0, selectedGenres);
     Draw_Scatterplot(selectedSongs);
     console.log(selectedGenres);
 }
+
 function addCheckBoxes(array) {
     // console.log(array);
     var genreContainer = document.getElementById("genreContainer");
-    array.forEach((d,i)=>{
+    array.forEach((d, i) => {
         //Add if checkbox not show
-        if(document.getElementById(d)==null) {
+        if (document.getElementById(d) == null) {
             let checkbox = document.createElement('input');
             checkbox.type = "checkbox";
             checkbox.name = d;
@@ -155,18 +161,18 @@ function addCheckBoxes(array) {
 
         // Set default check box
         let checkbox = document.getElementById(d);
-        if(i===0) checkbox.checked = true;
+        if (i === 0) checkbox.checked = true;
         else checkbox.checked = false;
     })
 }
 
 function graphByYear(data, year) {
     var selectedSongs = [];
-    data.forEach(d=>{
-        if(d.tracks_track_date_created == year)
+    data.forEach(d => {
+        if (d.tracks_track_date_created == year)
             selectedSongs.push(d);
     });
-    drawGraph(selectedSongs,year,null);
+    drawGraph(selectedSongs, year, null);
     Draw_Scatterplot(selectedSongs);
 }
 
@@ -175,7 +181,7 @@ const minForegroundOpacity = "0.2";
 
 
 // Draw graph from songs data, and year (0: draw all year, else: draw by year)
-function drawGraph(songs,year,selectedGenres) {
+function drawGraph(songs, year, selectedGenres) {
     // console.log(year+ ": "+songs.length);
     d3.selectAll(".foreground").remove();
     d3.selectAll(".dimension").remove();
@@ -183,23 +189,21 @@ function drawGraph(songs,year,selectedGenres) {
     features.forEach((d) => {
 
         // Add Scale for each axis
-        if (d=="genre") {
-            if(year == 0)
-                yScale[d] = d3.scalePoint().range([parallelContentHeight,0]).domain(selectedGenres);
+        if (d == "genre") {
+            if (year == 0)
+                yScale[d] = d3.scalePoint().range([parallelContentHeight, 0]).domain(selectedGenres);
             else
-                yScale[d] = d3.scalePoint().range([parallelContentHeight,0]).domain(genresByYear[year]);
-        }
-        else if(d=="tempo" || d=="duration"){
+                yScale[d] = d3.scalePoint().range([parallelContentHeight, 0]).domain(genresByYear[year]);
+        } else if (d == "tempo" || d == "duration") {
             yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0])
                 .domain(d3.extent(songs, function (fea) {
                     return fea[d];
                 }))
             // console.log(temp);
-        }
-        else
-            yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0]).domain([0,1]);
+        } else
+            yScale[d] = d3.scaleLinear().range([parallelContentHeight, 0]).domain([0, 1]);
     });
-    
+
     // Add blue foreground lines for focus.
     foreground = g.append("g")
         .attr("class", "foreground")
@@ -208,16 +212,22 @@ function drawGraph(songs,year,selectedGenres) {
         .data(songs)
         .enter()
         .append("path")
-        .attr("id",d=>{return "path"+ d.track_id;})
+        .attr("id", d => {
+            return "path" + d.track_id;
+        })
         .attr("d", path)
-        .attr("stroke",d=>{return colorByTop20Genres(d.genre);})
-        .attr("data-legend",function(d) { return d.genre})
-        .on("mouseover",d=>{
+        .attr("stroke", d => {
+            return colorByTop20Genres(d.genre);
+        })
+        .attr("data-legend", function (d) {
+            return d.genre
+        })
+        .on("mouseover", d => {
             MouseOverLines(d);
             MouseOverCircles(d);
             MouseOvertooltip(d);
         })
-        .on("mouseout",d=>{
+        .on("mouseout", d => {
             MouseOutLines(d);
             MouseOutCircles(d);
         });
@@ -232,7 +242,9 @@ function drawGraph(songs,year,selectedGenres) {
             return "translate(" + xScale(d) + ")";
         })
         .call(d3.drag()
-            .subject(function(d) { return {x: xScale(d)}; })
+            .subject(function (d) {
+                return {x: xScale(d)};
+            })
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
@@ -242,22 +254,22 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("class", "axises")
         .each(function (d) {
             // Call y-axises
-            if(d =="genre")
+            if (d == "genre")
                 d3.select(this).call(d3.axisRight(yScale[d]));
-            else if (d =="duration")
+            else if (d == "duration")
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5).tickFormat(d3.format(",")));
             else
                 d3.select(this).call(d3.axisLeft(yScale[d]).ticks(5));
         })
         .append("text")
         .style("text-anchor", "middle")
-        .style("fill","black")
+        .style("fill", "black")
         .attr("y", parallelContentHeight + 15)
         .text(function (d) {
-            if(d=="duration")
-                return d+"(s)";
-            if(d=="tempo")
-                return d+"(bpm)";
+            if (d == "duration")
+                return d + "(s)";
+            if (d == "tempo")
+                return d + "(bpm)";
             return d;
         });
 
@@ -265,7 +277,7 @@ function drawGraph(songs,year,selectedGenres) {
     xAxisGroup.append("g")
         .attr("class", "brush")
         .each(function (d) {
-            if(d != "genre") {
+            if (d != "genre") {
                 d3.select(this).call(yScale[d].brush = d3.brushY()
                     .extent([[-10, 0], [10, parallelContentHeight]])
                     .on("brush", brush)
@@ -276,53 +288,58 @@ function drawGraph(songs,year,selectedGenres) {
 }
 
 function MouseOverLines(d) {
-    d3.select("#path"+ d.track_id)
-    .style("stroke-width","4px")
-    .style("opacity", maxForegroundOpacity);
-    
+    d3.select("#path" + d.track_id)
+        .style("stroke-width", "4px")
+        .style("opacity", maxForegroundOpacity);
+
     // Show title - genre (Year)
     titleGroup.append("text")
-    .style("font-weight","bold")
-    .style("font", "12px sans-serif")
-    .attr("y", -5)
-    .attr("class","title")
-    .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+        .style("font-weight", "bold")
+        .style("font", "12px sans-serif")
+        .attr("y", -5)
+        .attr("class", "title")
+        .text(d.title + " - " + d.genre + " (" + d.tracks_track_date_created + ")");
 
     // Show rect before title
     titleGroup.append("rect")
-    .attr("class","title")
-    .attr("x",-17)
-    .attr("y",-15)
-    .attr("width",10).attr("height",10)
-    .style("fill",function (){return colorByTop20Genres(d.genre)});
-    
+        .attr("class", "title")
+        .attr("x", -17)
+        .attr("y", -15)
+        .attr("width", 10).attr("height", 10)
+        .style("fill", function () {
+            return colorByTop20Genres(d.genre)
+        });
+
     //Show song info to the graph
-    xAxisGroup.append("text").attr("class","title")
-    .style("text-anchor","middle")
-    .style("font","12px sans-serif")
-    .attr("y",-5)
-    .text(feature=>{
-        if(feature != "genre")
-            return d[feature].toFixed(2);
-    });
+    xAxisGroup.append("text").attr("class", "title")
+        .style("text-anchor", "middle")
+        .style("font", "12px sans-serif")
+        .attr("y", -5)
+        .text(feature => {
+            if (feature != "genre")
+                return d[feature].toFixed(2);
+        });
 }
 
 function MouseOutLines(d) {
-    d3.select("#path"+ d.track_id)
-    .style("stroke-width","1px")
-    .style("opacity", minForegroundOpacity);
+    d3.select("#path" + d.track_id)
+        .style("stroke-width", "1px")
+        .style("opacity", minForegroundOpacity);
     d3.selectAll(".title").remove();
 }
 
 function path(d) {
     // console.log('333333')
-    return line(features.map(function(p) {return [position(p), yScale[p](d[p])]; }));
+    return line(features.map(function (p) {
+        return [position(p), yScale[p](d[p])];
+    }));
 }
 
 function position(d) {
     var v = dragging[d];
     return v == null ? xScale(d) : v;
 }
+
 function dragstarted(d) {
     dragging[d] = xScale(d);
     foreground.style("opacity", minForegroundOpacity / 2);
@@ -332,17 +349,21 @@ function dragged(d) {
     dragging[d] = Math.min(parallelWidth, Math.max(0, d3.event.x));
     foreground.attr("d", path);
 
-    features.sort(function(a, b) { return position(a) - position(b); });
+    features.sort(function (a, b) {
+        return position(a) - position(b);
+    });
     xScale.domain(features);
-    xAxisGroup.attr("transform", function(da) {
+    xAxisGroup.attr("transform", function (da) {
         // console.log((da));
-        return "translate(" + position(da) + ")"; })
+        return "translate(" + position(da) + ")";
+    })
 }
 
 
 function transition(g) {
     return g.transition().duration(500);
 }
+
 function dragended(d) {
     delete dragging[d];
     d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
@@ -357,12 +378,12 @@ function brush() {
 
     var actives = [];
     parallelSvg.selectAll(".brush")
-        .filter(function(d) {
+        .filter(function (d) {
             // console.log(d3.brushSelection(this));
             yScale[d].brushSelectionValue = d3.brushSelection(this);
             return d3.brushSelection(this);
         })
-        .each(function(d) {
+        .each(function (d) {
             // Get extents of brush along each active selection axis (the Y axes)
             actives.push({
                 feature: d,
@@ -371,24 +392,23 @@ function brush() {
         });
 
     var selected = [];
-    foreground.style("display", function(d) {
-        if(actives.every(function(active) {
+    foreground.style("display", function (d) {
+        if (actives.every(function (active) {
             let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
             return result;
         })) {
             selected.push(d);
             return null;
-        }
-        else return"none";
+        } else return "none";
     });
 
     // Link to scatterPlot in brushing
-    if(d3.brushSelection(this)==null) {     // If not brushing, update Scatter plot
-        if(!selected.length) {
+    if (d3.brushSelection(this) == null) {     // If not brushing, update Scatter plot
+        if (!selected.length) {
             var selectedSongs = [];
             var year = sliderTime.value();
-            dataset.forEach(d=>{
-                if(d.tracks_track_date_created == year)
+            dataset.forEach(d => {
+                if (d.tracks_track_date_created == year)
                     selected.push(d);
             });
         }

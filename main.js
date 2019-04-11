@@ -31,7 +31,9 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         dataset.columns = songData.columns;
 
         //get audiodata for k-mean cluster, assign the genre for each datapoint
-        audioData.forEach((d,i)=>{d.genre=dataset[i].genre})
+        audioData.forEach((d, i) => {
+            d.genre = dataset[i].genre
+        })
 
 
         // get features that used for mutlti-dimension coordinates
@@ -66,7 +68,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         topGenres20 = topGenresAll.slice(0, 20);
 
         // add genres after sorting
-        genres = topGenresAll.map(d=>d.genre);
+        genres = topGenresAll.map(d => d.genre);
 
         UpdateDataTSNE(bigdata.slice(0, testSize));
         drawSlider();
@@ -183,8 +185,8 @@ function Draw_Scatterplot(data) {
         //Exit
         selection.exit().remove();
         //Enter
-         // Define the div for the tooltip
-         div = d3.select("body").append("div")
+        // Define the div for the tooltip
+        div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
         const newElements = selection.enter()
@@ -194,9 +196,11 @@ function Draw_Scatterplot(data) {
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
             .attr("r", circleRadius)
-            .attr("data-legend",function(d) { return d.genre})
+            .attr("data-legend", function (d) {
+                return d.genre
+            })
             .style("opacity", circleOpacity)
-            .style("fill",d=>colorByTop20Genres(d.genre))
+            .style("fill", d => colorByTop20Genres(d.genre))
             // .style("fill", function (d) {
             //     if (topGenres20.some(element => element.genre === d.genre)) {
             //         return color(d.genre);
@@ -220,20 +224,20 @@ function Draw_Scatterplot(data) {
             .attr("cy", d => yScale(d.y))
             .attr("r", circleRadius)
             .style("opacity", circleOpacity)
-            .style("fill",d=>colorByTop20Genres(d.genre));
-            // .style("fill", function (d) {
-            //     if (topGenres20.some(element => element.genre === d.genre)) {
-            //         return color(d.genre);
-            //     } else {
-            //         return "black";
-            //     }
-            // });
+            .style("fill", d => colorByTop20Genres(d.genre));
+        // .style("fill", function (d) {
+        //     if (topGenres20.some(element => element.genre === d.genre)) {
+        //         return color(d.genre);
+        //     } else {
+        //         return "black";
+        //     }
+        // });
     }
 }
 
 function MouseOverCircles(d) {
     d3.select("#circle" + d.track_id)
-    .attr("r", circleRadius * 3);
+        .attr("r", circleRadius * 3);
     d3.select("#circle" + d.track_id)
     // .append("title")
     // .text(function (d) {
@@ -245,6 +249,7 @@ function MouseOverCircles(d) {
     // }
 
 }
+
 function MouseOvertooltip(d) {
     div.transition()
         .duration(200)
@@ -259,12 +264,13 @@ function MouseOvertooltip(d) {
         "Speechiness:" + d.speechiness.toFixed(2) + "<br/>" +
         "Tempo:" + d.tempo);
 }
+
 function MouseOutCircles(d) {
     d3.select("#circle" + d.track_id)
-    .attr("r", circleRadius);
+        .attr("r", circleRadius);
     d3.select("#circle" + d.track_id)
-    .select("text")
-    .remove();
+        .select("text")
+        .remove();
     div.transition()
         .duration(500)
         .style("opacity", 0);
@@ -310,9 +316,9 @@ function getcluster(data) {
     //
     // console.log(centroids);
     // return centroids;
-    var cluster_count_genre=[];
+    var cluster_count_genre = [];
     var index;
-    for (i=1;i<clusterSet.length;i++){
+    for (i = 1; i < clusterSet.length; i++) {
         cluster_count_genre.push(CountGenres(clusterSet[i].points))
     }
     console.log(cluster_count_genre)

@@ -3,8 +3,8 @@ var legendWidth = 1000, legendHeight = 150,
     legendConntentWidth = legendWidth - legendMargin.left - legendMargin.right,
     legendContentHeight = legendHeight - legendMargin.top - legendMargin.bottom;
 
-var legendSvg = d3.select("#legend-chart").append("svg").attr("width",legendConntentWidth).attr("height",legendContentHeight),
-    legendG = legendSvg.append("g").attr("transform","translate("+legendMargin.left+","+legendMargin.top+")");
+var legendSvg = d3.select("#legend-chart").append("svg").attr("width", legendConntentWidth).attr("height", legendContentHeight),
+    legendG = legendSvg.append("g").attr("transform", "translate(" + legendMargin.left + "," + legendMargin.top + ")");
 
 var legendisClicked = false;
 
@@ -12,7 +12,7 @@ var legendGenres = [];
 
 function drawLegend() {
 
-    legendGenres = topGenres20.map(g=>g.genre).slice(0,19);
+    legendGenres = topGenres20.map(g => g.genre).slice(0, 19);
     legendGenres.push("Others");
 
     var rectHeight = 13, rectWidth = 80;
@@ -27,13 +27,18 @@ function drawLegend() {
         // .attr("id",d=>{return "legendRect"+d;})
         .attr("x", (d, i) => {
             if (i < 10) return i * rectWidth;
-            else return (i-10) * rectWidth; })
-        .attr("y", (d,i)=>(i<10)?0:rectHeight*2+30)
+            else return (i - 10) * rectWidth;
+        })
+        .attr("y", (d, i) => (i < 10) ? 0 : rectHeight * 2 + 30)
         .attr("width", rectWidth).attr("height", rectHeight)
         .style("fill", d => colorByTop20Genres(d))
-        .on("mouseover",d=>{legendMouseOver(d)})
-        .on("mouseout",legendMouseOut)
-        .on("click",d=>{legendClick(d)})
+        .on("mouseover", d => {
+            legendMouseOver(d)
+        })
+        .on("mouseout", legendMouseOut)
+        .on("click", d => {
+            legendClick(d)
+        })
 
     legendG.append("g")
         .attr("class", "legend")
@@ -42,16 +47,21 @@ function drawLegend() {
         .enter()
         .append("text")
         // .attr("id",d=>{return "legendText"+d;})
-        .style("text-anchor","middle")
-        .style("font","12px times")
-        .attr("x",(d,i)=> {
-            if (i < 10) return i * rectWidth + rectWidth/2;
-            else return (i-10) * rectWidth + rectWidth/2; })
-        .attr("y", (d,i)=>(i<10)?rectHeight+15:(rectHeight+30)*2)
-        .text(d=>d)
-        .on("mouseover",d=>{legendMouseOver(d)})
-        .on("mouseout",legendMouseOut)
-        .on("click",d=>{legendClick(d)})
+        .style("text-anchor", "middle")
+        .style("font", "12px times")
+        .attr("x", (d, i) => {
+            if (i < 10) return i * rectWidth + rectWidth / 2;
+            else return (i - 10) * rectWidth + rectWidth / 2;
+        })
+        .attr("y", (d, i) => (i < 10) ? rectHeight + 15 : (rectHeight + 30) * 2)
+        .text(d => d)
+        .on("mouseover", d => {
+            legendMouseOver(d)
+        })
+        .on("mouseout", legendMouseOut)
+        .on("click", d => {
+            legendClick(d)
+        })
 }
 
 function legendMouseOver(gen) {
@@ -64,27 +74,16 @@ function legendMouseOver(gen) {
     // });
 
     // foreground.style("opacity","0.5");
-    var selected = [];
-    foreground.style("display", function(d) {
-        if(d.genre == gen){
-            selected.push(d);
-            return null;
-        }
-        return"none"});
-    Draw_Scatterplot(selected);
+    foreground.style("display", function (d) {
+        return (d.genre == gen) ? null : "none"
+    });
 }
 
 function legendMouseOut() {
-
-    if(!legendisClicked) {
-        var selected = [];
+    if (!legendisClicked) {
         // foreground.style("opacity",minForegroundOpacity);
-        foreground.style("display", d=>{
-            selected.push(d);
-            return null});
+        foreground.style("display", null);
 
-
-        Draw_Scatterplot(selected);
         // legendG.style("opacity","1");
         // legendGenres.forEach(d=>{
         //     d3.select("#legendRect"+d).style("opacity","1");
@@ -92,11 +91,10 @@ function legendMouseOut() {
         //
         // })
     }
-
 }
 
 function legendClick(gen) {
-    if(legendisClicked)
+    if (legendisClicked)
         foreground.style("display", null);
     else
         legendMouseOver(gen);
