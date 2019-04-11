@@ -71,13 +71,14 @@ The task completed by each member is described as following:
 - Legend for Genre coloring - Nhat, Hao, Darien
 - Legend for Genre coloring; mouseover events - Hao
 - Scatterplot; context info on mouseover - Nhat
+- Report on readme: Nhat, Darien
 
 
 # Interesting Findings and Observation:
 
 We are still confused about how genres are defined in each dataset. Depending on the variance of the value of each audio features, it's hard to define the genres close to each other like Rock, Electronic, Hip-Hop. However, looking the graph below, it's clearly that Rock (Green) has the significant higher value of energy and valence comparing with the Fold (Orange)
 
-![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/tsne.jpeg)
+![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/tsne.JPG)
 
 
 
