@@ -50,3 +50,17 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 
 3. In the future, we will implement sample song when users click to color legend represented for each genre. It's really useful since users will get more sense about how genre is defined.
 
+# Team work and member contribution:
+This is the first time we work together as a team. The great thing is that all the team member is responsible for their task as well as active in communication.
+We keep record of our plan and any change in the google docs can be accessed via the link: https://docs.google.com/document/d/1S3JwXyC4khUWXspvmMm_VTI3uhHmnp570HxRtPYyoXY/edit?usp=sharing
+
+The task completed by each member is described as following:
+- Task : Name 
+- Task : Name
+- Task : Name
+- Task : Name
+
+
+
+
+
