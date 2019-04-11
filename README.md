@@ -1,5 +1,4 @@
-# CS5331-Project-2
-SONG GENRE VISUALIZATION
+# CS5331-Project-2: SONG GENRE VISUALIZATION
 
 ## Video
 [Video Link Here](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Project%202%20Demo%20Video.mkv)
@@ -31,7 +30,7 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 - We decided to use the T-Sne library in Javascript (https://github.com/karpathy/tsnejs)
 - However, we are unable to process all 13,127 datapoints (songs) (each has 8-dimensions) in web browser, we tried process the wholde dataset in Node.js also. Finally, we decided to use the first 8000 songs in our dataset and we think it preserved much information needed for our visualization.
 ![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/tsne.gif)
-- The above image is the test example of processing 500 datapoints using T-SNE. However, with 8000 datapoints, it takes about 30 minutes to complete so we chose to pre-computed the output of tsne.
+- The above image is the test example of processing 500 datapoints using T-SNE. However, with 8000 datapoints, it takes about 30 minutes (we used webworker) to complete so we chose to pre-computed the output of tsne.
 
 # Functionality:
 1. Filter and Brush in Parallel Coordinate Graph: User can choose the filter by year or genre to display the data. Brush to the specific range in each dimension to observe the trend.
@@ -40,7 +39,13 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 
 3. No refresh since we apply enter, exit and update in our svg elements.
 
-4. Zoom function applied in ScatterPlot
+4. Zoom function applied in ScatterPlot.
+
+5. Display specific genre when mouseover in colorlegend element.
 
 
+# Limitation and Future Work:
+1. Currently, we are unable to visualize the whole 13,127 songs, however, we will find the way to reduce the cost when working with t-sne.
+2. We want to visualize each iteration when computing the t-sne so it may provide more visible information how t-sne works.
 
+3. In the future, we will implement sample song when users click to color legend represented for each genre. It's really useful since users will get more sense about how genre is defined.
