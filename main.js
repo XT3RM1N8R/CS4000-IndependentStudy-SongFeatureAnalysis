@@ -66,7 +66,6 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         topGenres20 = topGenresAll.slice(0, 20);
 
         UpdateDataTSNE(bigdata.slice(0, testSize));
-
         drawSlider();
         graphByYear(dataset, sliderTime.value());
         document.getElementById("genreContainer").style.display = "none";
@@ -75,10 +74,10 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         // getcluster(audioData)
 
         //Using hierachical cluster method (source: https://harthur.github.io/clusterfck/ )
-        var threshold = 14; // only combine two clusters with distance less than 14 ??? I still in question about the threshold
-        var clusters = clusterfck.hcluster(audioData, clusterfck.EUCLIDEAN_DISTANCE,
-            clusterfck.AVERAGE_LINKAGE, threshold);
-        console.log(clusters)
+        // var threshold = 14; // only combine two clusters with distance less than 14 ??? I still in question about the threshold
+        // var clusters = clusterfck.hcluster(audioData, clusterfck.EUCLIDEAN_DISTANCE,
+        //     clusterfck.AVERAGE_LINKAGE, threshold);
+        // console.log(clusters)
 
 
     });
