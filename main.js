@@ -73,11 +73,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         graphByYear(dataset, sliderTime.value());
         document.getElementById("genreContainer").style.display = "none";
 
-        drawLegend(d=>{
-            var temp = topGenres20.map(g=>g.genre).slice(0,19);
-            temp.push("Others");
-            return temp;
-        });
+        drawLegend();
 
         //Using k-mean for 10 clusters, apply count genre in each cluster;
         // getcluster(audioData)
@@ -200,13 +196,14 @@ function Draw_Scatterplot(data) {
             .attr("r", circleRadius)
             .attr("data-legend",function(d) { return d.genre})
             .style("opacity", circleOpacity)
-            .style("fill", function (d) {
-                if (topGenres20.some(element => element.genre === d.genre)) {
-                    return color(d.genre);
-                } else {
-                    return "black";
-                }
-            })
+            .style("fill",d=>colorByTop20Genres(d.genre))
+            // .style("fill", function (d) {
+            //     if (topGenres20.some(element => element.genre === d.genre)) {
+            //         return color(d.genre);
+            //     } else {
+            //         return "black";
+            //     }
+            // })
             .on("mouseover", function (d) {
                 MouseOverCircles(d);
                 MouseOverLines(d);
@@ -223,13 +220,14 @@ function Draw_Scatterplot(data) {
             .attr("cy", d => yScale(d.y))
             .attr("r", circleRadius)
             .style("opacity", circleOpacity)
-            .style("fill", function (d) {
-                if (topGenres20.some(element => element.genre === d.genre)) {
-                    return color(d.genre);
-                } else {
-                    return "black";
-                }
-            });
+            .style("fill",d=>colorByTop20Genres(d.genre));
+            // .style("fill", function (d) {
+            //     if (topGenres20.some(element => element.genre === d.genre)) {
+            //         return color(d.genre);
+            //     } else {
+            //         return "black";
+            //     }
+            // });
     }
 }
 

@@ -12,7 +12,7 @@ const formatYear = d3.timeFormat("%Y");
 
 var parallelSvg = d3.select("#chart-area").append("svg").attr("width",parallelWidth+200).attr("height",parallelHeight),
     g = parallelSvg.append("g").attr("transform","translate("+parallelMargin.left+","+parallelMargin.top+")"),
-    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight/2)+","+(parallelMargin.top-15)+")");
+    titleGroup = parallelSvg.append("g").attr("transform","translate("+(parallelContentHeight-15)+","+(parallelMargin.top-15)+")");
 
 // x, y, and color Scale
 var xScale = d3.scalePoint().range([0,parallelContentWidth]),
@@ -213,6 +213,7 @@ function drawGraph(songs,year,selectedGenres) {
         .on("mouseover",d=>{
             MouseOverLines(d);
             MouseOverCircles(d);
+            MouseOvertooltip(d);
         })
         .on("mouseout",d=>{
             MouseOutLines(d);
@@ -280,11 +281,12 @@ function MouseOverLines(d) {
     // Show title - genre (Year)
     titleGroup.append("text")
     .style("font-weight","bold")
-    .style("font", "14px sans-serif")
+    .style("font", "12px sans-serif")
     .attr("y", -5)
     .attr("class","title")
     .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
-    
+
+    // Show rect before title
     titleGroup.append("rect")
     .attr("class","title")
     .attr("x",-17)
