@@ -1,5 +1,5 @@
 svg {
-    font: 10px sans-serif;
+    font: 10px Times;
 }
 
 .background path {
@@ -25,13 +25,14 @@ svg {
     shape-rendering: crispEdges;
 }
 
-.axises text {
-    font-size: 10px;
-    /*stroke: black;*/
-    font-weight: lighter;
-    text-shadow: 0 1px 0 darkblue, 1px 0 0 #fff, 0 -1px 0 darkblue, -1px 0 0 #fff;
-    cursor: move;
-}
+/*.axises text {*/
+    /*font-size: 10px;*/
+    /*!*stroke: black;*!*/
+    /*font-family: Times;*/
+    /*font-weight: lighter;*/
+    /*text-shadow: 0 1px 0 darkblue, 1px 0 0 #fff, 0 -1px 0 darkblue, -1px 0 0 #fff;*/
+    /*cursor: move;*/
+/*}*/
 
 .header {
     font-family: 'Open Sans', sans-serif;
