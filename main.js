@@ -117,7 +117,7 @@ function CountGenres(data) {    // ***We could optimize this function further, b
     return count_genre;
 }
 
-const width = 700, height = 500,
+const width = 700, height = 350,
     margin = {left: 20, top: 20, right: 20, bottom: 20},
     contentWidth = width - margin.left - margin.right,
     contentHeight = height - margin.top - margin.bottom;

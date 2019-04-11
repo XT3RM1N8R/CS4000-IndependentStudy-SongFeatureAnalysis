@@ -1,7 +1,7 @@
 // console.log('1111111111');
 
 // Info to show visualization
-var parallelWidth = 630, parallelHeight = 500,
+var parallelWidth = 630, parallelHeight = 300,
     parallelMargin = {top: 30, right: 20, bottom: 30, left: 30},
     parallelContentWidth = parallelWidth - parallelMargin.left - parallelMargin.right,
     parallelContentHeight = parallelHeight - parallelMargin.top - parallelMargin.bottom;
