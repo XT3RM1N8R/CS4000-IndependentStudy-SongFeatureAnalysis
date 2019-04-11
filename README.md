@@ -80,5 +80,8 @@ We are still confused about how genres are defined in each dataset. Depending on
 
 ![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/rock-folk.JPG)
 
+When observe Electronic genre, we see that instrumentalness, liveness, and speechiness seem not to be changed variously. For instrumentalness, they focuses around 0.8 and 1, which mean fully instrumental. For speechiness, they are aournd 0 to 0.2 to show that not much words in this genre. Finally, the liveness is in [0,0.4] means almost songs are recorded.  
+![Electronic](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/Electronic.png)
+
 
 
