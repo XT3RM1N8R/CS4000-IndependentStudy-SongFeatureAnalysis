@@ -35,7 +35,11 @@ var line = d3.line(),
 //drag object
 var dragging = {};
 
-
+function colorByTop20Genres(genre) {
+    if(topGenres20.map(d=>d.genre).includes(genre))
+        return color(genre);
+    return "#000000";
+}
 function drawSlider() {
     var timeRange = d3.extent(dataset,d=>{return d.tracks_track_date_created});
     var dataTime = d3.range(timeRange[0],timeRange[1]+1).map(d=>{
@@ -203,7 +207,7 @@ function drawGraph(songs,year,selectedGenres) {
         .append("path")
         .attr("id",d=>{return "path"+ d.track_id;})
         .attr("d", path)
-        .attr("stroke",d=>{return color(d.genre);})
+        .attr("stroke",d=>{return colorByTop20Genres(d.genre);})
         .attr("data-legend",function(d) { return d.genre})
         .on("mouseover",d=>{
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
@@ -220,7 +224,7 @@ function drawGraph(songs,year,selectedGenres) {
                 .attr("x",-17)
                 .attr("y",-15)
                 .attr("width",10).attr("height",10)
-                .style("fill",function (){return color(d.genre)});
+                .style("fill",function (){return colorByTop20Genres(d.genre)});
 
             //Show song info to the graph
             xAxisGroup.append("text").attr("class","title")
