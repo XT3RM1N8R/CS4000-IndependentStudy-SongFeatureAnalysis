@@ -124,6 +124,27 @@ const svg = d3.select("#theGraph")
     .attr("width", width)
     .attr("height", height);
 
+var ordinal = d3.scaleOrdinal() // This is for testing the legend with a scale
+.domain(["a", "b", "c", "d", "e"])
+.range([ "rgb(153, 107, 195)", "rgb(56, 106, 197)", "rgb(93, 199, 76)", "rgb(223, 199, 31)", "rgb(234, 118, 47)"]);
+
+const legend = svg.append("g")
+    .attr("class","legend")
+    .attr("transform","translate(50,30)")
+    .style("font-size","12px")
+    .call(d3.legendColor);
+
+svg.append("g")
+.attr("class", "legendOrdinal")
+.attr("transform", "translate(20,20)");
+
+var legendOrdinal = d3.legendColor()
+.shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
+.shapePadding(10)
+.scale(ordinal);  // .scale(color) does not work  // .scale(color.domain(topGenres20) does not work
+
+svg.select(".legendOrdinal")
+.call(legendOrdinal);
 
 const scatterplot = svg
     .append("g")
@@ -189,6 +210,7 @@ function Draw_Scatterplot(data) {
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
             .attr("r", radius)
+            .attr("data-legend",function(d) { return d.genre})
             .style("opacity", opacity)
             .style("fill", function (d) {
                 if (topGenres20.some(element => element.genre === d.genre)) {

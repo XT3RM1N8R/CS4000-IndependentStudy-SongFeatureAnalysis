@@ -204,6 +204,7 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("id",d=>{return "path"+ d.track_id;})
         .attr("d", path)
         .attr("stroke",d=>{return color(d.genre);})
+        .attr("data-legend",function(d) { return d.genre})
         .on("mouseover",d=>{
             d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
 
