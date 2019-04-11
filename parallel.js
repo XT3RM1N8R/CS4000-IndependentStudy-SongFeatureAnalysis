@@ -36,7 +36,8 @@ var line = d3.line(),
 var dragging = {};
 
 function colorByTop20Genres(genre) {
-    if(topGenres20.map(d=>d.genre).includes(genre))
+    var temp = topGenres20.map(d=>d.genre).slice(0,19);
+    if(temp.includes(genre))
         return color(genre);
     return "#000000";
 }

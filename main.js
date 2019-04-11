@@ -74,7 +74,7 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
         document.getElementById("genreContainer").style.display = "none";
 
         drawLegend(d=>{
-            var temp = topGenres20.map(g=>g.genre);
+            var temp = topGenres20.map(g=>g.genre).slice(0,19);
             temp.push("Others");
             return temp;
         });
