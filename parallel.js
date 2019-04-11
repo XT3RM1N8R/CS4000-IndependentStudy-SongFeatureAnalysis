@@ -60,6 +60,8 @@ function drawSlider() {
         .on('onchange', val => {
             d3.select('p#value-time').text((val));
             graphByYear(dataset,sliderTime.value());
+
+            legendisClicked = false; //set legend off-click
         });
 
     var gTime = d3

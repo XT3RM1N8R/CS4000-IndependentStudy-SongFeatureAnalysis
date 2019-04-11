@@ -64,14 +64,27 @@ function legendMouseOver(gen) {
     // });
 
     // foreground.style("opacity","0.5");
-    foreground.style("display", function(d) {return (d.genre == gen)? null:"none"});
+    var selected = [];
+    foreground.style("display", function(d) {
+        if(d.genre == gen){
+            selected.push(d);
+            return null;
+        }
+        return"none"});
+    Draw_Scatterplot(selected);
 }
 
 function legendMouseOut() {
-    if(!legendisClicked) {
-        // foreground.style("opacity",minForegroundOpacity);
-        foreground.style("display", null);
 
+    if(!legendisClicked) {
+        var selected = [];
+        // foreground.style("opacity",minForegroundOpacity);
+        foreground.style("display", d=>{
+            selected.push(d);
+            return null});
+
+
+        Draw_Scatterplot(selected);
         // legendG.style("opacity","1");
         // legendGenres.forEach(d=>{
         //     d3.select("#legendRect"+d).style("opacity","1");
@@ -79,6 +92,7 @@ function legendMouseOut() {
         //
         // })
     }
+
 }
 
 function legendClick(gen) {
