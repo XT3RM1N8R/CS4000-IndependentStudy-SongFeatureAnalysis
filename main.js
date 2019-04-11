@@ -156,9 +156,7 @@ const scatterplot = svg
 
 
 //create zoom handler
-var zoom_handler = d3.zoom().scaleExtent([1, 6])
-    .translateExtent([[0, 0], [width, height]])
-    .extent([[0, 0], [width, height]])
+var zoom_handler = d3.zoom().scaleExtent([0, 6])
     .on("zoom", zoom);
 
 
