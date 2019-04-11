@@ -255,7 +255,7 @@ function drawGraph(songs,year,selectedGenres) {
             if(d=="duration")
                 return d+"(s)";
             if(d=="tempo")
-                return d+"(bps)";
+                return d+"(bpm)";
             return d;
         });
 
