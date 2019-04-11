@@ -1,5 +1,5 @@
-var legendWidth = 1700, legendHeight = 150,
-    legendMargin = {top: 10, right: 10, bottom: 10, left: 200},
+var legendWidth = 1000, legendHeight = 150,
+    legendMargin = {top: 10, right: 10, bottom: 10, left: 10},
     legendConntentWidth = legendWidth - legendMargin.left - legendMargin.right,
     legendContentHeight = legendHeight - legendMargin.top - legendMargin.bottom;
 
@@ -8,7 +8,7 @@ var legendSvg = d3.select("#legend-chart").append("svg").attr("width",legendConn
 
 function drawLegend(genres) {
 
-    var rectHeight = 10, rectWidth = 90;
+    var rectHeight = 10, rectWidth = 80;
     // var textX = rectWidth/2;
 
     legendG.append("g")
@@ -41,5 +41,6 @@ function drawLegend(genres) {
             if(d == "Old-Time / Historic")
                 return "Old-Time";
             return d});
+
 
 }

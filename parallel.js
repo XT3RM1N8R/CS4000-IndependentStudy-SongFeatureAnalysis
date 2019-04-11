@@ -52,7 +52,7 @@ function drawSlider() {
         .min(timeRange[0])
         .max(timeRange[1])
         .step(1)
-        .width(300)
+        .width(150)
         .tickFormat(d3.format(".0f"))
         .tickValues(dataTime)
         .default(dataTime[0])
@@ -65,7 +65,7 @@ function drawSlider() {
         .select('#slider-time')
         .append('svg')
         .attr("id","slider")
-        .attr('width', 400)
+        .attr('width', 200)
         .attr('height', 100)
         .append('g')
         .attr('transform', 'translate(30,30)');

@@ -144,11 +144,22 @@ h2 {
 
 #slider-time{
     position: relative;
-    width: 700px;
+    width: 200px;
     height: 100px;
 }
 .col-sm-1{
     position: relative;
-    width: 700px;
+    width: 200px;
     height: 100px;
+}
+
+#slider{
+    position: relative;
+    width:250px;
+    height:100px;
+}
+#legend-chart {
+    position: absolute;
+    top: 50px;
+    left: 300px;
 }
