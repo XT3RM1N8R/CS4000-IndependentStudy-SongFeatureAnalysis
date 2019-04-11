@@ -68,7 +68,7 @@ svg {
     float: left;
     border: 1px solid black;
     position:absolute;
-    width:700px;
+    width:705px;
     height:400px;
 }
 .filter{
@@ -80,8 +80,8 @@ svg {
     float: left;
     border: 1px solid black;
     position:absolute;
-    left:708px;
-    width:650px;
+    left:713px;
+    width:700px;
     height:400px;
 }
 /*Slider style*/

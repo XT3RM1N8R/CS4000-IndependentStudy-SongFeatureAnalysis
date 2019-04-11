@@ -210,10 +210,12 @@ function Draw_Scatterplot(data) {
             .on("mouseover", function (d) {
                 MouseOverCircles(d);
                 MouseOverLines(d);
+                MouseOvertooltip(d);
             })
             .on("mouseout", function (d) {
                 MouseOutCircles(d);
                 MouseOutLines(d);
+
             });
         //Update
         selection
@@ -235,41 +237,32 @@ function MouseOverCircles(d) {
     d3.select("#circle" + d.track_id)
     .attr("r", circleRadius * 3);
     d3.select("#circle" + d.track_id)
-    .append("title")
-    .text(function (d) {
-        if (topGenres20.some(element => element.genre === d.genre)) {
-            return "Top Genre: " + d.genre;
-        } else {
-            return "Genre: " + d.genre;
-        }
-    });
-    acousticness: 0.416675233
-    danceability: 0.675893985
-    duration: "168"
-    energy: 0.634476268
-    genre: "Hip-Hop"
-    instrumentalness: 0.010628068
-    liveness: 0.177646571
-    speechiness: 0.159310065
-    tempo: 165.922
+    // .append("title")
+    // .text(function (d) {
+    //     if (topGenres20.some(element => element.genre === d.genre)) {
+    //         return "Top Genre: " + d.genre;
+    //     } else {
+    //         return "Genre: " + d.genre;
+    //     }
+    // }
 
+}
+function MouseOvertooltip(d) {
     div.transition()
         .duration(200)
         .style("opacity", .9);
-    div	.html("Genre:"+ d.genre + "<br/>" +
+    div.html("Genre:" + d.genre + "<br/>" +
         "Acousticness:" + d.acousticness.toFixed(2) + "<br/>" +
-    "Danceability:" + d.danceability.toFixed(2) + "<br/>"+
-    "Duration:" + d.duration + "<br/>"+
-    "Energy:" + d.energy.toFixed(2) + "<br/>"+
-    "Instrumentalness:" + d.instrumentalness.toFixed(2) + "<br/>"+
-    "Liveness:" + d.liveness.toFixed(2) + "<br/>"+
-    "Speechiness:" + d.speechiness.toFixed(2) + "<br/>"+
-    "Tempo:" + d.tempo)
+        "Danceability:" + d.danceability.toFixed(2) + "<br/>" +
+        "Duration:" + d.duration + "<br/>" +
+        "Energy:" + d.energy.toFixed(2) + "<br/>" +
+        "Instrumentalness:" + d.instrumentalness.toFixed(2) + "<br/>" +
+        "Liveness:" + d.liveness.toFixed(2) + "<br/>" +
+        "Speechiness:" + d.speechiness.toFixed(2) + "<br/>" +
+        "Tempo:" + d.tempo)
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY - 28) + "px");
-
 }
-
 function MouseOutCircles(d) {
     d3.select("#circle" + d.track_id)
     .attr("r", circleRadius);
