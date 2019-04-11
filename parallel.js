@@ -169,7 +169,7 @@ function graphByYear(data, year) {
 }
 
 const maxForegroundOpacity = "1";
-const minForegroundOpacity = "0.1";
+const minForegroundOpacity = "0.2";
 
 
 // Draw graph from songs data, and year (0: draw all year, else: draw by year)

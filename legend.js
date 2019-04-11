@@ -24,8 +24,7 @@ function drawLegend() {
         .data(legendGenres)
         .enter()
         .append("rect")
-        .attr("id",d=>{return "legendRect"+d;})
-        // .attr("id",d=>{return "path"+ d.track_id;})
+        // .attr("id",d=>{return "legendRect"+d;})
         .attr("x", (d, i) => {
             if (i < 10) return i * rectWidth;
             else return (i-10) * rectWidth; })
@@ -42,7 +41,7 @@ function drawLegend() {
         .data(legendGenres)
         .enter()
         .append("text")
-        .attr("id",d=>{return "legendText"+d;})
+        // .attr("id",d=>{return "legendText"+d;})
         .style("text-anchor","middle")
         .style("font","12px times")
         .attr("x",(d,i)=> {
@@ -64,13 +63,15 @@ function legendMouseOver(gen) {
     //     }
     // });
 
-    // legendG.style("opacity","0.3");
+    // foreground.style("opacity","0.5");
     foreground.style("display", function(d) {return (d.genre == gen)? null:"none"});
 }
 
 function legendMouseOut() {
     if(!legendisClicked) {
+        // foreground.style("opacity",minForegroundOpacity);
         foreground.style("display", null);
+
         // legendG.style("opacity","1");
         // legendGenres.forEach(d=>{
         //     d3.select("#legendRect"+d).style("opacity","1");
