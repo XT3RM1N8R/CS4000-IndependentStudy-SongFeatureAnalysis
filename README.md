@@ -35,6 +35,7 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 # Functionality:
 1. Filter and Brush in Parallel Coordinate Graph: User can choose the filter by year or genre to display the data. Brush to the specific range in each dimension to observe the trend.
 
+
 2. Link between two graphs via mouseover event.
 
 3. No refresh since we apply enter, exit and update in our svg elements.
@@ -43,9 +44,9 @@ Source of audio features collected in Spotify (https://towardsdatascience.com/is
 
 5. Display specific genre when mouseover in colorlegend element.
 
-
 # Limitation and Future Work:
 1. Currently, we are unable to visualize the whole 13,127 songs, however, we will find the way to reduce the cost when working with t-sne.
 2. We want to visualize each iteration when computing the t-sne so it may provide more visible information how t-sne works.
 
 3. In the future, we will implement sample song when users click to color legend represented for each genre. It's really useful since users will get more sense about how genre is defined.
+
