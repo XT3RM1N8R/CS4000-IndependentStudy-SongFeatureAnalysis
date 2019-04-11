@@ -12,7 +12,7 @@ Link: https://nhatmusic.github.io/CS5331-Project-2/
 - In our project, We mostly focus on the audio features, these audio features are contained in echonest.csv with 13127 songs. We will discuss about the meaning of the audio features we use in our project as following:
 
 - Note: the value of all the features (except tempo) is in the range 0.0 -1.0.
-1. Instrumentalness: This value represents the amount of vocals in the song. The closer it is to 1.0, the more instrumental the song is.
+1. Instrumentalness: This value represents the amount of vocals (or lack thereof) in the song. The closer it is to 1.0, the more instrumental the song is.
 2. Acousticness: This value describes how acoustic a song is. A score of 1.0 means the song is most likely to be an acoustic one.
 3. Liveness: This value describes the probability that the song was recorded with a live audience. According to the official documentation “a value above 0.8 provides strong likelihood that the track is live”.
 4. Speechiness: “Speechiness detects the presence of spoken words in a track”. If the speechiness of a song is above 0.66, it is probably made of spoken words, a score between 0.33 and 0.66 is a song that may contain both music and words, and a score below 0.33 means the song does not have any speech.
