@@ -27,7 +27,7 @@ svg {
 
 .axises text {
     font-size: 10px;
-    stroke: black;
+    /*stroke: black;*/
     font-weight: lighter;
     text-shadow: 0 1px 0 darkblue, 1px 0 0 #fff, 0 -1px 0 darkblue, -1px 0 0 #fff;
     cursor: move;

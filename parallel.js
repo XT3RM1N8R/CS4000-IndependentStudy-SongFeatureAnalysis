@@ -265,6 +265,7 @@ function drawGraph(songs,year,selectedGenres) {
         })
         .append("text")
         .style("text-anchor", "middle")
+        .style("fill","black")
         .attr("y", parallelContentHeight + 15)
         .text(function (d) {
             if(d=="duration")
@@ -318,7 +319,6 @@ function transition(g) {
     return g.transition().duration(500);
 }
 function dragended(d) {
-    console.log("drag end");
     delete dragging[d];
     d3.select(this).attr("transform", "translate(" + xScale(d) + ")");
     transition(foreground).attr("d", path);
@@ -346,6 +346,30 @@ function brush() {
         });
 
     var selected = [];
+    foreground.style("display", function(d) {
+        if(actives.every(function(active) {
+            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
+            return result;
+        })) {
+            selected.push(d);
+            return null;
+        }
+        else return"none";
+    });
+
+    // Link to scatterPlot in brushing
+    if(d3.brushSelection(this)==null) {     // If not brushing, update Scatter plot
+        if(!selected.length) {
+            var selectedSongs = [];
+            var year = sliderTime.value();
+            dataset.forEach(d=>{
+                if(d.tracks_track_date_created == year)
+                    selected.push(d);
+            });
+        }
+    }
+    Draw_Scatterplot(selected);
+
     // Update foreground to only display selected values
     // foreground.style("opacity",function(d) {
     //         return actives.every(function(active) {
@@ -354,13 +378,7 @@ function brush() {
     //             return result;
     //         }) ? "1" : "0.1";
     //     });
-    foreground.style("display", function(d) {
-        return actives.every(function(active) {
-            let result = active.extent[1] <= d[active.feature] && d[active.feature] <= active.extent[0];
-            if(result)selected.push(d);
-            return result;
-        }) ? null : "none";
-    });
+
     // (actives.length>0)?out.text(d3.tsvFormat(selected.slice(0,24))):out.text(d3.tsvFormat(sample_data.slice(0,24)));;
 
 }
