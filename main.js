@@ -186,6 +186,9 @@ function UpdateDataTSNE(data) {
     });
 }
 
+const circleRadius = 3;
+const circleOpacity = "0.75";
+
 // Draw a scatterplot from the given data
 function Draw_Scatterplot(data) {
     const xScale = d3.scaleLinear()
@@ -197,14 +200,7 @@ function Draw_Scatterplot(data) {
 
     UpdateNodes(data);
 
-    //DrawLegend(color, topGenres20);
-
     function UpdateNodes(data) {
-        const hoverDelay = 50;
-        const radius = 3;
-        const opacity = "0.75";
-
-
         const selection = scatterplot.selectAll(".compute").data(data);
         //Exit
         selection.exit().remove();
@@ -212,11 +208,12 @@ function Draw_Scatterplot(data) {
         const newElements = selection.enter()
             .append('circle')
             .attr("class", "compute")
+            .attr("id", d => "circle" + d.track_id)
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
-            .attr("r", radius)
+            .attr("r", circleRadius)
             .attr("data-legend",function(d) { return d.genre})
-            .style("opacity", opacity)
+            .style("opacity", circleOpacity)
             .style("fill", function (d) {
                 if (topGenres20.some(element => element.genre === d.genre)) {
                     return color(d.genre);
@@ -225,40 +222,19 @@ function Draw_Scatterplot(data) {
                 }
             })
             .on("mouseover", function (d) {
-                /*d3.select(this)   // Doesn't work
-                .append("circle")
-                    .attr("cx", d => xScale(d.x))
-                    .attr("cy", d => yScale(d.y))
-                    .attr("r", radius * 2)
-                    .style("fill", "black");*/
-                d3.select(this)     // Does work
-                    .attr("r", radius * 3);
-                d3.select(this)
-                    .append("title")
-                    .text(function (d) {
-                        if (topGenres20.some(element => element.genre === d.genre)) {
-                            return "Top Genre: " + d.genre;
-                        } else {
-                            return "Genre: " + d.genre;
-                        }
-                    })
+                MouseOverCircles(d);
+                MouseOverLines(d);
             })
             .on("mouseout", function (d) {
-                /*d3.select(this)   // Doesn't Work
-                .select("circle")
-                    .remove();*/
-                d3.select(this)     // Does work
-                    .attr("r", radius);
-                d3.select(this)
-                    .select("text")
-                    .remove();
+                MouseOutCircles(d);
+                MouseOutLines(d);
             });
         //Update
         selection
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
-            .attr("r", radius)
-            .style("opacity", opacity)
+            .attr("r", circleRadius)
+            .style("opacity", circleOpacity)
             .style("fill", function (d) {
                 if (topGenres20.some(element => element.genre === d.genre)) {
                     return color(d.genre);
@@ -267,6 +243,28 @@ function Draw_Scatterplot(data) {
                 }
             });
     }
+}
+
+function MouseOverCircles(d) {
+    d3.select("#circle" + d.track_id)
+    .attr("r", circleRadius * 3);
+    d3.select("#circle" + d.track_id)
+    .append("title")
+    .text(function (d) {
+        if (topGenres20.some(element => element.genre === d.genre)) {
+            return "Top Genre: " + d.genre;
+        } else {
+            return "Genre: " + d.genre;
+        }
+    });
+}
+
+function MouseOutCircles(d) {
+    d3.select("#circle" + d.track_id)
+    .attr("r", circleRadius);
+    d3.select("#circle" + d.track_id)
+    .select("text")
+    .remove();
 }
 
 /*function DrawLegend(colorScale, values) {

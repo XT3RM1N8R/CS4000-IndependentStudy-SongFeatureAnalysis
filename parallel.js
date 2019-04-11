@@ -210,35 +210,12 @@ function drawGraph(songs,year,selectedGenres) {
         .attr("stroke",d=>{return colorByTop20Genres(d.genre);})
         .attr("data-legend",function(d) { return d.genre})
         .on("mouseover",d=>{
-            d3.select("#path"+ d.track_id).style("stroke-width","4px").style("opacity", maxForegroundOpacity);
-
-            // Show title - genre (Year)
-            titleGroup.append("text")
-                .style("font-weight","bold")
-                .attr("y", -5)
-                .attr("class","title")
-                .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
-
-            titleGroup.append("rect")
-                .attr("class","title")
-                .attr("x",-17)
-                .attr("y",-15)
-                .attr("width",10).attr("height",10)
-                .style("fill",function (){return colorByTop20Genres(d.genre)});
-
-            //Show song info to the graph
-            xAxisGroup.append("text").attr("class","title")
-                .style("text-anchor","middle")
-                .style("font","10px times")
-                .attr("y",-5)
-                .text(feature=>{
-                    if(feature != "genre")
-                        return d[feature];
-                });
+            MouseOverLines(d);
+            MouseOverCircles(d);
         })
         .on("mouseout",d=>{
-            d3.select("#path"+ d.track_id).style("stroke-width","1px").style("opacity", minForegroundOpacity);
-            d3.selectAll(".title").remove();
+            MouseOutLines(d);
+            MouseOutCircles(d);
         });
     foreground.style("opacity", minForegroundOpacity);
 
@@ -292,6 +269,43 @@ function drawGraph(songs,year,selectedGenres) {
                 );
             }
         });
+}
+
+function MouseOverLines(d) {
+    d3.select("#path"+ d.track_id)
+    .style("stroke-width","4px")
+    .style("opacity", maxForegroundOpacity);
+    
+    // Show title - genre (Year)
+    titleGroup.append("text")
+    .style("font-weight","bold")
+    .attr("y", -5)
+    .attr("class","title")
+    .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
+    
+    titleGroup.append("rect")
+    .attr("class","title")
+    .attr("x",-17)
+    .attr("y",-15)
+    .attr("width",10).attr("height",10)
+    .style("fill",function (){return colorByTop20Genres(d.genre)});
+    
+    //Show song info to the graph
+    xAxisGroup.append("text").attr("class","title")
+    .style("text-anchor","middle")
+    .style("font","10px times")
+    .attr("y",-5)
+    .text(feature=>{
+        if(feature != "genre")
+            return d[feature];
+    });
+}
+
+function MouseOutLines(d) {
+    d3.select("#path"+ d.track_id)
+    .style("stroke-width","1px")
+    .style("opacity", minForegroundOpacity);
+    d3.selectAll(".title").remove();
 }
 
 function path(d) {
