@@ -9,9 +9,9 @@ Link: https://nhatmusic.github.io/CS5331-Project-2/
 ## Dataset:
 - The FMA provides audio from 106,574 tracks from 16,341 artists and 14,854 albums, arranged in a hierarchical taxonomy of 161 genres. It provides full-length and high-quality audio, pre-computed features, together with track- and user-level metadata, tags, and free-form text such as biographies.
 
-- In our project, We mostly focus on the audio features, these audio features is contained in echonest.csv with 13127 songs. We will discuss about the meaning of the audio features we use in our project as following:
+- In our project, We mostly focus on the audio features, these audio features are contained in echonest.csv with 13127 songs. We will discuss about the meaning of the audio features we use in our project as following:
 
-- Note: the value of all the features is in the range 0.0 -1.0.
+- Note: the value of all the features (except tempo) is in the range 0.0 -1.0.
 1. Instrumentalness: This value represents the amount of vocals in the song. The closer it is to 1.0, the more instrumental the song is.
 2. Acousticness: This value describes how acoustic a song is. A score of 1.0 means the song is most likely to be an acoustic one.
 3. Liveness: This value describes the probability that the song was recorded with a live audience. According to the official documentation “a value above 0.8 provides strong likelihood that the track is live”.
