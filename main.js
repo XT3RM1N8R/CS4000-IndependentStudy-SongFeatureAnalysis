@@ -236,10 +236,10 @@ function Draw_Scatterplot(data) {
                 d3.select(this)
                     .append("title")
                     .text(function (d) {
-                        if (topGenres20.includes(d.genre)) {
+                        if (topGenres20.some(element => element.genre === d.genre)) {
                             return "Top Genre: " + d.genre;
                         } else {
-                            return "Other Genre: " + d.genre;
+                            return "Genre: " + d.genre;
                         }
                     })
             })
