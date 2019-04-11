@@ -12,7 +12,7 @@ Link: https://nhatmusic.github.io/CS5331-Project-2/
 
 
 <h5>Data description:</h5> 
-We got the data from ![this website](https://nam04.safelinks.protection.outlook.com/?url=http%3A%2F%2Farchive.ics.uci.edu%2Fml%2Fdatasets%2FFMA%253A%2BA%2BDataset%2BFor%2BMusic%2BAnalysis&data=02%7C01%7CHao.H.Nguyen%40ttu.edu%7Ccd21a2b53408446e2a6e08d6a7dd2d74%7C178a51bf8b2049ffb65556245d5c173c%7C0%7C0%7C636880965719261197&sdata=Oc4xVBcN9UnvPItAYBz2AEP8yyLuN1NjNZgFYBgigXQ%3D&reserved=0)
+We got the data from ![this website](http://archive.ics.uci.edu/ml/datasets/FMA%3A+A+Dataset+For+Music+Analysis)
 with all song's feature to analysis 
 
 
