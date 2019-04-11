@@ -1,26 +1,46 @@
-#SONGS VISUALIZATION
+# CS5331-Project-2
+SONG GENRE VISUALIZATION
 
-
-<h2>Video demo</h2>
-
+## Video
 [Video Link Here](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Project%202%20Demo%20Video.mkv)
-#
 
 ![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/p2.Le.Nguyen.Sokolov.gif)
 Link: https://nhatmusic.github.io/CS5331-Project-2/
-#
+
+## Dataset:
+- The FMA provides audio from 106,574 tracks from 16,341 artists and 14,854 albums, arranged in a hierarchical taxonomy of 161 genres. It provides full-length and high-quality audio, pre-computed features, together with track- and user-level metadata, tags, and free-form text such as biographies.
+
+- In our project, We mostly focus on the audio features, these audio features is contained in echonest.csv with 13127 songs. We will discuss about the meaning of the audio features we use in our project as following:
+
+- Note: the value of all the features is in the range 0.0 -1.0.
+1. Instrumentalness: This value represents the amount of vocals in the song. The closer it is to 1.0, the more instrumental the song is.
+2. Acousticness: This value describes how acoustic a song is. A score of 1.0 means the song is most likely to be an acoustic one.
+3. Liveness: This value describes the probability that the song was recorded with a live audience. According to the official documentation “a value above 0.8 provides strong likelihood that the track is live”.
+4. Speechiness: “Speechiness detects the presence of spoken words in a track”. If the speechiness of a song is above 0.66, it is probably made of spoken words, a score between 0.33 and 0.66 is a song that may contain both music and words, and a score below 0.33 means the song does not have any speech.
+5. Energy: “(energy) represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy”.
+6. Danceability: “Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable”.
+7. Valence: “A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)”.
+8. Tempo: The tempo determines the performance speed of the music. So when you count how many beats are in one minute of a song played at a specific tempo, you can quickly determine the Beats Per Minute or BPM.
+Source of audio features collected in Spotify (https://towardsdatascience.com/is-my-spotify-music-boring-an-analysis-involving-music-data-and-machine-learning-47550ae931de)
+
+# Data-processing:
+- Echonest.csv does not have all the information we need like song title, genre, duration, etc. Therefore, we merge the data from tracks.csv to get those information using Excel's function and combine into one dataset in csv file to use for the project.
+
+# Apply T-SNE:
+- We are so excited to learn about T-SNE, t-Distributed Stochastic Neighbor Embedding is a (prize-winning) technique for dimensionality reduction that is particularly well suited for the visualization of high-dimensional datasets.
+- We decided to use the T-Sne library in Javascript (https://github.com/karpathy/tsnejs)
+- However, we are unable to process all 13,127 datapoints (songs) (each has 8-dimensions) in web browser, we tried process the wholde dataset in Node.js also. Finally, we decided to use the first 8000 songs in our dataset and we think it preserved much information needed for our visualization.
+![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/tsne.gif)
+- The above image is the test example of processing 500 datapoints using T-SNE. However, with 8000 datapoints, it takes about 30 minutes to complete so we chose to pre-computed the output of tsne.
+
+# Functionality:
+1. Filter and Brush in Parallel Coordinate Graph: User can choose the filter by year or genre to display the data. Brush to the specific range in each dimension to observe the trend.
+
+2. Link between two graphs via mouseover event.
+
+3. No refresh since we apply enter, exit and update in our svg elements.
+
+4. Zoom function applied in ScatterPlot
 
 
-<h5>Data description:</h5> 
-We got the data from ![this website](http://archive.ics.uci.edu/ml/datasets/FMA%3A+A+Dataset+For+Music+Analysis)
-with all song's feature to analysis 
 
-
-The data has 150 thousand rows <i>(datapoint)</i> with multiple columns <i>(feature detail of each song)</i>. 
-However, we only use 8 thousand rows and 11 columns (8 columns of echonest audio data, title, genre, and year created) for our project. 
-
-<h5>Controls</h5>
-
-
-<h5>Technical behind</h5>
- 
