@@ -259,9 +259,7 @@ function MouseOvertooltip(d) {
         "Instrumentalness:" + d.instrumentalness.toFixed(2) + "<br/>" +
         "Liveness:" + d.liveness.toFixed(2) + "<br/>" +
         "Speechiness:" + d.speechiness.toFixed(2) + "<br/>" +
-        "Tempo:" + d.tempo)
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY - 28) + "px");
+        "Tempo:" + d.tempo);
 }
 function MouseOutCircles(d) {
     d3.select("#circle" + d.track_id)

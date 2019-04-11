@@ -165,6 +165,8 @@ h2 {
 }
 div.tooltip {
     position: absolute;
+    top: 204px;
+    left:1280px;
     text-align: left;
     width: 120px;
     height: 130px;
