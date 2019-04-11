@@ -46,11 +46,11 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
                 if (feature != "genre")
                     d[feature] = +d[feature];
             });
-            var gen = d["genre"];
-            // Create new element in genres count if the element is in first appears.
-            if (!genres.includes(gen)) {
-                genres.push(gen);
-            }
+            // var gen = d["genre"];
+            // // Create new element in genres count if the element is in first appears.
+            // if (!genres.includes(gen)) {
+            //     genres.push(gen);
+            // }
             //Add genres by each year
             if (!genresByYear.hasOwnProperty(year)) {
                 genresByYear[year] = [];
@@ -64,6 +64,9 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
 
         topGenresAll = CountGenres(dataset);
         topGenres20 = topGenresAll.slice(0, 20);
+
+        // add genres after sorting
+        genres = topGenresAll.map(d=>d.genre);
 
         UpdateDataTSNE(bigdata.slice(0, testSize));
         drawSlider();
