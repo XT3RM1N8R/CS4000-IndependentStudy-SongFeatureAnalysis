@@ -279,6 +279,7 @@ function MouseOverLines(d) {
     // Show title - genre (Year)
     titleGroup.append("text")
     .style("font-weight","bold")
+    .style("font", "14px sans-serif")
     .attr("y", -5)
     .attr("class","title")
     .text(d.title + " - " + d.genre + " ("+d.tracks_track_date_created+")");
@@ -293,11 +294,11 @@ function MouseOverLines(d) {
     //Show song info to the graph
     xAxisGroup.append("text").attr("class","title")
     .style("text-anchor","middle")
-    .style("font","10px times")
+    .style("font","12px sans-serif")
     .attr("y",-5)
     .text(feature=>{
         if(feature != "genre")
-            return d[feature];
+            return d[feature].toFixed(2);
     });
 }
 
