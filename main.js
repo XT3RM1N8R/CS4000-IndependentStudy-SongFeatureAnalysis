@@ -123,7 +123,7 @@ function CountGenres(data) {    // ***We could optimize this function further, b
     return count_genre;
 }
 
-const width = 700, height = 350,
+const width = 600, height = 350,
     margin = {left: 20, top: 20, right: 20, bottom: 20},
     contentWidth = width - margin.left - margin.right,
     contentHeight = height - margin.top - margin.bottom;
@@ -187,6 +187,10 @@ function Draw_Scatterplot(data) {
         //Exit
         selection.exit().remove();
         //Enter
+         // Define the div for the tooltip
+         div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
         const newElements = selection.enter()
             .append('circle')
             .attr("class", "compute")
@@ -239,6 +243,31 @@ function MouseOverCircles(d) {
             return "Genre: " + d.genre;
         }
     });
+    acousticness: 0.416675233
+    danceability: 0.675893985
+    duration: "168"
+    energy: 0.634476268
+    genre: "Hip-Hop"
+    instrumentalness: 0.010628068
+    liveness: 0.177646571
+    speechiness: 0.159310065
+    tempo: 165.922
+
+    div.transition()
+        .duration(200)
+        .style("opacity", .9);
+    div	.html("Genre:"+ d.genre + "<br/>" +
+        "Acousticness:" + d.acousticness.toFixed(2) + "<br/>" +
+    "Danceability:" + d.danceability.toFixed(2) + "<br/>"+
+    "Duration:" + d.duration + "<br/>"+
+    "Energy:" + d.energy.toFixed(2) + "<br/>"+
+    "Instrumentalness:" + d.instrumentalness.toFixed(2) + "<br/>"+
+    "Liveness:" + d.liveness.toFixed(2) + "<br/>"+
+    "Speechiness:" + d.speechiness.toFixed(2) + "<br/>"+
+    "Tempo:" + d.tempo)
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+
 }
 
 function MouseOutCircles(d) {
@@ -247,6 +276,9 @@ function MouseOutCircles(d) {
     d3.select("#circle" + d.track_id)
     .select("text")
     .remove();
+    div.transition()
+        .duration(500)
+        .style("opacity", 0);
 }
 
 /*function DrawLegend(colorScale, values) {
