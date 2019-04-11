@@ -81,7 +81,7 @@ svg {
     border: 1px solid black;
     position:absolute;
     left:713px;
-    width:700px;
+    width:630px;
     height:400px;
 }
 /*Slider style*/
@@ -165,8 +165,8 @@ h2 {
 }
 div.tooltip {
     position: absolute;
-    top: 204px;
-    left:1280px;
+    top: 205px;
+    left:1220px;
     text-align: left;
     width: 120px;
     height: 130px;
