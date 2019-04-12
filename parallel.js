@@ -225,7 +225,7 @@ function drawGraph(songs, year, selectedGenres) {
         .on("mouseover", d => {
             MouseOverLines(d);
             MouseOverCircles(d);
-            MouseOvertooltip(d);
+            // MouseOvertooltip(d);
         })
         .on("mouseout", d => {
             MouseOutLines(d);
