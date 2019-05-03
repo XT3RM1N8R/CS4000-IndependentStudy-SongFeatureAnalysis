@@ -1,7 +1,6 @@
 var raw_dataset = [];
 var dataset = [];
 var audioData = [];
-const testSize = 1000; // The size of our test data for development speed
 var topGenresAll = [];           // Must not be greater than the size of our precomputed
 var topGenres20 = [];            // t-SNE result if we are using it
 
@@ -10,8 +9,15 @@ var selectedGenres = [];
 var genres = [];
 var genresByYear = {};
 // var genresCount = [];
-const FEATURE_SET = 1;
-const FEATURES_PER_SET = 12;
+
+let testSizeString = prompt("Enter data test-size", "1000");
+const TEST_SIZE = +testSizeString; // The size of our test data for development speed
+
+let featuresPerSetString = prompt("Enter the number of features per set:", "12");
+const FEATURES_PER_SET = +featuresPerSetString;
+
+let featureSet = prompt("Enter the number of the set you wish you analyze:", "0");
+const FEATURE_SET = 0;
 
 d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
     .row(function (d) {
@@ -27,8 +33,8 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
     })
     .get(function (error, songData) {
         raw_dataset = songData;     // Save a copy of the raw dataset
-        audioData = audioData.slice(0, testSize); // Limit the test data for quick debugging
-        dataset = songData.slice(0, testSize);
+        audioData = audioData.slice(0, TEST_SIZE); // Limit the test data for quick debugging
+        dataset = songData.slice(0, TEST_SIZE);
         dataset.columns = songData.columns;
 
         //get audiodata for k-mean cluster, assign the genre for each datapoint
@@ -76,7 +82,7 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
             feature_set: FEATURE_SET // The number for the set of features that are being analyzed
         });
         
-        //UpdateDataTSNE(bigdata.slice(0, testSize));
+        //UpdateDataTSNE(bigdata.slice(0, TEST_SIZE));
         drawSlider();
         graphByYear(dataset, sliderTime.value());
         document.getElementById("genreContainer").style.display = "none";
