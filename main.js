@@ -193,10 +193,7 @@ function Draw_Scatterplot(data) {
         //Exit
         selection.exit().remove();
         //Enter
-        // Define the div for the tooltip
-        div = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
+      
         const newElements = selection.enter()
             .append('circle')
             .attr("class", "compute")
@@ -219,7 +216,7 @@ function Draw_Scatterplot(data) {
             .on("mouseover", function (d) {
                 MouseOverCircles(d);
                 MouseOverLines(d);
-                MouseOvertooltip(d);
+                MouseOverTooltip(d);
             })
             .on("mouseout", function (d) {
                 MouseOutCircles(d);
@@ -258,11 +255,17 @@ function MouseOverCircles(d) {
 
 }
 
-function MouseOvertooltip(d) {
-    div.transition()
+
+// Define the div for the tooltip
+let toolTipDiv = d3.select("body").append("div")
+.attr("class", "tooltip")
+.style("opacity", 0);
+
+function MouseOverTooltip(d) {
+    toolTipDiv.transition()
         .duration(200)
         .style("opacity", .9);
-    div.html("Genre:" + d.genre + "<br/>" +
+    toolTipDiv.html("Genre:" + d.genre + "<br/>" +
         "Acousticness:" + d.acousticness.toFixed(2) + "<br/>" +
         "Danceability:" + d.danceability.toFixed(2) + "<br/>" +
         "Duration:" + d.duration + "<br/>" +
@@ -279,7 +282,7 @@ function MouseOutCircles(d) {
     d3.select("#circle" + d.track_id)
         .select("text")
         .remove();
-    div.transition()
+    toolTipDiv.transition()
         .duration(500)
         .style("opacity", 0);
 }
