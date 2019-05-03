@@ -1,7 +1,7 @@
 var raw_dataset = [];
 var dataset = [];
 var audioData = [];
-const testSize = 8000; // The size of our test data for development speed
+const testSize = 1000; // The size of our test data for development speed
 var topGenresAll = [];           // Must not be greater than the size of our precomputed
 var topGenres20 = [];            // t-SNE result if we are using it
 
@@ -10,18 +10,19 @@ var selectedGenres = [];
 var genres = [];
 var genresByYear = {};
 // var genresCount = [];
+const FEATURE_SET = 1;
+const FEATURES_PER_SET = 12
 
-d3.csv("./Dataset/dataset_full(optimal).csv")
+d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
     .row(function (d) {
-        audioData.push([
-            +d.acousticness,
-            +d.danceability,
-            +d.energy,
-            +d.instrumentalness,
-            +d.liveness,
-            +d.speechiness,
-            +d.tempo,
-            +d.valence]);
+        let featureSetOffset = FEATURE_SET * FEATURES_PER_SET;
+        let featureKeys = [];
+        let featureNumber;
+        for (let i = 0; i < FEATURES_PER_SET; i++) {
+          featureNumber = featureSetOffset + i;
+          featureKeys.push(+d["echonest_temporal_features" + featureNumber.toString()]);
+        }
+        audioData.push([...featureKeys]);
         return d;
     })
     .get(function (error, songData) {
@@ -69,7 +70,14 @@ d3.csv("./Dataset/dataset_full(optimal).csv")
 
         // add genres after sorting
         genres = topGenresAll.map(d => d.genre);
-
+    
+        startWorker({dataset:audioData,
+            epsilon: 1,        // epsilon is learning rate (10 = default)
+            perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
+            iterations: 500,
+            feature_set: FEATURE_SET // The number for the set of features that are being analyzed
+        });
+        
         UpdateDataTSNE(bigdata.slice(0, testSize));
         drawSlider();
         graphByYear(dataset, sliderTime.value());
