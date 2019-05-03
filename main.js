@@ -11,7 +11,7 @@ var genres = [];
 var genresByYear = {};
 // var genresCount = [];
 const FEATURE_SET = 1;
-const FEATURES_PER_SET = 12
+const FEATURES_PER_SET = 12;
 
 d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
     .row(function (d) {
@@ -34,8 +34,7 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
         //get audiodata for k-mean cluster, assign the genre for each datapoint
         audioData.forEach((d, i) => {
             d.genre = dataset[i].genre
-        })
-
+        });
 
         // get features that used for mutlti-dimension coordinates
         features = songData.columns.slice(1, 10);
@@ -64,7 +63,6 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
             }
         });
 
-
         topGenresAll = CountGenres(dataset);
         topGenres20 = topGenresAll.slice(0, 20);
 
@@ -78,7 +76,7 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
             feature_set: FEATURE_SET // The number for the set of features that are being analyzed
         });
         
-        UpdateDataTSNE(bigdata.slice(0, testSize));
+        //UpdateDataTSNE(bigdata.slice(0, testSize));
         drawSlider();
         graphByYear(dataset, sliderTime.value());
         document.getElementById("genreContainer").style.display = "none";
@@ -93,8 +91,6 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
         // var clusters = clusterfck.hcluster(audioData, clusterfck.EUCLIDEAN_DISTANCE,
         //     clusterfck.AVERAGE_LINKAGE, threshold);
         // console.log(clusters)
-
-
     });
 
 // Count the genres and return a descending frequency-ordered list of top genres
