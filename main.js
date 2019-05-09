@@ -10,7 +10,7 @@ var genres = [];
 var genresByYear = {};
 // var genresCount = [];
 
-let testSizeString = prompt("Enter data test-size", "1000");
+let testSizeString = prompt("Enter data test-size", "200");
 const TEST_SIZE = +testSizeString; // The size of our test data for development speed
 
 let featuresPerSetString = prompt("Enter the number of features per set:", "12");
@@ -44,6 +44,7 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
 
         // get features that used for mutlti-dimension coordinates
         features = songData.columns.slice(1, 10);
+        features = features.concat(songData.columns.slice(15,15 + FEATURES_PER_SET));
         xScale.domain(features);
 
         // Doing Time Slider
