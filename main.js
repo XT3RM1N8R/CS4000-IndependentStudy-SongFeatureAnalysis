@@ -215,6 +215,13 @@ const circleOpacity = "0.75";
 
 // Draw a scatterplot from the given data
 function Draw_Scatterplot(data) {
+    if (legendisClicked) {
+        data = data.filter(function(d) {
+            return d.genre === globalLegendGenre;
+        });
+    }
+    
+    
     const xScale = d3.scaleLinear()
         .domain(getExtent(data, "x"))
         .range([0, contentWidth]);
