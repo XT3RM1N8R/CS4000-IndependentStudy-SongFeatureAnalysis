@@ -16,6 +16,7 @@ onmessage = function(e){
              "<br>Learning Rate: " + inputs.epsilon +
              "<br>Perplexity: " + inputs.perplexity +
              "<br>Feature Set: " + inputs.feature_set +
+             "<br>Features Per Set: " + inputs.features_per_set +
              "<br>Iteration: " + iteration;
     };
     

@@ -13,29 +13,61 @@ var genresByYear = {};
 let testSizeString = prompt("Enter data test-size", "200");
 const TEST_SIZE = +testSizeString; // The size of our test data for development speed
 
-let featuresPerSetString = prompt("Enter the number of features per set:", "12");
+let featuresPerSetString = prompt("Enter the number of features per set:", "224");
 const FEATURES_PER_SET = +featuresPerSetString;
 
 let featureSet = prompt("Enter the number of the set you wish you analyze:", "0");
 const FEATURE_SET = 0;
 
+var featureFields = [];
 d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
     .row(function (d) {
         let featureSetOffset = FEATURE_SET * FEATURES_PER_SET;
         let featureKeys = [];
         let featureNumber;
         for (let i = 0; i < FEATURES_PER_SET; i++) {
-          featureNumber = featureSetOffset + i;
-          featureKeys.push(+d["echonest_temporal_features" + featureNumber.toString()]);
+            featureNumber = featureSetOffset + i;
+            let featurePropertyName = "echonest_temporal_features" + featureNumber.toString();
+          
+            if (!featureFields.hasOwnProperty(featureNumber)) {
+                featureFields[featureNumber] = [];
+            }
+            featureFields[featureNumber].push(+d[featurePropertyName]);
+            featureKeys.push(+d[featurePropertyName]);
         }
         audioData.push([...featureKeys]);
         return d;
     })
     .get(function (error, songData) {
         raw_dataset = songData;     // Save a copy of the raw dataset
+        audioData.columns = songData.columns;   // Gets erased later :( - not absolutely necessary, but could be useful to fix
+        
         audioData = audioData.slice(0, TEST_SIZE); // Limit the test data for quick debugging
         dataset = songData.slice(0, TEST_SIZE);
         dataset.columns = songData.columns;
+    
+        featureFields = featureFields.map(function(field) {
+            field = field.slice(0, TEST_SIZE);
+            let rangeMinMax = d3.extent(field);
+            field.minValue = rangeMinMax[0];
+            field.maxValue = rangeMinMax[1];
+            
+            return field;
+        });
+    
+        audioData = audioData.map(function(row, rowNumber) {
+            row = row.map(function(featureValue, featureNumber) {
+                let featurePropertyName = "echonest_temporal_features" + featureNumber.toString();
+            
+                featureValue = (featureValue - featureFields[featureNumber].minValue) / (featureFields[featureNumber].maxValue - featureFields[featureNumber].minValue);
+            
+                dataset[rowNumber][featurePropertyName] = featureValue;
+                
+                return featureValue;
+            });
+            
+            return row;
+        });
 
         //get audiodata for k-mean cluster, assign the genre for each datapoint
         audioData.forEach((d, i) => {
@@ -80,7 +112,8 @@ d3.csv("./Dataset/dataset_full(echonest_features+tracks).csv")
             epsilon: 1,        // epsilon is learning rate (10 = default)
             perplexity: 30,    // roughly how many neighbors each point influences (30 = default)
             iterations: 500,
-            feature_set: FEATURE_SET // The number for the set of features that are being analyzed
+            feature_set: FEATURE_SET, // The number for the set of features that are being analyzed
+            features_per_set: FEATURES_PER_SET   // The amount of features in the set
         });
         
         //UpdateDataTSNE(bigdata.slice(0, TEST_SIZE));
