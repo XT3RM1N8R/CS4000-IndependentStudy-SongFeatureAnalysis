@@ -215,7 +215,7 @@ const circleOpacity = "0.75";
 
 // Draw a scatterplot from the given data
 function Draw_Scatterplot(data) {
-    if (legendisClicked) {
+    if (legendisHover) {
         data = data.filter(function(d) {
             return d.genre === globalLegendGenre;
         });

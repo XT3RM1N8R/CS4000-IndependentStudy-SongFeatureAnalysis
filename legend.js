@@ -64,6 +64,7 @@ function drawLegend() {
         })
 }
 
+var legendisHover = false;
 function legendMouseOver(gen) {
     // legendGenres.forEach(d=>{
     //
@@ -82,28 +83,27 @@ function legendMouseOver(gen) {
         }
         return"none"});
     
+    legendisHover = true;
     globalLegendGenre = gen;
     Draw_Scatterplot(selected);
 }
 
 function legendMouseOut() {
-    if (!legendisClicked) {
-        var selected = [];
-        // foreground.style("opacity",minForegroundOpacity);
-        foreground.style("display", d=>{
-            selected.push(d);
-            return null});
+    var selected = [];
+    // foreground.style("opacity",minForegroundOpacity);
+    foreground.style("display", d=>{
+        selected.push(d);
+        return null});
 
+    legendisHover = false;
+    Draw_Scatterplot(selected);
 
-        Draw_Scatterplot(selected);
-
-        // legendG.style("opacity","1");
-        // legendGenres.forEach(d=>{
-        //     d3.select("#legendRect"+d).style("opacity","1");
-        //     d3.select("#legendText"+d).style("opacity","1");
-        //
-        // })
-    }
+    // legendG.style("opacity","1");
+    // legendGenres.forEach(d=>{
+    //     d3.select("#legendRect"+d).style("opacity","1");
+    //     d3.select("#legendText"+d).style("opacity","1");
+    //
+    // })
 }
 
 var globalLegendGenre;
