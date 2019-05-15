@@ -5,9 +5,9 @@ onmessage = function(e){
 
     const tsne = new tsnejs.tSNE(inputs); // create a tSNE instance
 
-    alert("About to initialize tSNE with Raw Data");
+    //alert("About to initialize tSNE with Raw Data");
     tsne.initDataRaw(inputs.dataset);
-    alert("tSNE Initialization Complete");
+    //alert("tSNE Initialization Complete");
     
     const dataSize = inputs.dataset.length;
     let Log_TSNE = function(iteration) {
@@ -25,7 +25,7 @@ onmessage = function(e){
             Updated_TSNE(tsne.getSolution(), Log_TSNE(k));
     }
     Completed_TSNE(tsne.getSolution(), Log_TSNE(inputs.iterations));
-    alert("tSNE Complete. Scroll down to view tSNE result.")
+    //alert("tSNE Complete. Scroll down to view tSNE result.")
 };
 
 // Tell the worker container in the main thread to send an alert
