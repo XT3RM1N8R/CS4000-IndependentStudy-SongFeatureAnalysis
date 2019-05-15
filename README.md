@@ -1,6 +1,7 @@
 # CS5331-Project-2: SONG GENRE VISUALIZATION
 
-![Demo Gif]()
+![Demo Gif](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/demo-gif.gif)
+
 Demo Link: https://xt3rm1n8r.github.io/CS4000-IndependentStudy-SongFeatureAnalysis/
 
 ## Overview:
@@ -19,10 +20,14 @@ The web application starts out by prompting users for the data test size. This i
 - 2000 tracks will be much slower and might take a few minutes
 - 8000 tracks could take half an hour or more, and is not recommended for quick viewing
 - Anything more than this (up to the 13127 total tracks currently available for complete analysis) can take significantly longer and may crash the application after a long time
-[alert-size-prompt.png]()
+
+![alert-size-prompt.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/alert-size-prompt.png)
+
 Afterwards, there will be two more alerts prompting for the number of features per set and the number of the set that you wish to analyze. These are simply for dividing up the 224 temporal audio features into sets of the specified number, then accessing the subset with the given set index. For example, the default is 224 (all features) and 0, which would result in only 1 set starting at 0 (the only possible set index in this case). Alternatively, 112 would yield a possible set number of 0 and 1, each yielding the first and last 112 features, respectively. It is recommended to simply use the default configuration.
-[alert-features-per-set.png]()
-[alert-set-number.png]()
+
+![alert-features-per-set.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/alert-features-per-set.png)
+![alert-set-number.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/alert-set-number.png)
+
 The next part proceeds to run the selected features of the selected tracks through the T-SNE. Depending on the amount of tracks selected, it may take a few minutes to see any initial progress for the T-SNE on the Scatterplot, or it may complete immediately.
 
 
@@ -53,12 +58,15 @@ This part of my independent study strengthened my understanding in a few areas:
 
 ### T-SNE Dimensionality Reduction & Live Application
 I learned how to apply T-SNE to datasets with variable width and length. I also learned how to display a live T-SNE calculation using a Javascript Webworker and the D3 library.
-[webworker-sample.png]()
+
+![webworker-sample.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/webworker-sample.png)
 
 ### Data Cleaning and Normalization
 I learned the importance of data cleaning to reduce noise in the data, select the most useful information, and prevent undefined behavior. I also learned the importance of normalization in maintaining equal value weighting when performing dimensionality reduction and in regards to optimization of data visualization, with a focus on proper data representation.
-[data-normalization-method.png]()
+
+![data-normalization-method.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/data-normalization-method.png)
 
 ### Layout and Modification of CSS with D3
 I maintained a basic understanding of HTML and CSS beforehand, but this project strengthened my understanding of these concepts in regards to dynamic modification of these values using D3, such as filtering the datapoints in realtime by hovering the genre legend during T-SNE calculation.
-[tsne-legend-hover.png]()
+
+![tsne-legend-hover.png](https://github.com/XT3RM1N8R/CS4000-IndependentStudy-SongFeatureAnalysis/blob/master/images/tsne-legend-hover.gif)
