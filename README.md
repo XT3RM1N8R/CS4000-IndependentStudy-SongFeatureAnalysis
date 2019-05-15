@@ -1,10 +1,7 @@
 # CS5331-Project-2: SONG GENRE VISUALIZATION
 
-## Video
-[Video Link Here](https://www.youtube.com/watch?v=N_5CfvvKGwg&feature=youtu.be)
-
 ![Alt text](https://github.com/Nhatmusic/CS5331-Project-2/blob/master/Dataset/p2.Le.Nguyen.Sokolov.gif)
-Link: https://nhatmusic.github.io/CS5331-Project-2/
+Link: https://xt3rm1n8r.github.io/CS4000-IndependentStudy-SongFeatureAnalysis/
 
 ## Dataset:
 - The FMA provides audio from 106,574 tracks from 16,341 artists and 14,854 albums, arranged in a hierarchical taxonomy of 161 genres. It provides full-length and high-quality audio, pre-computed features, together with track- and user-level metadata, tags, and free-form text such as biographies.
